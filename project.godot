@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Iris Project"
+config/name="Iris Game Project"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
