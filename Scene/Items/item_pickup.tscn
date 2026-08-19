@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b62var7ngf40y"]
+
+[ext_resource type="Script" uid="uid://b7dfiqh7v5g3f" path="res://Scripts/Player/item_pickup.gd" id="1_pfd53"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u2m2a"]
+
+[node name="ItemPickup" type="Area2D" unique_id=1202857723]
+collision_mask = 2
+script = ExtResource("1_pfd53")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=364497868]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2135169933]
+shape = SubResource("CircleShape2D_u2m2a")

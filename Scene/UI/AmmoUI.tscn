@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://claqqsgd1y0ci"]
+
+[ext_resource type="Script" uid="uid://dyy8yff42luic" path="res://Scripts/Player/ammo_ui.gd" id="1_yhoyw"]
+[ext_resource type="Texture2D" uid="uid://dxjt8yrwa37ru" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/kindpng_6986985.png" id="2_25eux"]
+
+[node name="AmmoUI" type="CanvasLayer" unique_id=1977145140]
+script = ExtResource("1_yhoyw")
+
+[node name="Control" type="Control" parent="." unique_id=830965956]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 90.0
+offset_bottom = 24.0
+
+[node name="AmmoLabel" type="Label" parent="Control" unique_id=1481162576]
+layout_mode = 0
+offset_left = 389.0
+offset_top = 49.0
+offset_right = 473.0
+offset_bottom = 72.0
+text = "Arrows 5/5"
+
+[node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=1372206935]
+position = Vector2(411.6934, 22.999985)
+rotation = 1.5707964
+scale = Vector2(0.052023903, 0.058851846)
+texture = ExtResource("2_25eux")

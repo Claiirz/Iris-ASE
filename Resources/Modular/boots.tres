@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://c3nr8luf274ym"]
+
+[ext_resource type="Texture2D" uid="uid://py83cvrguste" path="res://Asset/PlaceHolders/placeholder 32x32.png" id="1_3gugr"]
+[ext_resource type="Script" uid="uid://6tqbywrdd4g6" path="res://Scripts/Items/upgrade_data.gd" id="1_yylv3"]
+
+[resource]
+script = ExtResource("1_yylv3")
+icon = ExtResource("1_3gugr")

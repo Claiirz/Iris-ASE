@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://bdqaswtl5odrv"]
+
+[ext_resource type="Script" uid="uid://cgkfogs6u0t4m" path="res://Scene/Enemies/enemy_1.gd" id="1_211yn"]
+[ext_resource type="Texture2D" uid="uid://dqwkapoa5yvb4" path="res://Asset/v1.1 dungeon crawler 16X16 pixel pack/v1.1 dungeon crawler 16X16 pixel pack/enemies/flying creature/fly_anim_spritesheet.png" id="1_vckqs"]
+[ext_resource type="Shader" uid="uid://bq20iutan84hp" path="res://Scene/Enemies/hitflash.gdshader" id="2_bf3ho"]
+[ext_resource type="PackedScene" uid="uid://dwqm2ddlhmvpa" path="res://DroppedSword.tscn" id="2_ugfsa"]
+[ext_resource type="Resource" uid="uid://digyf7g45kv1s" path="res://Resources/Bat_stat.tres" id="2_waihr"]
+[ext_resource type="Script" uid="uid://bj2nvgl6gkbyw" path="res://Scripts/fsmenemy/Bat/enemy1fsm.gd" id="3_a0xd0"]
+[ext_resource type="Script" uid="uid://b7r162kqyde8y" path="res://Scripts/fsmenemy/Bat/dash_state.gd" id="4_fa4mx"]
+[ext_resource type="Script" uid="uid://dr8wxepx1symr" path="res://Scripts/fsmenemy/Bat/chase_state.gd" id="5_fa4mx"]
+[ext_resource type="Script" uid="uid://dgrm7qhxp3riw" path="res://Scripts/fsmenemy/Bat/telegraph_state.gd" id="6_bf3ho"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e2o6t"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a8t2u"]
+resource_local_to_scene = true
+shader = ExtResource("2_bf3ho")
+shader_parameter/flash = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_211yn"]
+atlas = ExtResource("1_vckqs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqxu6"]
+atlas = ExtResource("1_vckqs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vicv"]
+atlas = ExtResource("1_vckqs")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0xd0"]
+atlas = ExtResource("1_vckqs")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_foiu6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_211yn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqxu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0vicv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0xd0")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 10.0
+}]
+
+[node name="Enemy1" type="CharacterBody2D" unique_id=1795360975]
+collision_layer = 4
+collision_mask = 12
+script = ExtResource("1_211yn")
+stats = ExtResource("2_waihr")
+dropped_sword_scene = ExtResource("2_ugfsa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=936446941]
+scale = Vector2(1.2, 1.2)
+shape = SubResource("CapsuleShape2D_e2o6t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=343158236]
+texture_filter = 1
+material = SubResource("ShaderMaterial_a8t2u")
+sprite_frames = SubResource("SpriteFrames_foiu6")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=224646178]
+collision_layer = 4
+collision_mask = 8
+
+[node name="Hitbox1" type="CollisionShape2D" parent="HurtBox" unique_id=1796026468]
+scale = Vector2(0.72, 0.72)
+shape = SubResource("CapsuleShape2D_e2o6t")
+debug_color = Color(0.99999994, 0.015153582, 0.030238241, 0.41960785)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1369414967]
+path_desired_distance = 0.1
+simplify_path = true
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="FSM" type="Node" parent="." unique_id=355101477 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_a0xd0")
+initial_state = NodePath("Chase")
+
+[node name="Dash" type="Node" parent="FSM" unique_id=335933498]
+script = ExtResource("4_fa4mx")
+
+[node name="Chase" type="Node" parent="FSM" unique_id=1808374273]
+script = ExtResource("5_fa4mx")
+
+[node name="Telegraph" type="Node" parent="FSM" unique_id=419827265]
+script = ExtResource("6_bf3ho")

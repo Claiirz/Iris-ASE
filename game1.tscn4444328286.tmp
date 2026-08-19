@@ -1,0 +1,181 @@
+[gd_scene format=3 uid="uid://baaq8tw5xv8tq"]
+
+[ext_resource type="Texture2D" uid="uid://bhv4pq1as4sqg" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/full tilemap.png" id="1_x4ggo"]
+[ext_resource type="PackedScene" uid="uid://blj7mchukkgp7" path="res://Scene/Characters/Player.tscn" id="2_siop2"]
+[ext_resource type="PackedScene" uid="uid://bdqaswtl5odrv" path="res://Scene/Enemies/enemy_1.tscn" id="3_uiav5"]
+[ext_resource type="Script" uid="uid://btgpbshlgbuot" path="res://Scripts/Handlers/stats.gd" id="4_x4pud"]
+[ext_resource type="Script" uid="uid://dxhwwc3no1phl" path="res://Scripts/Handlers/EnemySpawner.gd" id="5_tefqq"]
+[ext_resource type="Script" uid="uid://2fvyy5oaiohp" path="res://Scripts/Handlers/object_generator.gd" id="6_siop2"]
+[ext_resource type="Script" uid="uid://dgs630lx8k5o3" path="res://Scripts/Handlers/ground_generator.gd" id="7_uiav5"]
+[ext_resource type="Script" uid="uid://65qd7bih7fws" path="res://Scripts/Handlers/nav_baker.gd" id="7_x4pud"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_eow3j"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_fc0e3"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 3.59375, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 3.5971737, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_7jktm"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 3.59375, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 3.5971737, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e2o6t"]
+texture = ExtResource("1_x4ggo")
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_eow3j")
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_7jktm")
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+3:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_fc0e3")
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+8:3/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_4r3jh"]
+physics_layer_0/collision_layer = 5
+physics_layer_0/collision_mask = 0
+navigation_layer_0/layers = 2
+sources/0 = SubResource("TileSetAtlasSource_e2o6t")
+
+[sub_resource type="Resource" id="Resource_x4pud"]
+resource_local_to_scene = true
+script = ExtResource("4_x4pud")
+base_max_health = 5
+base_defense = 1
+base_attack = 1
+experience = 1
+metadata/_custom_type_script = "uid://btgpbshlgbuot"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ryrav"]
+vertices = PackedVector2Array(470, 262, -326, 262, -326, -358, 470, -358)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(480, -368, 480, 272, -336, 272, -336, -368)])
+source_geometry_mode = 2
+
+[node name="Game" type="Node2D" unique_id=1466410273]
+
+[node name="TileMap" type="Node2D" parent="." unique_id=1983090551]
+texture_filter = 1
+
+[node name="Ground" type="TileMapLayer" parent="TileMap" unique_id=571157232]
+light_mask = 0
+visibility_layer = 2
+use_parent_material = true
+tile_set = SubResource("TileSet_4r3jh")
+collision_enabled = false
+
+[node name="Object" type="TileMapLayer" parent="TileMap" unique_id=181102321 groups=["nav_obstacles", "navigation_polygon_source_geometry_group"]]
+light_mask = 0
+visibility_layer = 5
+z_index = 1
+tile_set = SubResource("TileSet_4r3jh")
+
+[node name="CharacterBody2D" parent="." unique_id=1182116428 instance=ExtResource("2_siop2")]
+position = Vector2(54, 57)
+max_speed = null
+acceleration = null
+friction = null
+dodge_speed_multiplier = null
+dodge_duration = null
+dodge_cooldown = null
+buff_duration = null
+buff_cooldown = null
+attack_buff_flat = null
+attack_speed_multiplier = null
+skill_2_duration = null
+skill_2_cooldown = null
+slow_time_scale = null
+skill_3_duration = null
+skill_3_cooldown = null
+invincibility_time = null
+max_arrows = null
+attack_range = null
+
+[node name="Enemy1" parent="." unique_id=1795360975 instance=ExtResource("3_uiav5")]
+position = Vector2(323, 178)
+collision_mask = 9
+stats = SubResource("Resource_x4pud")
+
+[node name="GroundGenerator" type="Node2D" parent="." unique_id=1783040297 node_paths=PackedStringArray("ground_layer", "object_generator")]
+script = ExtResource("7_uiav5")
+ground_layer = NodePath("../TileMap/Ground")
+object_generator = NodePath("../ObjectGenerator")
+floor_tiles = Array[Vector2i]([Vector2i(2, 1), Vector2i(3, 1), Vector2i(2, 2)])
+
+[node name="ObjectGenerator" type="Node2D" parent="." unique_id=1391370952 node_paths=PackedStringArray("ground_layer", "object_layer", "nav_region")]
+script = ExtResource("6_siop2")
+ground_layer = NodePath("../TileMap/Ground")
+object_layer = NodePath("../TileMap/Object")
+density = 0.02
+use_noise_clustering = true
+nav_region = NodePath("../NavigationRegion2D")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=99220952 node_paths=PackedStringArray("object_layer")]
+navigation_polygon = SubResource("NavigationPolygon_ryrav")
+navigation_layers = 2
+script = ExtResource("7_x4pud")
+object_layer = NodePath("../TileMap/Object")
+
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=2139376431 node_paths=PackedStringArray("ground_layer", "player")]
+script = ExtResource("5_tefqq")
+enemy_scene = ExtResource("3_uiav5")
+ground_layer = NodePath("../TileMap/Ground")
+player = NodePath("../CharacterBody2D")

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dmgqx01im1pht"]
+
+[ext_resource type="Script" uid="uid://uox1av4e7ad4" path="res://Scripts/arrow.gd" id="1_e81i5"]
+[ext_resource type="Texture2D" uid="uid://py83cvrguste" path="res://Asset/PlaceHolders/placeholder 32x32.png" id="1_wuvox"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4r3jh"]
+
+[node name="arrow" type="Area2D" unique_id=874749416]
+script = ExtResource("1_e81i5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=59680158]
+position = Vector2(10, 0)
+shape = SubResource("CircleShape2D_4r3jh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=990327751]
+position = Vector2(5, 0)
+scale = Vector2(1.0625, 0.3125)
+texture = ExtResource("1_wuvox")
