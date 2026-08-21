@@ -64,6 +64,6 @@ func _trigger_threat_penalty() -> void:
 	max_threat_reached.emit()
 	print("WARNING: Threat maxed out! Spawning ambush or elite squad!")
 	
-	# Optional: Reset threat partly so it loops, or keep it maxed until they escape
+	# Reset threat partly so it loops, or keep it maxed until they escape
 	current_threat = max_threat * 0.5 
 	time_camping = 1.0 # Keeps pressure high

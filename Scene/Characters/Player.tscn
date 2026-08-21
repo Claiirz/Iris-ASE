@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://claqqsgd1y0ci" path="res://Scene/UI/AmmoUI.tscn" id="14_a01wv"]
 [ext_resource type="Script" uid="uid://bx6ww1ei3gn4b" path="res://Scene/Characters/stats_component.gd" id="15_fr445"]
 [ext_resource type="Script" uid="uid://cbmacx8umo32y" path="res://Scripts/Items/upgrade_component.gd" id="16_kme1g"]
-[ext_resource type="PackedScene" uid="uid://crelu3prpsyy" path="res://ThreatMeter.tscn" id="17_0xel3"]
+[ext_resource type="PackedScene" uid="uid://crelu3prpsyy" path="res://Scene/UI/ThreatMeter.tscn" id="17_0xel3"]
 [ext_resource type="Script" uid="uid://0bdbavsduasy" path="res://Scripts/Player/debug_hud.gd" id="17_kme1g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uwfu8"]

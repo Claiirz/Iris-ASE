@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://crelu3prpsyy"]
+
+[ext_resource type="Texture2D" uid="uid://py83cvrguste" path="res://Asset/PlaceHolders/placeholder 32x32.png" id="1_s3nh5"]
+[ext_resource type="Texture2D" uid="uid://dh7l8hrm0gwjx" path="res://Asset/PlaceHolders/Solid_red.png" id="2_s8wla"]
+[ext_resource type="Script" uid="uid://x2c3a5g1c4gw" path="res://Scripts/threat_bar.gd" id="3_s3nh5"]
+[ext_resource type="Script" uid="uid://dyr51h120vre2" path="res://Scripts/threat_system.gd" id="4_5caa1"]
+
+[node name="TextureProgressBar" type="TextureProgressBar" unique_id=2006686967 node_paths=PackedStringArray("threat_system")]
+offset_left = 1.0
+offset_right = 44.0
+offset_bottom = 131.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("1_s3nh5")
+texture_progress = ExtResource("2_s8wla")
+script = ExtResource("3_s3nh5")
+threat_system = NodePath("Node")
+
+[node name="Node" type="Node" parent="." unique_id=89148561]
+script = ExtResource("4_5caa1")
