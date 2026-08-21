@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://claqqsgd1y0ci" path="res://Scene/UI/AmmoUI.tscn" id="14_a01wv"]
 [ext_resource type="Script" uid="uid://bx6ww1ei3gn4b" path="res://Scene/Characters/stats_component.gd" id="15_fr445"]
 [ext_resource type="Script" uid="uid://cbmacx8umo32y" path="res://Scripts/Items/upgrade_component.gd" id="16_kme1g"]
+[ext_resource type="PackedScene" uid="uid://crelu3prpsyy" path="res://ThreatMeter.tscn" id="17_0xel3"]
 [ext_resource type="Script" uid="uid://0bdbavsduasy" path="res://Scripts/Player/debug_hud.gd" id="17_kme1g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uwfu8"]
@@ -301,11 +302,11 @@ script = ExtResource("12_8f4vj")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=682399595]
 texture_filter = 1
 process_callback = 0
-position_smoothing_enabled = true
 
 [node name="AmmoUI" parent="Camera2D" unique_id=1977145140 instance=ExtResource("14_a01wv")]
 
 [node name="DebugHUD" type="Control" parent="Camera2D" unique_id=847775920]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("17_kme1g")
@@ -314,8 +315,9 @@ script = ExtResource("17_kme1g")
 layout_mode = 0
 offset_left = -233.0
 offset_top = -126.0
-offset_right = -193.0
-offset_bottom = -86.0
+offset_right = -118.0
+offset_bottom = -24.0
+theme_override_font_sizes/font_size = 8
 
 [node name="Sword" parent="." unique_id=19817907 instance=ExtResource("8_i6irg")]
 
@@ -332,7 +334,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="UIMAPTEST" parent="." unique_id=1353149509 instance=ExtResource("14_a01wv")]
-visible = false
 
 [node name="StatsComponent" type="Node" parent="." unique_id=582746730]
 script = ExtResource("15_fr445")
@@ -341,5 +342,11 @@ script = ExtResource("15_fr445")
 script = ExtResource("16_kme1g")
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=1110855856]
+
+[node name="TextureProgressBar" parent="." unique_id=2006686967 instance=ExtResource("17_0xel3")]
+offset_left = 196.0
+offset_top = 4.0
+offset_right = 239.0
+offset_bottom = 135.0
 
 [editable path="Sword"]
