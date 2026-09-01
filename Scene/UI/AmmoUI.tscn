@@ -14,11 +14,10 @@ offset_bottom = 24.0
 
 [node name="AmmoLabel" type="Label" parent="Control" unique_id=1481162576]
 layout_mode = 0
-offset_left = 389.0
+offset_left = 370.0
 offset_top = 49.0
-offset_right = 473.0
+offset_right = 454.0
 offset_bottom = 72.0
-text = "Arrows 5/5"
 
 [node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=1372206935]
 position = Vector2(411.6934, 22.999985)

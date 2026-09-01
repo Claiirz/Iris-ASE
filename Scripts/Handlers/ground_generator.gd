@@ -5,8 +5,8 @@ extends Node2D
 @export var object_generator: Node2D  # Drag ObjectGenerator here in Inspector
 
 @export_group("Map Dimensions") 
-@export var map_width: int = 150 # Map Size X 
-@export var map_height: int = 150 # Map Size Y
+@export var map_width: int = 100 # Map Size X 
+@export var map_height: int = 100 # Map Size Y
 
 @export_group("TileSet Configuration")
 @export var source_id: int = 0

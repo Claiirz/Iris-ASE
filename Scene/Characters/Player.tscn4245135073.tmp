@@ -337,12 +337,8 @@ theme_override_font_sizes/font_size = 8
 [node name="AnimationPlayer" parent="Sword" index="1" unique_id=1489610586]
 libraries/ = SubResource("AnimationLibrary_liw1m")
 
-[node name="SlashSprite" parent="Sword" index="2" unique_id=1759495289]
-visible = true
-
 [node name="CollisionShape2D" parent="Sword/Hitbox" parent_id_path=PackedInt32Array(19817907, 173766647) index="0" unique_id=131011992]
 shape = SubResource("CapsuleShape2D_4r3jh")
-disabled = false
 
 [node name="HPLabel" type="Label" parent="." unique_id=744901631]
 offset_right = 40.0

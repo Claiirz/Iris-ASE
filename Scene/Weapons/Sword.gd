@@ -85,10 +85,18 @@ func calculate_damage() -> Dictionary:
 	var base_dmg: float = float(damage)
 	var is_crit: bool = false
 
+	# 1. Prioritize the curve-scaled attack power from your Stats resource!
+	if player and player.get("stats") and player.stats:
+		base_dmg = float(player.stats.current_attack)
+	# Fallback to StatsComponent only if resource doesn't exist
+	elif player and player.has_node("StatsComponent"):
+		var stats_comp = player.get_node("StatsComponent")
+		if "damage" in stats_comp:
+			base_dmg = float(stats_comp.damage)
+
+	# 2. Handle Crit calculation from StatsComponent safely
 	if player and player.has_node("StatsComponent"):
 		var stats_comp = player.get_node("StatsComponent")
-		base_dmg = float(damage) + float(stats_comp.damage)/2
-
 		if "crit_rate" in stats_comp and "crit_damage" in stats_comp:
 			if randf() < stats_comp.crit_rate:
 				base_dmg *= stats_comp.crit_damage
@@ -98,7 +106,6 @@ func calculate_damage() -> Dictionary:
 		"damage": roundi(base_dmg),
 		"is_crit": is_crit
 	}
-
 
 func reset_hit_targets() -> void:
 	hit_entities.clear()

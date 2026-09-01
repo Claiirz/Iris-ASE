@@ -160,6 +160,7 @@ root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_liw1m")
 
 [node name="SlashSprite" type="Sprite2D" parent="." unique_id=1759495289]
+visible = false
 texture_filter = 1
 position = Vector2(8.675777, 0.50000054)
 scale = Vector2(0.75781256, 2.8125)
@@ -177,3 +178,4 @@ collision_mask = 4
 texture_filter = 1
 position = Vector2(7, -1)
 shape = SubResource("CapsuleShape2D_4r3jh")
+disabled = true

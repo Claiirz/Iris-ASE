@@ -13,7 +13,7 @@ const STAT_CURVES: Dictionary[BuffableStats, Curve] = {
 	BuffableStats.ATTACK: preload("uid://c2cmqpl268wvx"),
 }
 
-const BASE_LEVEL_EXP: float = 100.0
+const BASE_LEVEL_EXP: float = 1.0
 
 signal health_depleted
 signal health_changed(cur_health: int, max_health: int)
@@ -24,7 +24,7 @@ signal health_changed(cur_health: int, max_health: int)
 @export var experience: int = 0: set = _on_experience_set
 
 var level: int:
-	get(): return floor(max(1.0, sqrt(experience / 100.0) + 0.5))
+	get(): return floor(max(1.0, sqrt(experience / BASE_LEVEL_EXP) + 0.5))
 
 var current_max_health: int = 100
 var current_defense: int = 10
@@ -50,9 +50,10 @@ func remove_buff(buff: StatBuff) -> void:
 	recalculate_stats.call_deferred()
 	
 func recalculate_stats() -> void:
-	var stat_sample_pos: float = (float(level) / 100.0) - 0.01
+	# Map level (1 to 100) precisely to curve domain (0.0 to 1.0)
+	var stat_sample_pos: float = clamp((float(level) - 1.0) / 99.0, 0.0, 1.0)
 	
-	# Sample base stats from curves
+	# Sample base stats from curves (Y-axis acts as multiplier: Y=1.0 is 100% base stat)
 	var sampled_hp: float = base_max_health * STAT_CURVES[BuffableStats.MAX_HEALTH].sample(stat_sample_pos)
 	var sampled_def: float = base_defense * STAT_CURVES[BuffableStats.DEFENSE].sample(stat_sample_pos)
 	var sampled_atk: float = base_attack * STAT_CURVES[BuffableStats.ATTACK].sample(stat_sample_pos)

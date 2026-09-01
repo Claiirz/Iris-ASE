@@ -46,7 +46,7 @@ var is_time_stopped: bool = false
 var can_use_skill_3: bool = true
 
 # --- Invincibility & Death Settings ---
-@export var invincibility_time: float = 0.5
+@export var invincibility_time: float = 0.2
 var is_invulnerable: bool = false
 var is_dead: bool = false
 
@@ -101,6 +101,19 @@ func _ready() -> void:
 		fsm.init(self)
 
 	_update_sword_speed()
+	
+func add_xp(amount: int) -> void:
+	if stats:
+		var old_level: int = stats.level
+		stats.experience += amount
+		
+		print("Gained XP: ", amount, " | Total XP: ", stats.experience, " | Level: ", stats.level)
+		
+		# Check if leveling up occurred
+		if stats.level > old_level:
+			print("LEVEL UP! Reached Level: ", stats.level)
+			# Fully restore health on level up as a reward
+			stats.health = stats.current_max_health
 
 func _unhandled_input(event: InputEvent) -> void:
 	if is_dead: return

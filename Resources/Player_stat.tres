@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://btgpbshlgbuot" path="res://Scripts/Handlers/stats.gd" id="1_2hcld"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_2hcld")
-base_max_health = 99999
 base_attack = 1
 metadata/_custom_type_script = "uid://btgpbshlgbuot"

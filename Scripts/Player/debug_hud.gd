@@ -16,27 +16,31 @@ func _process(_delta: float) -> void:
 	# Retrieve stats component references safely
 	var stats_comp = player.get_node_or_null("StatsComponent")
 	
-	# Placeholder fields for Level/Exp (adjust if you store them elsewhere)
-	var player_level: int = player.get("player_level") if player.get("player_level") != null else 1
-	var current_exp: int = player.get("current_exp") if player.get("current_exp") != null else 0
+	# Fallbacks for Level/Exp/Attack from player stats resource
+	var current_lvl = 1
+	var current_exp = 0
+	var atk_dmg: int = 1
+	
+	if player.get("stats") and player.stats:
+		current_lvl = player.stats.level
+		current_exp = player.stats.experience
+		atk_dmg = player.stats.current_attack # <--- Pulls scaled attack from resource!
 	
 	# Get final calculated movement speed
 	var speed: float = player.get_current_move_speed() if player.has_method("get_current_move_speed") else player.max_speed
 
-	# Default fallback values
-	var atk_dmg: int = 1
+	# Default fallback values for other stats
 	var crit_rate: float = 0.0
 	var crit_dmg: float = 150.0
 	var atk_cooldown: float = 1.0
 
-	# Pull actual stats from StatsComponent if it exists
+	# Pull secondary stats (like crit and cooldown) from StatsComponent if it exists
 	if stats_comp:
-		atk_dmg = stats_comp.damage
-		crit_rate = stats_comp.crit_rate * 100.0   # Convert to percentage (e.g., 5.0%)
-		crit_dmg = stats_comp.crit_damage * 100.0 # Convert to percentage (e.g., 150.0%)
-		atk_cooldown = stats_comp.attack_cooldown
+		if "crit_rate" in stats_comp: crit_rate = stats_comp.crit_rate * 100.0   # Convert to percentage
+		if "crit_damage" in stats_comp: crit_dmg = stats_comp.crit_damage * 100.0 # Convert to percentage
+		if "attack_cooldown" in stats_comp: atk_cooldown = stats_comp.attack_cooldown
 
-	# Calculate Attack Speed factor (inverse of cooldown, e.g., 1.0 / cooldown)
+	# Calculate Attack Speed factor (inverse of cooldown)
 	var atk_speed: float = 1.0 / atk_cooldown if atk_cooldown > 0 else 1.0
 
 	# Format and display text
@@ -49,7 +53,7 @@ Attack Speed: %.2f (CD: %.2fs)
 Crit Rate: %.1f%%
 Crit Damage: %.1f%%
 """ % [
-		player_level, 
+		current_lvl, # Fixed: changed from player_level to current_lvl
 		current_exp, 
 		speed, 
 		atk_dmg, 

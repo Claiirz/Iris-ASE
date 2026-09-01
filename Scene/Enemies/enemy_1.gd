@@ -48,6 +48,10 @@ var unstuck_duration: float = 0.0
 @export var item_to_drop_scene: PackedScene
 @export var possible_drops: Array[UpgradeData] = [] # Drag Boots, Cutter, Gloves, Crowbar, Anvil here in Inspector
 
+# --- LOOT & XP DROPS ---
+@export var xp_orb_scene: PackedScene        # <-- Drag XpOrb.tscn here in Inspector
+@export var xp_drop_amount: int = 15         # <-- How much XP this enemy gives
+var is_dropping_items: bool = false # Guard flag to prevent double-spawning
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -302,6 +306,9 @@ func die() -> void:
 
 
 func _drop_random_item() -> void:
+	if is_dropping_items:
+		return
+	is_dropping_items = true
 	# Safe deferral to run after physics query flush finishes
 	call_deferred("_spawn_dropped_item")
 
@@ -328,8 +335,28 @@ func _spawn_dropped_item() -> void:
 		item_instance.upgrade_data = selected_drop
 	elif "resource" in item_instance:
 		item_instance.resource = selected_drop
+	
+	# 1. Spawn regular upgrade item if configured
+	# 1. Spawn Regular Item Upgrade (Boots, Cutter, etc.) if assigned
+	if item_to_drop_scene and not possible_drops.is_empty():
+		
+		if item_instance and item_instance.get_parent() == null:
+			item_instance.global_position = global_position
+			if "upgrade_data" in item_instance:
+				item_instance.upgrade_data = selected_drop
+			elif "resource" in item_instance:
+				item_instance.resource = selected_drop
+			get_tree().current_scene.add_child(item_instance)
 
-	get_tree().current_scene.add_child(item_instance)
+	# 2. Spawn XP Orb if assigned
+	if xp_orb_scene:
+		var xp_instance = xp_orb_scene.instantiate() as Node2D
+		if xp_instance and xp_instance.get_parent() == null:
+			# Offset slightly so it doesn't overlap completely with the item drop
+			xp_instance.global_position = global_position + Vector2(randf_range(-15, 15), randf_range(-15, 15))
+			if "xp_value" in xp_instance:
+				xp_instance.xp_value = xp_drop_amount
+			get_tree().current_scene.add_child(xp_instance)
 
 
 # --- TIME STOP SUPPORT (Skill 3) ---

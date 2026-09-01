@@ -4,8 +4,8 @@ extends NavigationRegion2D
 @export var object_layer: TileMapLayer #Drag Object layer here.
 
 @export_group("Grid Dimensions")
-@export var map_width: int = 150
-@export var map_height: int = 150
+@export var map_width: int = 100
+@export var map_height: int = 100
 @export var tile_size: Vector2 = Vector2(16, 16)
 
 @export_group("Obstacle Footprint")

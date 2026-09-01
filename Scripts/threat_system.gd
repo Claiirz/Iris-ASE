@@ -1,4 +1,6 @@
-class_name ThreatSystem extends Node
+class_name ThreatSystem 
+extends Node
+
 # Threat system functions like an anti-camp zone. the longer the player stays/wanders around the same spot -
 # the bar fills up
 @export_category("Zone Settings")
@@ -10,6 +12,10 @@ class_name ThreatSystem extends Node
 @export var base_threat_speed: float = 4.0   # Initial threat added per second
 @export var acceleration_rate: float = 1.4    # How much faster it accumulates the longer the player stays
 @export var decay_rate: float = 10.0         # How fast threat drops when moving away
+
+@export_category("Boss Spawn Settings")
+@export var boss_scene: PackedScene        # <-- Drag your Boss.tscn here in the Inspector
+@export var boss_spawn_distance: float = 250.0 # Distance away from player to spawn the boss
 
 var player: CharacterBody2D = null
 var current_threat: float = 0.0
@@ -62,8 +68,19 @@ func _process(delta: float) -> void:
 
 func _trigger_threat_penalty() -> void:
 	max_threat_reached.emit()
-	print("WARNING: Threat maxed out! Spawning ambush or elite squad!")
+	print("WARNING: Threat maxed out! Spawning Boss!")
 	
-	# Reset threat partly so it loops, or keep it maxed until they escape
+	# Spawn the boss into the current scene if assigned
+	if boss_scene and player and is_instance_valid(player):
+		var boss_instance = boss_scene.instantiate() as Node2D
+		if boss_instance:
+			# Spawn at a random direction offset around the player so it doesn't clip directly into them
+			var spawn_offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * boss_spawn_distance
+			boss_instance.global_position = player.global_position + spawn_offset
+			get_tree().current_scene.add_child(boss_instance)
+	else:
+		push_warning("ThreatSystem Warning: Boss Scene is not assigned in the Inspector!")
+
+	# Reset threat partly so it loops, or keep it maxed out
 	current_threat = max_threat * 0.5 
 	time_camping = 1.0 # Keeps pressure high

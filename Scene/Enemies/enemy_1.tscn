@@ -19,6 +19,7 @@
 [ext_resource type="Resource" uid="uid://bgywcxrpl2qi1" path="res://Resources/Modular/gloves.tres" id="10_0s1pb"]
 [ext_resource type="Script" uid="uid://02j3210st2e3" path="res://Scripts/Handlers/mutation_component.gd" id="10_3kujk"]
 [ext_resource type="Script" uid="uid://duu51k5uio6r0" path="res://Scripts/fsmenemy/Bat/die_state.gd" id="11_cmy35"]
+[ext_resource type="PackedScene" uid="uid://b2c1c464hqjqa" path="res://Scene/xp_orb.tscn" id="11_xmtim"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2m2a"]
 radius = 8.0
@@ -114,6 +115,7 @@ stuck_check_interval = 1.0
 min_moved_distance = 6.0
 item_to_drop_scene = ExtResource("4_q3670")
 possible_drops = Array[ExtResource("5_xmtim")]([ExtResource("7_pjusm"), ExtResource("6_uv7m1"), ExtResource("8_8yf06"), ExtResource("9_0ef5i"), ExtResource("10_0s1pb")])
+xp_orb_scene = ExtResource("11_xmtim")
 
 [node name="HitBox" type="Area2D" parent="." unique_id=354901139]
 collision_layer = 4
@@ -182,4 +184,5 @@ one_way_collision_margin = 40.5
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1707710554]
 scale = Vector2(1.2, 1.2)
 shape = SubResource("CapsuleShape2D_e2o6t")
+disabled = true
 one_way_collision_margin = 40.5

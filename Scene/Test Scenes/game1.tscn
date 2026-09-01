@@ -110,6 +110,14 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(480, -368, 480, 272, -336, 272, -336, -368)])
 source_geometry_mode = 2
 
+[sub_resource type="Resource" id="Resource_xnt2d"]
+resource_local_to_scene = true
+script = ExtResource("4_x4pud")
+base_max_health = 10000
+base_attack = 1
+experience = 5000
+metadata/_custom_type_script = "uid://btgpbshlgbuot"
+
 [node name="Game" type="Node2D" unique_id=1466410273]
 
 [node name="TileMap" type="Node2D" parent="." unique_id=1983090551]
@@ -160,3 +168,4 @@ ground_layer = NodePath("../TileMap/Ground")
 player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=1182116428 instance=ExtResource("8_b2lmk")]
+stats = SubResource("Resource_xnt2d")

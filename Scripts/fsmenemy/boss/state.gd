@@ -1,4 +1,4 @@
-class_name State
+class_name Stateboss
 extends Node
 
 var fsm: Node = null
