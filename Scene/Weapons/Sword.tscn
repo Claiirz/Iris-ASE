@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cmvuc7jclhymn" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/Sword.png" id="1_d55eh"]
 [ext_resource type="Script" uid="uid://biw8xqr2wodkm" path="res://Scene/Weapons/Sword.gd" id="1_p73jl"]
 [ext_resource type="Texture2D" uid="uid://dbi5x2ynukccq" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/effects (new)/slash_effect_anim_spritesheet.png" id="2_p73jl"]
+[ext_resource type="AudioStream" uid="uid://buopvg6tld8kj" path="res://Asset/sfx/playersfx/sword1.mp3" id="4_lutwn"]
 
 [sub_resource type="Animation" id="Animation_adgam"]
 length = 0.001
@@ -158,7 +159,6 @@ root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_liw1m")
 
 [node name="SlashSprite" type="Sprite2D" parent="." unique_id=1759495289]
-visible = false
 texture_filter = 1
 position = Vector2(-0.32422113, 0)
 scale = Vector2(0.75781256, 1.6250001)
@@ -176,4 +176,6 @@ collision_mask = 4
 texture_filter = 1
 position = Vector2(7, -1)
 shape = SubResource("CapsuleShape2D_4r3jh")
-disabled = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1260688405]
+stream = ExtResource("4_lutwn")

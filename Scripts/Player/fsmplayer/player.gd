@@ -16,6 +16,7 @@ const COLOR_DEAD = Color.RED
 @export var dodge_speed_multiplier: float = 2.0
 @export var dodge_duration: float = 0.25
 @export var dodge_cooldown: float = 1.0
+@export var dash_effect_offset: Vector2 = Vector2(-18, -8) # Adjust Y in the Inspector
 
 var is_dodging: bool = false
 var can_dodge: bool = true
@@ -59,13 +60,14 @@ var is_dead: bool = false
 @onready var stats_component: StatsComponent = $StatsComponent
 @onready var upgrade_component: UpgradeComponent = $UpgradeComponent
 @onready var attack_timer: Timer = $AttackTimer
-
+@export var equipped_weapon: Node2D
+@export var dash_effect_scene: PackedScene # Drag dash_effect.tscn here in Inspector
 # --- Arrow & Bow Settings ---
 @export var arrow_scene: PackedScene
 @export var max_arrows: int = 5
 @export var ammo_ui: CanvasLayer
 var current_arrows: int
-
+@onready var arrow_sfx: AudioStreamPlayer2D = get_node_or_null("ArrowSFX")
 @export var dropped_sword_scene: PackedScene
 @export var default_sword_scene: PackedScene
 var equipped_sword_scene: PackedScene
@@ -117,7 +119,16 @@ func add_xp(amount: int) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if is_dead: return
-
+	
+	if Input.is_action_just_pressed("attack"):
+		if equipped_weapon and equipped_weapon.has_method("trigger_attack"):
+			equipped_weapon.trigger_attack()
+	
+	# Exclusive Weapon Skill Input (F Key / "skill" action)
+	if Input.is_action_just_pressed("skill"):
+		if sword and sword.has_method("use_skill"):
+			sword.use_skill()
+			
 	# Unified Input Handling
 	if event.is_action_pressed("attack"): trigger_attack()
 	elif event.is_action_pressed("shoot"): shoot_arrow()
@@ -181,6 +192,24 @@ func _start_dodge() -> void:
 	dodge_dir = input_dir.normalized() if input_dir else (Vector2.LEFT if animated_sprite.flip_h else Vector2.RIGHT)
 	animated_sprite.modulate.a = 0.5
 
+	# --- SPAWN DASH EFFECT ---
+	var effect = dash_effect_scene.instantiate() as Node2D
+	
+	var is_facing_left: bool = dodge_dir.x < 0
+	
+	# Flip the sprite sprite horizontally when facing left
+	if "flip_h" in effect:
+		effect.flip_h = is_facing_left
+	
+	# Calculate offset: keep Y height fixed, flip only X offset
+	var final_offset := dash_effect_offset
+	if is_facing_left:
+		final_offset.x = -final_offset.x
+		
+	effect.global_position = global_position + final_offset
+	get_tree().current_scene.add_child(effect)
+	
+
 	if fsm and fsm.has_method("change_state"):
 		fsm.change_state("Dodge" if fsm.has_node("Dodge") else "dodge")
 
@@ -207,13 +236,22 @@ func _on_attack_timer_timeout() -> void:
 		trigger_attack()
 
 func trigger_attack() -> void:
-	if sword_animation_player and not sword_animation_player.is_playing():
-		if sword and sword.has_method("reset_hit_targets"):
+	if not sword:
+		return
+
+	# 1. If the weapon has our new combo system, let it handle itself
+	if sword.has_method("trigger_attack"):
+		sword.trigger_attack()
+		
+	# 2. Otherwise, fall back to the standard single-slash animation for regular weapons
+	elif sword_animation_player and not sword_animation_player.is_playing():
+		if sword.has_method("reset_hit_targets"):
 			sword.reset_hit_targets()
 
 		var anim_name = "Slash" if sword_animation_player.has_animation("Slash") else "slash"
 		if sword_animation_player.has_animation(anim_name):
 			sword_animation_player.play(anim_name)
+			
 
 func _get_nearest_enemy() -> Node2D:
 	var nearest: Node2D = null
@@ -315,9 +353,14 @@ func _update_sword_speed() -> void:
 	if is_time_slowed: final_speed *= (1.0 / slow_time_scale)
 	
 	sword_animation_player.speed_scale = final_speed
+	
+func _play_arrow_sound() -> void:
+	if current_arrows > 0:
+		arrow_sfx.play(1.25)
 
 # --- Weapons & Ammo ---
 func shoot_arrow() -> void:
+	_play_arrow_sound()
 	if current_arrows <= 0 or arrow_scene == null: return
 	current_arrows -= 1
 	update_ui()

@@ -20,6 +20,8 @@
 [ext_resource type="Script" uid="uid://02j3210st2e3" path="res://Scripts/Handlers/mutation_component.gd" id="10_3kujk"]
 [ext_resource type="Script" uid="uid://duu51k5uio6r0" path="res://Scripts/fsmenemy/Bat/die_state.gd" id="11_cmy35"]
 [ext_resource type="PackedScene" uid="uid://b2c1c464hqjqa" path="res://Scene/xp_orb.tscn" id="11_xmtim"]
+[ext_resource type="AudioStream" uid="uid://cn0cdjirj0yft" path="res://Asset/sfx/enemysfx/slap.wav" id="21_uv7m1"]
+[ext_resource type="AudioStream" uid="uid://51a0wvnrw2bb" path="res://Asset/sfx/enemysfx/splat_quick.wav" id="22_pjusm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2m2a"]
 radius = 8.0
@@ -149,6 +151,7 @@ avoidance_enabled = true
 radius = 16.0
 avoidance_layers = 0
 avoidance_mask = 2
+debug_enabled = true
 
 [node name="FSM" type="Node" parent="." unique_id=355101477 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_a0xd0")
@@ -186,3 +189,13 @@ scale = Vector2(1.2, 1.2)
 shape = SubResource("CapsuleShape2D_e2o6t")
 disabled = true
 one_way_collision_margin = 40.5
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=855526018]
+
+[node name="HurtSFX" type="AudioStreamPlayer2D" parent="." unique_id=1996758401]
+stream = ExtResource("21_uv7m1")
+volume_db = -18.583
+
+[node name="DeadSFX" type="AudioStreamPlayer2D" parent="." unique_id=177854701]
+stream = ExtResource("22_pjusm")
+volume_db = -18.583

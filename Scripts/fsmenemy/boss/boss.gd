@@ -17,11 +17,24 @@ var lunge_velocity: Vector2 = Vector2.ZERO
 @onready var attack_sprite: Sprite2D = $AttackSprite # Make sure your attack sprite node matches this name
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var hitbox: Area2D = $HitBox
+@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
+
+# --- ANTI-STUCK SETTINGS ---
+@export_group("Anti-Stuck")
+@export var stuck_check_interval: float = 0.4  # Check position every 0.4 seconds
+@export var min_moved_distance: float = 3.0    # Must move at least 3px
+@export var unstuck_push_force: float = 80.0   # Force to push away from walls
+
+var last_stuck_check_pos: Vector2 = Vector2.ZERO
+var stuck_timer: float = 0.0
+var unstuck_vector: Vector2 = Vector2.ZERO
+var unstuck_duration: float = 0.0
 
 func _ready() -> void:
 	add_to_group("enemies")
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
-
+	
+	
 	# Unique material instance for hit-flash shader.
 	if animated_sprite and animated_sprite.material:
 		animated_sprite.material = animated_sprite.material.duplicate()
@@ -49,7 +62,13 @@ func _ready() -> void:
 	# Check if spawned while Time Stop is active
 	if player and "is_time_stopped" in player and player.is_time_stopped:
 		call_deferred("freeze_time")
-
+	
+	# 1. Find the Boss Health Bar in the UI
+	var boss_bar = get_tree().get_first_node_in_group("boss_health_bar")
+	
+	# 2. Tell the bar to set itself up using THIS boss
+	if boss_bar and boss_bar.has_method("setup_boss"):
+		boss_bar.setup_boss(self)
 
 func _physics_process(_delta: float) -> void:
 	if is_dead or is_frozen:
@@ -62,6 +81,32 @@ func _physics_process(_delta: float) -> void:
 	if is_lunging:
 		velocity = lunge_velocity
 		move_and_slide()
+	
+	# --- ANTI-STUCK LOGIC ---
+	stuck_timer += _delta
+	if stuck_timer >= stuck_check_interval:
+		stuck_timer = 0.0
+		var moved_dist = global_position.distance_to(last_stuck_check_pos)
+		
+		# If the boss is supposed to be moving, but hasn't moved far enough...
+		if velocity.length() > 10.0 and moved_dist < min_moved_distance:
+			# Trigger a random push-off vector to pop him out of the corner
+			var random_angle = randf() * TAU
+			unstuck_vector = Vector2(cos(random_angle), sin(random_angle))
+			unstuck_duration = 0.3 # Push for 0.3 seconds
+			
+		last_stuck_check_pos = global_position
+
+	# --- NAVMESH ESCAPE RESCUE ---
+	var map = nav_agent.get_navigation_map()
+	if map.is_valid():
+		var closest_valid_pos = NavigationServer2D.map_get_closest_point(map, global_position)
+		
+		# If the boss's center drifts more than 10 pixels outside the valid navmesh into a hole:
+		if global_position.distance_to(closest_valid_pos) > 0.0:
+			# Instantly pop the boss out of the wall/hole onto the safe path!
+			global_position = closest_valid_pos
+			velocity = Vector2.ZERO # Reset momentum so it doesn'g glitch
 
 
 # --- FACING & HITBOX MIRRORING ---
@@ -195,13 +240,14 @@ func freeze_time() -> void:
 	is_frozen = true
 	velocity = Vector2.ZERO
 	set_physics_process(false)
-
-	if animated_sprite:
-		animated_sprite.pause()
-	if attack_sprite:
-		attack_sprite.pause()
-	if animation_player:
-		animation_player.pause()
+	
+	# Check if your sprite or animation node has the 'pause' method before calling it
+	if has_node("AnimatedSprite2D") and $AnimatedSprite2D.has_method("pause"):
+		$AnimatedSprite2D.pause()
+  
+	# Alternatively, if using an AnimationPlayer:
+	if has_node("AnimationPlayer"):
+		$AnimationPlayer.pause()
 
 	if has_node("FSM"):
 		$FSM.set_physics_process(false)
@@ -214,12 +260,13 @@ func unfreeze_time() -> void:
 	is_frozen = false
 	set_physics_process(true)
 
-	if animated_sprite:
-		animated_sprite.play()
-	if attack_sprite:
-		attack_sprite.play()
-	if animation_player:
-		animation_player.play()
+	# Check if your sprite or animation node has the 'pause' method before calling it
+	if has_node("AnimatedSprite2D") and $AnimatedSprite2D.has_method("pause"):
+		$AnimatedSprite2D.play()
+  
+	# Alternatively, if using an AnimationPlayer:
+	if has_node("AnimationPlayer"):
+		$AnimationPlayer.play()
 
 	if has_node("FSM"):
 		$FSM.set_physics_process(true)

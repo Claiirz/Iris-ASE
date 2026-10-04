@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://ccp1g063dgvfv" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/knight_run_spritesheet.png" id="3_8e2c0"]
 [ext_resource type="PackedScene" uid="uid://dmgqx01im1pht" path="res://Scene/Weapons/Arrow.tscn" id="3_fr445"]
 [ext_resource type="PackedScene" uid="uid://dwqm2ddlhmvpa" path="res://Scene/Items/DroppedSword.tscn" id="3_q6w3m"]
+[ext_resource type="PackedScene" uid="uid://cms3fl0ttf82v" path="res://Scene/Effects/dash_effect.tscn" id="3_uubsr"]
 [ext_resource type="Script" uid="uid://bw58vo6ovvqqw" path="res://Scripts/Player/fsmplayer/finite_state_machine.gd" id="4_pmp2f"]
+[ext_resource type="PackedScene" uid="uid://ddobaqt5u27oo" path="res://Scene/Weapons/Sword2.tscn" id="5_0xel3"]
 [ext_resource type="Script" uid="uid://c4a821ya6j5km" path="res://Scripts/Player/fsmplayer/idle_state.gd" id="5_pmp2f"]
 [ext_resource type="Script" uid="uid://dsqaicjbohk2x" path="res://Scripts/Player/fsmplayer/run_state.gd" id="6_pmp2f"]
 [ext_resource type="Script" uid="uid://l46q1d8sr7j0" path="res://Scripts/Player/hurtbox.gd" id="8_8v44s"]
@@ -17,6 +19,7 @@
 [ext_resource type="Script" uid="uid://cbmacx8umo32y" path="res://Scripts/Items/upgrade_component.gd" id="16_kme1g"]
 [ext_resource type="PackedScene" uid="uid://crelu3prpsyy" path="res://Scene/UI/ThreatMeter.tscn" id="17_0xel3"]
 [ext_resource type="Script" uid="uid://0bdbavsduasy" path="res://Scripts/Player/debug_hud.gd" id="17_kme1g"]
+[ext_resource type="AudioStream" uid="uid://cp1wmi4nlmdhg" path="res://Asset/sfx/playersfx/arrowshoot.mp3" id="20_rp6ye"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uwfu8"]
 atlas = ExtResource("2_wneh1")
@@ -263,10 +266,11 @@ height = 44.0
 collision_layer = 2
 script = ExtResource("1_ph5yk")
 stats = ExtResource("2_e5op4")
+dash_effect_scene = ExtResource("3_uubsr")
 arrow_scene = ExtResource("3_fr445")
 ammo_ui = NodePath("Camera2D/AmmoUI")
 dropped_sword_scene = ExtResource("3_q6w3m")
-default_sword_scene = ExtResource("8_i6irg")
+default_sword_scene = ExtResource("5_0xel3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2066522144]
 texture_filter = 1
@@ -299,19 +303,6 @@ script = ExtResource("6_pmp2f")
 [node name="Dodge" type="Node" parent="FSM" unique_id=916120529]
 script = ExtResource("12_8f4vj")
 
-[node name="FSM" type="Node" parent="FSM" unique_id=2008285993 node_paths=PackedStringArray("initial_state")]
-script = ExtResource("4_pmp2f")
-initial_state = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="FSM/FSM" unique_id=2114346866]
-script = ExtResource("5_pmp2f")
-
-[node name="Run" type="Node" parent="FSM/FSM" unique_id=1780374698]
-script = ExtResource("6_pmp2f")
-
-[node name="Dodge" type="Node" parent="FSM/FSM" unique_id=407594575]
-script = ExtResource("12_8f4vj")
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=682399595]
 texture_filter = 1
 process_callback = 0
@@ -337,12 +328,8 @@ theme_override_font_sizes/font_size = 8
 [node name="AnimationPlayer" parent="Sword" index="1" unique_id=1489610586]
 libraries/ = SubResource("AnimationLibrary_liw1m")
 
-[node name="SlashSprite" parent="Sword" index="2" unique_id=1759495289]
-visible = true
-
 [node name="CollisionShape2D" parent="Sword/Hitbox" parent_id_path=PackedInt32Array(19817907, 173766647) index="0" unique_id=131011992]
 shape = SubResource("CapsuleShape2D_4r3jh")
-disabled = false
 
 [node name="HPLabel" type="Label" parent="." unique_id=744901631]
 offset_right = 40.0
@@ -365,5 +352,8 @@ offset_left = 196.0
 offset_top = 4.0
 offset_right = 239.0
 offset_bottom = 135.0
+
+[node name="ArrowSFX" type="AudioStreamPlayer2D" parent="." unique_id=1819369404]
+stream = ExtResource("20_rp6ye")
 
 [editable path="Sword"]

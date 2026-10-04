@@ -7,8 +7,9 @@
 [ext_resource type="Script" uid="uid://2fvyy5oaiohp" path="res://Scripts/Handlers/object_generator.gd" id="6_siop2"]
 [ext_resource type="Script" uid="uid://dgs630lx8k5o3" path="res://Scripts/Handlers/ground_generator.gd" id="7_uiav5"]
 [ext_resource type="Script" uid="uid://65qd7bih7fws" path="res://Scripts/Handlers/nav_baker.gd" id="7_x4pud"]
+[ext_resource type="PackedScene" uid="uid://cpfdnia34xnmb" path="res://Scene/Enemies/enemy_2.tscn" id="8_b1d1g"]
 [ext_resource type="PackedScene" uid="uid://blj7mchukkgp7" path="res://Scene/Characters/Player.tscn" id="8_b2lmk"]
-[ext_resource type="PackedScene" uid="uid://cpfdnia34xnmb" path="res://Scene/Enemies/enemy_2.tscn" id="8_xnt2d"]
+[ext_resource type="PackedScene" uid="uid://c0cgjri6bk8t0" path="res://boss_uiBar.tscn" id="9_xnt2d"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eow3j"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -96,7 +97,7 @@ physics_layer_0/collision_mask = 0
 navigation_layer_0/layers = 2
 sources/0 = SubResource("TileSetAtlasSource_e2o6t")
 
-[sub_resource type="Resource" id="Resource_b1d1g"]
+[sub_resource type="Resource" id="Resource_5b5qi"]
 resource_local_to_scene = true
 script = ExtResource("4_x4pud")
 base_max_health = 5
@@ -111,7 +112,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(480, -368, 480, 272, -336, 272, -336, -368)])
 source_geometry_mode = 2
 
-[sub_resource type="Resource" id="Resource_5b5qi"]
+[sub_resource type="Resource" id="Resource_cxl5n"]
 resource_local_to_scene = true
 script = ExtResource("4_x4pud")
 base_max_health = 10000
@@ -140,7 +141,7 @@ tile_set = SubResource("TileSet_4r3jh")
 [node name="Enemy1" parent="." unique_id=1795360975 instance=ExtResource("3_uiav5")]
 position = Vector2(323, 178)
 collision_mask = 9
-stats = SubResource("Resource_b1d1g")
+stats = SubResource("Resource_5b5qi")
 
 [node name="GroundGenerator" type="Node2D" parent="." unique_id=1783040297 node_paths=PackedStringArray("ground_layer", "object_generator")]
 script = ExtResource("7_uiav5")
@@ -157,6 +158,7 @@ use_noise_clustering = true
 nav_region = NodePath("../NavigationRegion2D")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=99220952 node_paths=PackedStringArray("object_layer")]
+scale = Vector2(1, 1.0116279)
 navigation_polygon = SubResource("NavigationPolygon_ryrav")
 navigation_layers = 2
 script = ExtResource("7_x4pud")
@@ -164,9 +166,11 @@ object_layer = NodePath("../TileMap/Object")
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=2139376431 node_paths=PackedStringArray("ground_layer", "player")]
 script = ExtResource("5_tefqq")
-enemy_scene = ExtResource("8_xnt2d")
+enemy_scenes = Array[PackedScene]([ExtResource("3_uiav5"), ExtResource("8_b1d1g")])
 ground_layer = NodePath("../TileMap/Ground")
 player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=1182116428 instance=ExtResource("8_b2lmk")]
-stats = SubResource("Resource_5b5qi")
+stats = SubResource("Resource_cxl5n")
+
+[node name="BossUI" parent="." unique_id=2138250990 instance=ExtResource("9_xnt2d")]

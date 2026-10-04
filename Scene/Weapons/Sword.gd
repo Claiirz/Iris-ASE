@@ -1,13 +1,13 @@
 extends Node2D
 
-@export var damage: int = 1
+@export var damage: int = 5
 @export var sword_texture: Texture2D
 @export var weapon_name: String = "Basic Sword"
 @export var attack_speed: float = 1
 
 @onready var hitbox: Area2D = $Hitbox
 @onready var anim_player: AnimationPlayer = $AnimationPlayer # Ensure this path is correct
-
+@onready var swing_sfx: AudioStreamPlayer2D = get_node_or_null("AudioStreamPlayer2D")
 # Stores references to the ENEMY entities hit during this swing
 var hit_entities: Array[Node] = []
 
@@ -106,6 +106,25 @@ func calculate_damage() -> Dictionary:
 		"damage": roundi(base_dmg),
 		"is_crit": is_crit
 	}
+
+# --- ATTACK TRIGGER (Non-Combo) ---
+func trigger_attack() -> void:
+	# Prevent spamming if already swinging
+	if anim_player and anim_player.is_playing():
+		return
+
+	# Reset targets hit from previous swing
+	reset_hit_targets()
+
+	# Play swing sound with random pitch variation
+	if swing_sfx:
+		swing_sfx.pitch_scale = randf_range(0.9, 1.1)
+		swing_sfx.play()
+
+	# Play the standard slash animation
+	var anim_name = "Slash" if anim_player.has_animation("Slash") else "slash"
+	if anim_player.has_animation(anim_name):
+		anim_player.play(anim_name)
 
 func reset_hit_targets() -> void:
 	hit_entities.clear()

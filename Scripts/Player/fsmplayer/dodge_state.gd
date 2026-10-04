@@ -24,12 +24,6 @@ func enter() -> void:
 	else:
 		direction = direction.normalized()
 
-	# 2. Play animation
-	if player.has_method("update_animation"):
-		player.update_animation("dash")
-	elif player.animated_sprite:
-		player.animated_sprite.play("dash")
-
 	# 3. Audio
 	if dash_audio and player.get("audio"):
 		player.audio.stream = dash_audio

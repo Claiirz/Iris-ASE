@@ -1,16 +1,17 @@
 extends Node2D
 
-@export var enemy_scene: PackedScene              #enemy_1.tscn
-@export var ground_layer: TileMapLayer            # Drag TileMapLayer here
-@export var player: CharacterBody2D                # Drag Player here
+# Changed from a single scene to an array of scenes
+@export var enemy_scenes: Array[PackedScene] = []        # Drag multiple enemy scenes here in the Inspector
+@export var ground_layer: TileMapLayer                 # Drag TileMapLayer here
+@export var player: CharacterBody2D                    # Drag Player here
 
 @export_group("Spawn Settings")
-@export var max_enemies: int = 30                  # Total limit of enemies to spawn
-@export var min_spawn_distance: float = 250.0      # Off-camera distance threshold
-@export var min_timer_delay: float = 1.0           # Minimum interval (seconds)
-@export var max_timer_delay: float = 2.0           # Maximum interval (seconds)
-@export var min_group_spawn: int = 2               # Minimum enemies per interval
-@export var max_group_spawn: int = 3               # Maximum enemies per interval
+@export var max_enemies: int = 30                      # Total limit of enemies to spawn
+@export var min_spawn_distance: float = 250.0          # Off-camera distance threshold
+@export var min_timer_delay: float = 1.0               # Minimum interval (seconds)
+@export var max_timer_delay: float = 2.0               # Maximum interval (seconds)
+@export var min_group_spawn: int = 2                   # Minimum enemies per interval
+@export var max_group_spawn: int = 3                   # Maximum enemies per interval
 
 var current_spawned_count: int = 0
 var used_cells: Array[Vector2i] = []
@@ -20,8 +21,9 @@ func _ready() -> void:
 	call_deferred("setup_spawner")
 
 func setup_spawner() -> void:
-	if ground_layer == null or enemy_scene == null or player == null:
-		print("EnemySpawner: Missing scene references in Inspector!")
+	# Updated check to make sure the array isn't empty
+	if ground_layer == null or enemy_scenes.is_empty() or player == null:
+		print("EnemySpawner: Missing scene references or enemy list is empty in Inspector!")
 		return
 
 	used_cells = ground_layer.get_used_cells()
@@ -78,10 +80,13 @@ func spawn_single_enemy() -> bool:
 
 		if world_pos.distance_to(player.global_position) >= min_spawn_distance:
 			if is_position_clear(world_pos):
-				var enemy = enemy_scene.instantiate()
-				enemy.global_position = world_pos
-				get_tree().current_scene.add_child(enemy)
-				return true
+				# Pick a random enemy scene from your array!
+				var chosen_enemy_scene = enemy_scenes.pick_random()
+				if chosen_enemy_scene:
+					var enemy = chosen_enemy_scene.instantiate()
+					enemy.global_position = world_pos
+					get_tree().current_scene.add_child(enemy)
+					return true
 
 	return false
 

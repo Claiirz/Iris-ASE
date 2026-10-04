@@ -8,7 +8,7 @@ var enemy: CharacterBody2D
 @export var shoot_speed: float = 60.0    # Slows down while shooting
 @export var attack_range: float = 200.0  # Distance threshold: if player exceeds this, switch back to Chase
 @export var fire_rate: float = 1.2       # Seconds between shots
-
+@onready var shoot_sfx: AudioStreamPlayer2D = get_node_or_null("ShootSlime")
 var shoot_timer: float = 0.0
 var reposition_timer: float = 0.0
 var random_offset: Vector2 = Vector2.ZERO
@@ -17,9 +17,17 @@ func enter() -> void:
 	shoot_timer = 0.3
 	reposition_timer = 0.0
 	
+	# Fetch SFX from enemy if it exists there
+	if enemy:
+		shoot_sfx = enemy.get_node_or_null("ShootSlime")
+	
 	var sprite = enemy.get_node_or_null("AnimatedSprite2D")
 	if sprite:
 		sprite.play("chase") # Or your walking animation
+
+func _shoot_sfx() -> void:
+	if shoot_sfx:
+		shoot_sfx.play()
 
 func update(delta: float) -> void:
 	if not enemy:
@@ -63,10 +71,12 @@ func update(delta: float) -> void:
 	shoot_timer -= delta
 	if shoot_timer <= 0.0:
 		shoot_timer = fire_rate
+		_shoot_sfx()
 		shoot_projectile(player)
 
 
 func shoot_projectile(player: Node2D) -> void:
+	
 	if not projectile_scene:
 		push_warning("ShootState Warning: Projectile Scene is not assigned in the Inspector!")
 		return

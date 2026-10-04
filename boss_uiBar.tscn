@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c0cgjri6bk8t0"]
+
+[ext_resource type="Texture2D" uid="uid://dh7l8hrm0gwjx" path="res://Asset/PlaceHolders/Solid_red.png" id="2_lij2s"]
+[ext_resource type="Script" uid="uid://bhuoovnv06rjp" path="res://boss_health_bar.gd" id="3_0jncm"]
+
+[node name="BossUI" type="CanvasLayer" unique_id=2138250990]
+
+[node name="BossHealthBar" type="TextureProgressBar" parent="." unique_id=31366431 groups=["boss_health_bar"]]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -124.0
+offset_right = 124.0
+offset_bottom = 26.0
+grow_horizontal = 2
+nine_patch_stretch = true
+texture_progress = ExtResource("2_lij2s")
+script = ExtResource("3_0jncm")

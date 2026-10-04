@@ -8,14 +8,15 @@
 [ext_resource type="Script" uid="uid://gq44frnkrvnh" path="res://Scripts/fsmenemy/boss/idle_state.gd" id="6_lp24d"]
 [ext_resource type="Script" uid="uid://tsadxrqof1vm" path="res://Scripts/fsmenemy/boss/walk_state.gd" id="7_go67f"]
 [ext_resource type="Script" uid="uid://c1eg23mbi33tr" path="res://Scripts/fsmenemy/boss/attack_state.gd" id="8_8y25m"]
+[ext_resource type="Script" uid="uid://duu51k5uio6r0" path="res://Scripts/fsmenemy/Bat/die_state.gd" id="9_go67f"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lp24d"]
 radius = 10.858144
 height = 33.66337
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xde8l"]
-radius = 29.815
-height = 82.18
+radius = 12.499999
+height = 24.999998
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qyeha"]
 resource_local_to_scene = true
@@ -516,11 +517,12 @@ frame = 15
 frame_progress = 1.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1838482845]
-path_desired_distance = 31.07
+path_desired_distance = 8.0
+path_max_distance = 160.0
 navigation_layers = 3
 simplify_path = true
 avoidance_enabled = true
-radius = 16.0
+radius = 60.0
 avoidance_layers = 0
 avoidance_mask = 0
 debug_enabled = true
@@ -538,6 +540,9 @@ attack_range = 110.0
 
 [node name="Attack" type="Node" parent="FSM" unique_id=2146567597]
 script = ExtResource("8_8y25m")
+
+[node name="Die" type="Node" parent="FSM" unique_id=357376322]
+script = ExtResource("9_go67f")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=928726627]
 libraries/ = SubResource("AnimationLibrary_8y25m")

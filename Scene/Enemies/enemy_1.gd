@@ -31,18 +31,24 @@ var can_dash: bool = true
 var is_dead: bool = false
 var is_mutated: bool = false
 var is_frozen: bool = false  # Keeps time-stop momentum locked at zero
-
+var can_move: bool = false
 var last_stuck_check_pos: Vector2 = Vector2.ZERO
 var stuck_timer: float = 0.0
 var unstuck_vector: Vector2 = Vector2.ZERO
 var unstuck_duration: float = 0.0
 
+@onready var hurt_sfx: AudioStreamPlayer2D = get_node_or_null("HurtSFX")
+@onready var dead_sfx: AudioStreamPlayer2D = get_node_or_null("DeadSFX")
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hp_label: Label = $HPLabel
 @onready var mutation_component: MutationComponent = $MutationComponent
 @onready var separation_area: Area2D = $SeparationArea
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D  # Node alias for FSM compatibility
+@onready var screen_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+var path: PackedVector2Array = []
+var path_index: int = 0
+var path_update_timer: float = 0.0
 
 # --- LOOT DROP TESTING ---
 @export var item_to_drop_scene: PackedScene
@@ -56,10 +62,18 @@ var is_dropping_items: bool = false # Guard flag to prevent double-spawning
 func _ready() -> void:
 	add_to_group("enemies")
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
-
+	# Inside _ready():
+	if has_node("HitBox"):
+		var hitbox = $HitBox as Area2D
+		hitbox.body_entered.connect(_on_hitbox_body_entered)
+		hitbox.area_entered.connect(_on_hitbox_area_entered)
+	can_move = false
+	get_tree().create_timer(1.0).timeout.connect(func():
+		can_move = true
+	)
 	#Wait 1 physics frame for NavigationServer to sync baked map data.
 	await get_tree().physics_frame
-
+	
 	#Connect to avoidance signal for smooth pathfinding around objects.
 	if nav_agent:
 		nav_agent.velocity_computed.connect(_on_velocity_computed)
@@ -90,10 +104,15 @@ func _ready() -> void:
 	# Check if spawned while Time Stop is active
 	if player and "is_time_stopped" in player and player.is_time_stopped:
 		call_deferred("freeze_time")
+		
+	# Connect screen notifier signals
+	screen_notifier.screen_entered.connect(_on_screen_entered)
+	screen_notifier.screen_exited.connect(_on_screen_exited)
 
 
+# Add this tracking variable near your other variables
 func _physics_process(delta: float) -> void:
-	if is_dead or is_frozen:
+	if is_dead or is_frozen or not can_move:
 		velocity = Vector2.ZERO
 		return
 
@@ -101,33 +120,45 @@ func _physics_process(delta: float) -> void:
 		player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 		if not player:
 			return
+	
+	# --- 1. THROTTLED NAVIGATION UPDATE (Every 0.25 seconds) ---
+	path_update_timer += delta
+	if path_update_timer >= 0.25:
+		path_update_timer = 0.0
+		if nav_agent:
+			nav_agent.target_position = player.global_position
 
-	deal_contact_damage()
+	# --- 2. MOVEMENT & FORCE CALCULATIONS ---
+	var desired_velocity = Vector2.ZERO
 
-	# Navigation Pathfinding
-	if nav_agent:
-		nav_agent.target_position = player.global_position
+	if nav_agent and not nav_agent.is_navigation_finished():
+		var next_path_pos = nav_agent.get_next_path_position()
+		var move_direction = global_position.direction_to(next_path_pos)
+		desired_velocity = move_direction * chase_speed
+	else:
+		var move_direction = global_position.direction_to(player.global_position)
+		desired_velocity = move_direction * chase_speed
 
-		if not nav_agent.is_navigation_finished():
-			var next_path_pos = nav_agent.get_next_path_position()
-			var raw_direction = global_position.direction_to(next_path_pos)
-			
-			# 1. Base chase velocity
-			var desired_velocity = raw_direction * chase_speed
+	# Add soft separation
+	desired_velocity += get_separation_vector() * separation_force
 
-			# 2. Add soft separation from nearby enemies
-			desired_velocity += get_separation_vector() * separation_force
+	# Add unstuck force if active
+	if unstuck_duration > 0.0:
+		unstuck_duration -= delta
+		desired_velocity += unstuck_vector * unstuck_push_force
 
-			# 3. Add Anti-Stuck Nudge Force if active
-			if unstuck_duration > 0.0:
-				unstuck_duration -= delta
-				desired_velocity += unstuck_vector * unstuck_push_force
+	# --- Whirlwind Pull Force Integration ---
+	if external_pull_velocity != Vector2.ZERO:
+		desired_velocity += external_pull_velocity
+		# Smoothly decay the pull force over time
+		external_pull_velocity = external_pull_velocity.move_toward(Vector2.ZERO, 600.0 * delta)
 
-			if nav_agent.avoidance_enabled:
-				nav_agent.set_velocity(desired_velocity)
-			else:
-				velocity = desired_velocity
-				_move_and_eject_walls()
+	# --- 3. APPLY FINAL VELOCITY ---
+	if nav_agent and nav_agent.avoidance_enabled:
+		nav_agent.set_velocity(desired_velocity)
+	else:
+		velocity = desired_velocity
+		_move_and_eject_walls()
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
@@ -211,11 +242,24 @@ func _on_health_changed(cur_hp: int, max_hp: int) -> void:
 			hp_label.show()
 			hp_label.text = str(cur_hp) + "/" + str(max_hp)
 
+func _play_hurt_sound() -> void:
+	if hurt_sfx and hurt_sfx.stream:
+		# Add slight pitch variation so taking rapid hits doesn't sound repetitive
+		hurt_sfx.pitch_scale = randf_range(0.85, 1.15)
+		hurt_sfx.play()
+		
+func _dead_hurt_sound() -> void:
+	if dead_sfx and dead_sfx.stream:
+		# Add slight pitch variation so taking rapid hits doesn't sound repetitive
+		dead_sfx.play()
 
 func take_damage(amount: int, is_crit: bool = false) -> void:
 	if is_dead:
+		_dead_hurt_sound()
 		return
-
+	
+	_play_hurt_sound()
+	
 	if stats:
 		var final_damage = max(1, amount - stats.current_defense)
 		stats.health -= final_damage
@@ -291,7 +335,7 @@ func die() -> void:
 
 	# Drop item on death
 	_drop_random_item()
-
+	_dead_hurt_sound()
 	if has_node("FSM"):
 		var fsm = $FSM
 		if fsm.current_state and fsm.current_state.name.to_lower() == "die":
@@ -304,6 +348,21 @@ func die() -> void:
 	else:
 		queue_free()
 
+func _on_screen_entered() -> void:
+	# Re-enable processing when back on screen
+	set_physics_process(true)
+	if has_node("FSM"):
+		$FSM.set_physics_process(true)
+	if animated_sprite:
+		animated_sprite.play()
+
+func _on_screen_exited() -> void:
+	# Turn off heavy processing when off-screen
+	set_physics_process(false)
+	if has_node("FSM"):
+		$FSM.set_physics_process(false)
+	if animated_sprite:
+		animated_sprite.pause()
 
 func _drop_random_item() -> void:
 	if is_dropping_items:
@@ -388,3 +447,21 @@ func unfreeze_time() -> void:
 
 	if has_node("FSM"):
 		$FSM.set_physics_process(true)
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player") and body.has_method("take_damage"):
+		var damage_to_deal = stats.current_attack if stats else 1
+		body.take_damage(damage_to_deal)
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.has_method("take_damage"):
+		var damage_to_deal = stats.current_attack if stats else 1
+		area.take_damage(damage_to_deal)
+		
+# Add this near your other state variables
+var external_pull_velocity: Vector2 = Vector2.ZERO
+
+func apply_pull(pull_velocity: Vector2) -> void:
+	external_pull_velocity = pull_velocity
+	
+	

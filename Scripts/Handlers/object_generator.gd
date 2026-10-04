@@ -5,7 +5,7 @@ extends Node2D
 @export var object_layer: TileMapLayer
 
 @export_group("Density Settings")
-@export_range(0.0, 1.0) var density: float = 0.08  # ~8% scatter.
+@export_range(0.0, 1.0) var density: float = 0.03  # ~8% scatter.
 @export var use_noise_clustering: bool = false   # Turn OFF for guaranteed random scatter.
 
 @export_group("Tile Configuration")
