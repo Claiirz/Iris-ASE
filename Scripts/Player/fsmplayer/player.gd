@@ -68,6 +68,7 @@ var is_dead: bool = false
 @export var ammo_ui: CanvasLayer
 var current_arrows: int
 @onready var arrow_sfx: AudioStreamPlayer2D = get_node_or_null("ArrowSFX")
+@onready var dodge_sfx: AudioStreamPlayer2D = get_node_or_null("DodgeSFX")
 @export var dropped_sword_scene: PackedScene
 @export var default_sword_scene: PackedScene
 var equipped_sword_scene: PackedScene
@@ -187,6 +188,7 @@ func _start_dodge() -> void:
 	is_dodging = true
 	can_dodge = false
 	is_invulnerable = true
+	dodge_sfx.play()
 
 	var input_dir := Input.get_vector("left", "right", "up", "down")
 	dodge_dir = input_dir.normalized() if input_dir else (Vector2.LEFT if animated_sprite.flip_h else Vector2.RIGHT)

@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://crelu3prpsyy" path="res://Scene/UI/ThreatMeter.tscn" id="17_0xel3"]
 [ext_resource type="Script" uid="uid://0bdbavsduasy" path="res://Scripts/Player/debug_hud.gd" id="17_kme1g"]
 [ext_resource type="AudioStream" uid="uid://cp1wmi4nlmdhg" path="res://Asset/sfx/playersfx/arrowshoot.mp3" id="20_rp6ye"]
+[ext_resource type="AudioStream" uid="uid://bjtol0rwad3j7" path="res://Asset/sfx/playersfx/dash.mp3" id="21_x67wc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uwfu8"]
 atlas = ExtResource("2_wneh1")
@@ -355,5 +356,8 @@ offset_bottom = 135.0
 
 [node name="ArrowSFX" type="AudioStreamPlayer2D" parent="." unique_id=1819369404]
 stream = ExtResource("20_rp6ye")
+
+[node name="DodgeSFX" type="AudioStreamPlayer2D" parent="." unique_id=1128233367]
+stream = ExtResource("21_x67wc")
 
 [editable path="Sword"]

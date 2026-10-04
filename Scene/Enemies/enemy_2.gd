@@ -29,7 +29,8 @@ var is_frozen: bool = false # Keeps time-stop momentum locked at zero
 @onready var mutation_component: MutationComponent = $MutationComponent
 @onready var separation_area: Area2D = $SeparationArea
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D # Node alias for FSM compatibility
-
+@onready var hurt_sfx: AudioStreamPlayer2D = get_node_or_null("HurtSFX")
+@onready var dead_sfx: AudioStreamPlayer2D = get_node_or_null("DeadSFX")
 # --- LOOT DROP TESTING ---
 @export var item_to_drop_scene: PackedScene
 @export var possible_drops: Array[UpgradeData] = [] # Drag upgrades here in Inspector
@@ -130,11 +131,32 @@ func _on_health_changed(cur_hp: int, max_hp: int) -> void:
 			hp_label.show()
 			hp_label.text = str(cur_hp) + "/" + str(max_hp)
 
+func _play_hurt_sound() -> void:
+	if hurt_sfx and hurt_sfx.stream:
+		# Add slight pitch variation so taking rapid hits doesn't sound repetitive
+		hurt_sfx.pitch_scale = randf_range(0.85, 1.15)
+		hurt_sfx.play()
+		
+func _dead_hurt_sound() -> void:
+	if dead_sfx:
+		# 1. Unparent dead_sfx so queue_free() on the enemy won't stop it
+		remove_child(dead_sfx)
+		get_tree().current_scene.add_child(dead_sfx)
+		
+		# 2. Keep the sound positioned where the enemy died
+		dead_sfx.global_position = global_position
+		
+		# 3. Play the audio with slight pitch variation
+		dead_sfx.pitch_scale = randf_range(0.9, 1.1)
+		dead_sfx.play()
+		
+		# 4. Automatically free the audio player node once playback ends
+		dead_sfx.finished.connect(dead_sfx.queue_free)
 
 func take_damage(amount: int, is_crit: bool = false) -> void:
 	if is_dead:
 		return
-
+	_play_hurt_sound()
 	if stats:
 		var final_damage = max(1, amount - stats.current_defense)
 		stats.health -= final_damage
@@ -182,12 +204,12 @@ func _on_health_depleted() -> void:
 func die() -> void:
 	if is_dead:
 		return
-
+	
 	is_dead = true
-
+	
 	# Drop item on death
 	_drop_random_item()
-
+	_dead_hurt_sound()
 	if has_node("FSM"):
 		var fsm = $FSM
 		if fsm.has_method("transition_to"):

@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://cci3sme0t5auj" path="res://Scene/Enemies/projectile_enemy.tscn" id="9_f7afj"]
 [ext_resource type="Script" uid="uid://02j3210st2e3" path="res://Scripts/Handlers/mutation_component.gd" id="10_ruj5p"]
 [ext_resource type="AudioStream" uid="uid://d3t1e2bf6ucbe" path="res://Asset/sfx/enemysfx/slimeshoot.mp3" id="17_0rsd3"]
+[ext_resource type="AudioStream" uid="uid://cn0cdjirj0yft" path="res://Asset/sfx/enemysfx/slap.wav" id="18_7b4q2"]
+[ext_resource type="AudioStream" uid="uid://b3scix6m3qig" path="res://Asset/sfx/enemysfx/slimedead.mp3" id="19_ruj5p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7rq4n"]
 radius = 8.0
@@ -240,3 +242,11 @@ one_way_collision_margin = 40.5
 [node name="ShootSlime" type="AudioStreamPlayer2D" parent="." unique_id=225961176]
 stream = ExtResource("17_0rsd3")
 volume_db = -12.283
+
+[node name="HurtSFX" type="AudioStreamPlayer2D" parent="." unique_id=1155329636]
+stream = ExtResource("18_7b4q2")
+volume_db = -18.583
+
+[node name="DeadSFX" type="AudioStreamPlayer2D" parent="." unique_id=984475268]
+stream = ExtResource("19_ruj5p")
+volume_db = -6.269
