@@ -16,7 +16,7 @@ const COLOR_DEAD = Color.RED
 @export var dodge_speed_multiplier: float = 2.0
 @export var dodge_duration: float = 0.25
 @export var dodge_cooldown: float = 1.0
-@export var dash_effect_offset: Vector2 = Vector2(-18, -8) # Adjust Y in the Inspector
+@export var dash_effect_offset: Vector2 = Vector2(-18, -8)
 
 var is_dodging: bool = false
 var can_dodge: bool = true
@@ -61,7 +61,8 @@ var is_dead: bool = false
 @onready var upgrade_component: UpgradeComponent = $UpgradeComponent
 @onready var attack_timer: Timer = $AttackTimer
 @export var equipped_weapon: Node2D
-@export var dash_effect_scene: PackedScene # Drag dash_effect.tscn here in Inspector
+@export var dash_effect_scene: PackedScene
+
 # --- Arrow & Bow Settings ---
 @export var arrow_scene: PackedScene
 @export var max_arrows: int = 5
@@ -76,11 +77,16 @@ var equipped_sword_scene: PackedScene
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	add_to_group("player")
-	
+
+	# 1. Setup default stats resource & equipment FIRST
+	if stats:
+		stats = stats.duplicate()
+		stats.setup_stats()
+
 	current_arrows = max_arrows
 	equipped_sword_scene = default_sword_scene
-	update_ui()
 
+	# 2. Setup components and state machines
 	if stats_component and upgrade_component:
 		stats_component.setup(upgrade_component)
 		stats_component.stats_changed.connect(_on_stats_changed)
@@ -90,21 +96,47 @@ func _ready() -> void:
 		attack_timer.wait_time = stats_component.attack_cooldown
 		attack_timer.timeout.connect(_on_attack_timer_timeout)
 
-	if stats:
-		stats = stats.duplicate()
-		stats.setup_stats()
-		stats.health_changed.connect(_on_health_changed)
-		stats.health_depleted.connect(die)
-		_on_health_changed(stats.health, stats.current_max_health)
-
 	if animated_sprite and animated_sprite.material:
 		animated_sprite.material = animated_sprite.material.duplicate()
 
 	if fsm:
 		fsm.init(self)
 
+	# 3. RESTORE saved player data from GameManager OVER the defaults
+	GameManager.restore_player_data(self)
+
+	# 4. Re-equip saved sword if different from default scene
+	if equipped_sword_scene and equipped_sword_scene != default_sword_scene:
+		_equip_saved_sword(equipped_sword_scene)
+	else:
+		_update_sword_speed()
+
+	# 5. Connect health signals and update UI after restoring
+	if stats:
+		stats.health_changed.connect(_on_health_changed)
+		stats.health_depleted.connect(die)
+		_on_health_changed(stats.health, stats.current_max_health)
+
+	update_ui()
+	print("[DEBUG Player] Player initialized successfully on Floor ", GameManager.current_floor)
+
+func _equip_saved_sword(sword_scene: PackedScene) -> void:
+	if not sword_scene: return
+
+	if is_instance_valid(sword):
+		sword.queue_free()
+
+	for child in get_children():
+		if child.name.begins_with("Sword"):
+			child.queue_free()
+
+	sword = sword_scene.instantiate() as Node2D
+	sword.name = "Sword"
+	add_child(sword)
+
+	sword_animation_player = sword.get_node_or_null("AnimationPlayer")
 	_update_sword_speed()
-	
+
 func add_xp(amount: int) -> void:
 	if stats:
 		var old_level: int = stats.level
@@ -112,10 +144,8 @@ func add_xp(amount: int) -> void:
 		
 		print("Gained XP: ", amount, " | Total XP: ", stats.experience, " | Level: ", stats.level)
 		
-		# Check if leveling up occurred
 		if stats.level > old_level:
 			print("LEVEL UP! Reached Level: ", stats.level)
-			# Fully restore health on level up as a reward
 			stats.health = stats.current_max_health
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -125,12 +155,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if equipped_weapon and equipped_weapon.has_method("trigger_attack"):
 			equipped_weapon.trigger_attack()
 	
-	# Exclusive Weapon Skill Input (F Key / "skill" action)
 	if Input.is_action_just_pressed("skill"):
 		if sword and sword.has_method("use_skill"):
 			sword.use_skill()
 			
-	# Unified Input Handling
 	if event.is_action_pressed("attack"): trigger_attack()
 	elif event.is_action_pressed("shoot"): shoot_arrow()
 	elif event.is_action_pressed("dodge") and can_dodge and not is_dodging: _start_dodge()
@@ -154,7 +182,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, get_current_friction() * delta)
 		
-		# Cap speed efficiently
 		velocity = velocity.limit_length(target_speed)
 
 	if fsm:
@@ -163,17 +190,13 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_animations(input_direction)
 
-# --- Dynamic Stat Getters (Prevents Base Variable Mutation) ---
 func get_current_move_speed() -> float:
-	if max_speed <= 0: 
-		return 0.0
+	if max_speed <= 0: return 0.0
 
-	# Default to max_speed, but allow stats_component to exceed it when buffed by items
 	var spd: float = max_speed
 	if stats_component and stats_component.move_speed > 0:
 		spd = stats_component.move_speed
 
-	# Apply time-slow boost dynamically
 	if is_time_slowed and slow_time_scale > 0:
 		spd *= (1.0 / slow_time_scale)
 
@@ -183,34 +206,28 @@ func get_current_friction() -> float:
 	var multiplier = (1.0 / slow_time_scale) if is_time_slowed else 1.0
 	return friction * (multiplier * multiplier)
 
-# --- Dodge Logic ---
 func _start_dodge() -> void:
 	is_dodging = true
 	can_dodge = false
 	is_invulnerable = true
-	dodge_sfx.play()
+	if dodge_sfx: dodge_sfx.play()
 
 	var input_dir := Input.get_vector("left", "right", "up", "down")
 	dodge_dir = input_dir.normalized() if input_dir else (Vector2.LEFT if animated_sprite.flip_h else Vector2.RIGHT)
 	animated_sprite.modulate.a = 0.5
 
-	# --- SPAWN DASH EFFECT ---
-	var effect = dash_effect_scene.instantiate() as Node2D
-	
-	var is_facing_left: bool = dodge_dir.x < 0
-	
-	# Flip the sprite sprite horizontally when facing left
-	if "flip_h" in effect:
-		effect.flip_h = is_facing_left
-	
-	# Calculate offset: keep Y height fixed, flip only X offset
-	var final_offset := dash_effect_offset
-	if is_facing_left:
-		final_offset.x = -final_offset.x
+	if dash_effect_scene:
+		var effect = dash_effect_scene.instantiate() as Node2D
+		var is_facing_left: bool = dodge_dir.x < 0
+		if "flip_h" in effect:
+			effect.flip_h = is_facing_left
 		
-	effect.global_position = global_position + final_offset
-	get_tree().current_scene.add_child(effect)
-	
+		var final_offset := dash_effect_offset
+		if is_facing_left:
+			final_offset.x = -final_offset.x
+			
+		effect.global_position = global_position + final_offset
+		get_tree().current_scene.add_child(effect)
 
 	if fsm and fsm.has_method("change_state"):
 		fsm.change_state("Dodge" if fsm.has_node("Dodge") else "dodge")
@@ -232,20 +249,15 @@ func _end_dodge() -> void:
 	if fsm and fsm.has_method("change_state"):
 		fsm.change_state("Run" if input_dir != Vector2.ZERO else "Idle")
 
-# --- Attack Logic ---
 func _on_attack_timer_timeout() -> void:
 	if not is_dead and _get_nearest_enemy() != null:
 		trigger_attack()
 
 func trigger_attack() -> void:
-	if not sword:
-		return
+	if not sword: return
 
-	# 1. If the weapon has our new combo system, let it handle itself
 	if sword.has_method("trigger_attack"):
 		sword.trigger_attack()
-		
-	# 2. Otherwise, fall back to the standard single-slash animation for regular weapons
 	elif sword_animation_player and not sword_animation_player.is_playing():
 		if sword.has_method("reset_hit_targets"):
 			sword.reset_hit_targets()
@@ -253,7 +265,6 @@ func trigger_attack() -> void:
 		var anim_name = "Slash" if sword_animation_player.has_animation("Slash") else "slash"
 		if sword_animation_player.has_animation(anim_name):
 			sword_animation_player.play(anim_name)
-			
 
 func _get_nearest_enemy() -> Node2D:
 	var nearest: Node2D = null
@@ -267,7 +278,6 @@ func _get_nearest_enemy() -> Node2D:
 				nearest = enemy
 	return nearest
 
-# --- Skill 1: Attack & Speed Buff ---
 func activate_buff_skill() -> void:
 	can_use_skill_1 = false
 	is_buffed = true
@@ -287,7 +297,6 @@ func _remove_buff_skill() -> void:
 	_update_sword_speed()
 	_update_visual_state()
 
-# --- Skill 2: Time Slow ---
 func activate_time_slow_skill() -> void:
 	can_use_skill_2 = false
 	is_time_slowed = true
@@ -312,7 +321,6 @@ func _deactivate_time_slow_skill() -> void:
 	_update_sword_speed()
 	_update_visual_state()
 
-# --- Skill 3: Time Stop ---
 func activate_time_stop_skill() -> void:
 	can_use_skill_3 = false
 	is_time_stopped = true
@@ -335,7 +343,6 @@ func _deactivate_time_stop_skill() -> void:
 	get_tree().call_group("projectiles", "unfreeze_time")
 	_update_visual_state()
 
-# --- Helper State Managers ---
 func _update_visual_state() -> void:
 	if is_dead: return
 	var target_color = COLOR_NORMAL
@@ -357,10 +364,9 @@ func _update_sword_speed() -> void:
 	sword_animation_player.speed_scale = final_speed
 	
 func _play_arrow_sound() -> void:
-	if current_arrows > 0:
+	if current_arrows > 0 and arrow_sfx:
 		arrow_sfx.play(1.25)
 
-# --- Weapons & Ammo ---
 func shoot_arrow() -> void:
 	_play_arrow_sound()
 	if current_arrows <= 0 or arrow_scene == null: return
@@ -378,14 +384,10 @@ func shoot_arrow() -> void:
 	arrow.rotation = shoot_dir.angle()
 
 func swap_sword(new_sword_scene: PackedScene, drop_position: Vector2) -> void:
-	if not new_sword_scene:
-		return
+	if not new_sword_scene: return
 
-	# 1. Drop old sword with a small random offset so it doesn't instantly re-trigger pickup.
 	if dropped_sword_scene:
 		var old_drop = dropped_sword_scene.instantiate() as Node2D
-		
-		# Offset position away from player center.
 		var spawn_offset := Vector2(24, 0).rotated(randf() * TAU)
 		old_drop.global_position = drop_position + spawn_offset
 		
@@ -394,20 +396,15 @@ func swap_sword(new_sword_scene: PackedScene, drop_position: Vector2) -> void:
 		
 		get_tree().current_scene.add_child(old_drop)
 
-	# 2. Update tracking variable.
 	equipped_sword_scene = new_sword_scene
 
-	# 3. Immediately unparent and free ALL existing sword nodes to prevent stacking.
 	if is_instance_valid(sword):
-		remove_child(sword)
 		sword.queue_free()
 
 	for child in get_children():
 		if child.name.begins_with("Sword"):
-			remove_child(child)
 			child.queue_free()
 
-	# 4. Instantiate and attach new sword
 	sword = new_sword_scene.instantiate() as Node2D
 	sword.name = "Sword"
 	add_child(sword)
@@ -415,7 +412,6 @@ func swap_sword(new_sword_scene: PackedScene, drop_position: Vector2) -> void:
 	sword_animation_player = sword.get_node_or_null("AnimationPlayer")
 	_update_sword_speed()
 
-# --- Health, Damage & Death ---
 func take_damage(amount: int) -> void:
 	if is_dead or is_invulnerable: return
 
@@ -461,9 +457,11 @@ func die() -> void:
 	var death_tween = create_tween()
 	death_tween.tween_property(animated_sprite, "modulate", COLOR_DEAD, 0.2)
 	death_tween.tween_property(animated_sprite, "modulate:a", 0.0, 0.5)
-	death_tween.finished.connect(func(): get_tree().reload_current_scene())
+	death_tween.finished.connect(func():
+		GameManager.reset_run()
+		get_tree().reload_current_scene()
+	)
 
-# --- Utilities ---
 func look_at_mouse() -> void:
 	var is_mouse_left = get_global_mouse_position().x < global_position.x
 	animated_sprite.flip_h = is_mouse_left

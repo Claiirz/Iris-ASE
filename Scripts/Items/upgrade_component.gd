@@ -44,3 +44,8 @@ func sync_player_visuals() -> void:
 			if player.is_time_slowed and player.slow_time_scale > 0:
 				speed_scale *= (1.0 / player.slow_time_scale)
 			player.sword_animation_player.speed_scale = speed_scale
+
+func set_upgrade_stacks(stacks: Dictionary) -> void:
+	upgrade_stacks = stacks.duplicate(true)
+	stats_updated.emit()
+	sync_player_visuals()

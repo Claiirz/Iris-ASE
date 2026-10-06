@@ -59,7 +59,16 @@ func _ready() -> void:
 	if stats:
 		stats = stats.duplicate()
 		stats.setup_stats()
-
+		
+		# --- ADD DIFFICULTY SCALING HERE ---
+		# Increases health and damage by 20% for every floor past floor 1
+	
+		var floor_mult: float = 1.0 + ((GameManager.current_floor - 1) * 0.2)
+		stats.current_max_health = int(stats.current_max_health * floor_mult)
+		stats.current_attack = int(stats.current_attack * floor_mult)
+		stats.health = stats.current_max_health
+		# -----------------------------------
+		
 		# Safeguard: Ensure health isn't zero on spawn
 		if stats.health <= 0:
 			stats.health = stats.current_max_health
@@ -207,6 +216,14 @@ func die() -> void:
 	
 	is_dead = true
 	
+	# 1. Remove from group immediately so the count is accurate
+	remove_from_group("enemies")
+	
+	# --- NOTIFY SPAWNER OF KILL ---
+	var spawner = get_tree().get_first_node_in_group("spawner")
+	if spawner and spawner.has_method("notify_enemy_killed"):
+		spawner.notify_enemy_killed(global_position)
+	
 	# Drop item on death
 	_drop_random_item()
 	_dead_hurt_sound()
@@ -263,6 +280,14 @@ func freeze_time() -> void:
 	if has_node("FSM"):
 		$FSM.set_physics_process(false)
 
+func _spawn_portal() -> void:
+	# Load and spawn the portal exactly where the last enemy died
+	var portal_scene = load("res://portal.tscn")
+	if portal_scene:
+		var portal = portal_scene.instantiate() as Node2D
+		portal.global_position = global_position
+		# Use call_deferred to safely add nodes during physics/death processing
+		get_tree().current_scene.call_deferred("add_child", portal)
 
 func unfreeze_time() -> void:
 	if is_dead:

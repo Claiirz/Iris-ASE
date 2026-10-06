@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 DiscordRPCLoader="*uid://ceow3pb0wei51"
 Signal_Debugger="*uid://cwx10s3e0oemm"
+GameManager="*uid://b3xr4c0t6wqpp"
 
 [display]
 

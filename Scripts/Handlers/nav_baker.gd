@@ -1,7 +1,7 @@
 extends NavigationRegion2D
 
 @export_group("Dependencies")
-@export var object_layer: TileMapLayer #Drag Object layer here.
+@export var object_layer: TileMapLayer # Drag Object layer here.
 
 @export_group("Grid Dimensions")
 @export var map_width: int = 150
@@ -12,17 +12,20 @@ extends NavigationRegion2D
 # Set to Vector2i(1, 1) for single tiles, or Vector2i(4, 4) if your prop spans 4x4.
 @export var object_tile_span: Vector2i = Vector2i(1, 1)
 
-#Extra pixel buffer around obstacles (Default: 3.0px).
-@export var hole_padding: float = 0
+# Extra pixel buffer around obstacles (Default: 0.0px).
+@export var hole_padding: float = 0.0
 
 
 func bake_map_navigation() -> void:
+	# Keep NavRegion locked at world origin
 	global_position = Vector2.ZERO
+	rotation = 0.0
+	scale = Vector2.ONE
 
 	var nav_poly = NavigationPolygon.new()
 	var source_geometry = NavigationMeshSourceGeometryData2D.new()
 
-	# 1. Map Outer Boundary (-800px to +800px)(pojok).
+	# 1. Map Outer Boundary (-half to +half centered around origin).
 	var half_w = (map_width * tile_size.x) / 2.0
 	var half_h = (map_height * tile_size.y) / 2.0
 
@@ -34,23 +37,27 @@ func bake_map_navigation() -> void:
 	])
 	source_geometry.add_traversable_outline(outer_outline)
 
-	# 2. Build raw square boxes for all object cells.
+	# 2. Build precise boxes using TileMapLayer's actual cell positions.
 	if object_layer:
 		var object_cells = object_layer.get_used_cells()
 		var p = hole_padding
+		var half_tile = tile_size / 2.0
 		var raw_boxes: Array[PackedVector2Array] = []
 
 		for cell in object_cells:
-			var min_x = (cell.x * tile_size.x) - p
-			var min_y = (cell.y * tile_size.y) - p
-			var max_x = ((cell.x + object_tile_span.x) * tile_size.x) + p
-			var max_y = ((cell.y + object_tile_span.y) * tile_size.y) + p
+			# Get exact center of cell in world space, then convert to NavRegion local space
+			var cell_world_center: Vector2 = object_layer.to_global(object_layer.map_to_local(cell))
+			var cell_local_center: Vector2 = to_local(cell_world_center)
+
+			# Calculate precise bounds accounting for tile span and padding
+			var min_pos = cell_local_center - half_tile - Vector2(p, p)
+			var max_pos = cell_local_center - half_tile + Vector2(object_tile_span.x * tile_size.x, object_tile_span.y * tile_size.y) + Vector2(p, p)
 
 			var box = PackedVector2Array([
-				Vector2(min_x, min_y),
-				Vector2(max_x, min_y),
-				Vector2(max_x, max_y),
-				Vector2(min_x, max_y)
+				Vector2(min_pos.x, min_pos.y),
+				Vector2(max_pos.x, min_pos.y),
+				Vector2(max_pos.x, max_pos.y),
+				Vector2(min_pos.x, max_pos.y)
 			])
 			raw_boxes.append(box)
 
@@ -61,7 +68,7 @@ func bake_map_navigation() -> void:
 		for shape in merged_shapes:
 			source_geometry.add_obstruction_outline(shape)
 
-	# 5. Bake clean geometry without micro-slivers.
+	# 5. Bake clean geometry.
 	NavigationServer2D.bake_from_source_geometry_data(nav_poly, source_geometry)
 	navigation_polygon = nav_poly
 
@@ -96,15 +103,15 @@ func get_valid_spawn_position() -> Vector2:
 	var found_valid_spot: bool = false
 
 	while not found_valid_spot:
-		# Pick a random cell on your 100x100 floor (-50 to 50).
+		# Pick a random cell on your floor grid
 		var rand_x = randi_range(-map_width / 2, map_width / 2 - 1)
 		var rand_y = randi_range(-map_height / 2, map_height / 2 - 1)
 		var cell = Vector2i(rand_x, rand_y)
 
-		# Check if the Object TileMapLayer has NO tile here (-1 means empty).
+		# Check if the Object TileMapLayer has NO tile here (-1 means empty)
 		if object_layer.get_cell_source_id(cell) == -1:
 			valid_cell = cell
 			found_valid_spot = true
 
-	# Return center pixel position of the empty floor cell.
-	return object_layer.map_to_local(valid_cell)
+	# Return center global position of the empty floor cell
+	return object_layer.to_global(object_layer.map_to_local(valid_cell))

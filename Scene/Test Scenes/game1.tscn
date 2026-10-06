@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://baaq8tw5xv8tq"]
 
+[ext_resource type="Script" uid="uid://udrks5jt140q" path="res://Scene/Test Scenes/game_1.gd" id="1_5b5qi"]
 [ext_resource type="Texture2D" uid="uid://bhv4pq1as4sqg" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/full tilemap.png" id="1_x4ggo"]
+[ext_resource type="PackedScene" uid="uid://dxwe8lbeex71e" path="res://Scene/portal.tscn" id="2_cxl5n"]
 [ext_resource type="PackedScene" uid="uid://bdqaswtl5odrv" path="res://Scene/Enemies/enemy_1.tscn" id="3_uiav5"]
 [ext_resource type="Script" uid="uid://btgpbshlgbuot" path="res://Scripts/Handlers/stats.gd" id="4_x4pud"]
 [ext_resource type="Script" uid="uid://dxhwwc3no1phl" path="res://Scripts/Handlers/EnemySpawner.gd" id="5_tefqq"]
@@ -97,15 +99,6 @@ physics_layer_0/collision_mask = 0
 navigation_layer_0/layers = 2
 sources/0 = SubResource("TileSetAtlasSource_e2o6t")
 
-[sub_resource type="Resource" id="Resource_5b5qi"]
-resource_local_to_scene = true
-script = ExtResource("4_x4pud")
-base_max_health = 5
-base_defense = 1
-base_attack = 1
-experience = 1
-metadata/_custom_type_script = "uid://btgpbshlgbuot"
-
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ryrav"]
 vertices = PackedVector2Array(470, 262, -326, 262, -326, -358, 470, -358)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
@@ -121,6 +114,7 @@ experience = 5000
 metadata/_custom_type_script = "uid://btgpbshlgbuot"
 
 [node name="Game" type="Node2D" unique_id=1466410273]
+script = ExtResource("1_5b5qi")
 
 [node name="TileMap" type="Node2D" parent="." unique_id=1983090551]
 texture_filter = 1
@@ -137,11 +131,6 @@ light_mask = 0
 visibility_layer = 5
 z_index = 1
 tile_set = SubResource("TileSet_4r3jh")
-
-[node name="Enemy1" parent="." unique_id=1795360975 instance=ExtResource("3_uiav5")]
-position = Vector2(323, 178)
-collision_mask = 9
-stats = SubResource("Resource_5b5qi")
 
 [node name="GroundGenerator" type="Node2D" parent="." unique_id=1783040297 node_paths=PackedStringArray("ground_layer", "object_generator")]
 script = ExtResource("7_uiav5")
@@ -167,6 +156,7 @@ object_layer = NodePath("../TileMap/Object")
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=2139376431 node_paths=PackedStringArray("ground_layer", "player")]
 script = ExtResource("5_tefqq")
 enemy_scenes = Array[PackedScene]([ExtResource("3_uiav5"), ExtResource("8_b1d1g")])
+portal_scene = ExtResource("2_cxl5n")
 ground_layer = NodePath("../TileMap/Ground")
 player = NodePath("../Player")
 
