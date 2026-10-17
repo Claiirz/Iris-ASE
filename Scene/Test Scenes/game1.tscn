@@ -25,12 +25,6 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 3.5971737, -8, 8, -8, 8, 8, -8, 8)])
 agent_radius = 0.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_7jktm"]
-vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 3.59375, -8, 8, -8)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 3.5971737, -8, 8, -8, 8, 8, -8, 8)])
-agent_radius = 0.0
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e2o6t"]
 texture = ExtResource("1_x4ggo")
 0:0/0 = 0
@@ -51,7 +45,6 @@ texture = ExtResource("1_x4ggo")
 4:1/0 = 0
 5:1/0 = 0
 5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-5:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_7jktm")
 6:1/0 = 0
 7:1/0 = 0
 8:1/0 = 0
@@ -108,9 +101,7 @@ source_geometry_mode = 2
 [sub_resource type="Resource" id="Resource_cxl5n"]
 resource_local_to_scene = true
 script = ExtResource("4_x4pud")
-base_max_health = 10000
 base_attack = 1
-experience = 5000
 metadata/_custom_type_script = "uid://btgpbshlgbuot"
 
 [node name="Game" type="Node2D" unique_id=1466410273]

@@ -7,11 +7,11 @@ extends Node2D
 
 @export_group("Spawn Settings")
 @export var min_spawn_distance: float = 250.0          # Off-camera distance threshold
-@export var min_timer_delay: float = 1.0               # Minimum wave interval (seconds)
-@export var max_timer_delay: float = 2.0               # Maximum wave interval (seconds)
+@export var min_timer_delay: float = 0.1               # Minimum wave interval (seconds)
+@export var max_timer_delay: float = 0.5               # Maximum wave interval (seconds)
 @export var min_group_spawn: int = 2                   # Minimum enemies per wave
 @export var max_group_spawn: int = 3                   # Maximum enemies per wave
-@export var max_active_on_screen: int = 10             # Prevents lagging by limiting simultaneous active enemies
+@export var max_active_on_screen: int = 30           # Prevents lagging by limiting simultaneous active enemies
 
 var total_enemies_this_floor: int = 30
 var enemies_spawned_so_far: int = 0
@@ -138,13 +138,14 @@ func notify_enemy_killed(death_position: Vector2) -> void:
 	# STRICT CHECK: Only spawn portal if the spawner finished creating all floor enemies AND all are dead
 	if enemies_spawned_so_far >= total_enemies_this_floor and enemies_remaining_to_kill <= 0:
 		print("[DEBUG Spawner] All floor enemies defeated! Spawning portal now...")
-		_spawn_portal(death_position)
+		_spawn_portal()
 
-func _spawn_portal(spawn_pos: Vector2) -> void:
+func _spawn_portal() -> void:
 	if portal_scene:
 		var portal = portal_scene.instantiate() as Node2D
-		portal.global_position = spawn_pos
-		get_tree().current_scene.call_deferred("add_child", portal)
-		print("[DEBUG Spawner] Portal successfully added to scene tree at: ", spawn_pos)
-	else:
-		push_error("[DEBUG Spawner ERROR] 'portal_scene' is NOT assigned in EnemySpawner Inspector!")
+		
+		# Set the portal directly to the exact center of the map
+		portal.global_position = Vector2.ZERO 
+		
+		get_tree().current_scene.add_child(portal)
+		print("[DEBUG Spawner] Portal spawned in the middle of the map at: ", portal.global_position)

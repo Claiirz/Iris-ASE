@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bcsfhyk1svlrt"]
+
+[ext_resource type="Script" uid="uid://b2t3kw6xpv1nf" path="res://chain_lightning.gd" id="1_1vdow"]
+
+[node name="ChainLightning" type="Node2D" unique_id=142903769]
+script = ExtResource("1_1vdow")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=512152444]
+width = 3.0
+default_color = Color(1, 1, 0, 1)

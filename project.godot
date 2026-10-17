@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="roguelike test"
-run/main_scene="uid://baaq8tw5xv8tq"
+run/main_scene="uid://8vb8b3a22ikb"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 

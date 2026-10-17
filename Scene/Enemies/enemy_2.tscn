@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://bj2nvgl6gkbyw" path="res://Scripts/fsmenemy/Bat/enemy1fsm.gd" id="5_80xxg"]
 [ext_resource type="Resource" uid="uid://c3nr8luf274ym" path="res://Resources/Modular/boots.tres" id="6_0rsd3"]
 [ext_resource type="Script" uid="uid://bvno23ubadm7s" path="res://Scene/Enemies/chase_slime.gd" id="6_efy2c"]
+[ext_resource type="Resource" uid="uid://c0ht380bsdwhn" path="res://Resources/Modular/anvil.tres" id="7_m4sbg"]
+[ext_resource type="Resource" uid="uid://ec4cjbxqf1xk" path="res://Resources/Modular/cutter.tres" id="8_b24iy"]
 [ext_resource type="Script" uid="uid://djuky8wksagtj" path="res://Scene/Enemies/ranged_state.gd" id="8_efy2c"]
 [ext_resource type="Script" uid="uid://duu51k5uio6r0" path="res://Scripts/fsmenemy/Bat/die_state.gd" id="9_7b4q2"]
 [ext_resource type="PackedScene" uid="uid://cci3sme0t5auj" path="res://Scene/Enemies/projectile_enemy.tscn" id="9_f7afj"]
@@ -169,7 +171,7 @@ script = ExtResource("1_nox1f")
 stats = ExtResource("2_la3cr")
 dropped_sword_scene = ExtResource("3_80xxg")
 item_to_drop_scene = ExtResource("4_cjkdp")
-possible_drops = Array[ExtResource("5_7knv5")]([ExtResource("6_0rsd3")])
+possible_drops = Array[ExtResource("5_7knv5")]([ExtResource("6_0rsd3"), ExtResource("7_m4sbg"), ExtResource("8_b24iy")])
 
 [node name="HitBox" type="Area2D" parent="." unique_id=5357137]
 collision_layer = 4

@@ -25,7 +25,6 @@ func bake_map_navigation() -> void:
 	var nav_poly = NavigationPolygon.new()
 	var source_geometry = NavigationMeshSourceGeometryData2D.new()
 
-	# 1. Map Outer Boundary (-half to +half centered around origin).
 	var half_w = (map_width * tile_size.x) / 2.0
 	var half_h = (map_height * tile_size.y) / 2.0
 
@@ -37,7 +36,6 @@ func bake_map_navigation() -> void:
 	])
 	source_geometry.add_traversable_outline(outer_outline)
 
-	# 2. Build precise boxes using TileMapLayer's actual cell positions.
 	if object_layer:
 		var object_cells = object_layer.get_used_cells()
 		var p = hole_padding
@@ -45,11 +43,11 @@ func bake_map_navigation() -> void:
 		var raw_boxes: Array[PackedVector2Array] = []
 
 		for cell in object_cells:
-			# Get exact center of cell in world space, then convert to NavRegion local space
+		
 			var cell_world_center: Vector2 = object_layer.to_global(object_layer.map_to_local(cell))
 			var cell_local_center: Vector2 = to_local(cell_world_center)
 
-			# Calculate precise bounds accounting for tile span and padding
+		
 			var min_pos = cell_local_center - half_tile - Vector2(p, p)
 			var max_pos = cell_local_center - half_tile + Vector2(object_tile_span.x * tile_size.x, object_tile_span.y * tile_size.y) + Vector2(p, p)
 
@@ -61,14 +59,11 @@ func bake_map_navigation() -> void:
 			])
 			raw_boxes.append(box)
 
-		# 3. Fuse touching/overlapping boxes into clean combined polygons.
 		var merged_shapes = _merge_all_polygons(raw_boxes)
 
-		# 4. Add clean merged outlines to geometry.
 		for shape in merged_shapes:
 			source_geometry.add_obstruction_outline(shape)
 
-	# 5. Bake clean geometry.
 	NavigationServer2D.bake_from_source_geometry_data(nav_poly, source_geometry)
 	navigation_polygon = nav_poly
 
@@ -103,15 +98,13 @@ func get_valid_spawn_position() -> Vector2:
 	var found_valid_spot: bool = false
 
 	while not found_valid_spot:
-		# Pick a random cell on your floor grid
+
 		var rand_x = randi_range(-map_width / 2, map_width / 2 - 1)
 		var rand_y = randi_range(-map_height / 2, map_height / 2 - 1)
 		var cell = Vector2i(rand_x, rand_y)
 
-		# Check if the Object TileMapLayer has NO tile here (-1 means empty)
 		if object_layer.get_cell_source_id(cell) == -1:
 			valid_cell = cell
 			found_valid_spot = true
 
-	# Return center global position of the empty floor cell
 	return object_layer.to_global(object_layer.map_to_local(valid_cell))

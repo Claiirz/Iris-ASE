@@ -40,8 +40,12 @@ var is_frozen: bool = false # Keeps time-stop momentum locked at zero
 @export var xp_drop_amount: int = 15          # XP given on death
 var is_dropping_items: bool = false           # Guard flag to prevent double-spawning
 
+var is_stunned: bool = false
+var original_color: Color = Color.WHITE
+
 func _ready() -> void:
 	add_to_group("enemies")
+	original_color = modulate
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 
 	# Wait 1 physics frame for NavigationServer to sync baked map data.
@@ -301,3 +305,21 @@ func unfreeze_time() -> void:
 
 	if has_node("FSM"):
 		$FSM.set_physics_process(true)
+		
+func apply_stun(duration: float) -> void:
+	# Don't apply stun if dead
+	if get("is_dead") and is_dead: 
+		return
+
+	is_stunned = true
+	velocity = Vector2.ZERO # Instantly stop moving
+	
+	# Visual feedback: Turn the enemy yellow/blue to indicate electricity
+	modulate = Color(1.5, 1.5, 0.4) 
+
+	# Wait for the duration, then remove stun
+	get_tree().create_timer(duration, false).timeout.connect(_remove_stun)
+
+func _remove_stun() -> void:
+	is_stunned = false
+	modulate = original_color

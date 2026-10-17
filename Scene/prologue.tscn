@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dvq8yhiq7c5pl"]
+
+[ext_resource type="Script" uid="uid://bor4tkklctkvj" path="res://prologue.gd" id="1_7lpfv"]
+
+[node name="Prologue" type="Control" unique_id=613726649]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7lpfv")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1679135907]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=976746670]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="SkipButton" type="Button" parent="." unique_id=2080248221]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0

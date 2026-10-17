@@ -4,7 +4,7 @@ extends Node2D
 @export var sword_texture: Texture2D
 @export var weapon_name: String = "Basic Sword"
 @export var attack_speed: float = 1
-
+@export var chain_lightning_scene: PackedScene # Drag ChainLightning.tscn here
 @onready var hitbox: Area2D = $Hitbox
 @onready var anim_player: AnimationPlayer = $AnimationPlayer # Ensure this path is correct
 @onready var swing_sfx: AudioStreamPlayer2D = get_node_or_null("AudioStreamPlayer2D")
@@ -58,6 +58,22 @@ func _process_hit(node: Node) -> void:
 	
 	# Pass damage and crit flag to enemy
 	entity.take_damage(damage_data.damage, damage_data.is_crit)
+	# --- GUITAR PROC LOGIC ---
+	var player = get_tree().get_first_node_in_group("player")
+	if player and player.upgrade_component:
+		# Assuming you add GUITAR to your UpgradeData Enum
+		var guitar_stacks = player.upgrade_component.get_stack_count(UpgradeData.UpgradeType.GUITAR)
+		
+		if guitar_stacks > 0:
+			# 1% base + (1% per stack). e.g., 1 stack = 2%, 2 stacks = 3%
+			var proc_chance = 0.5 + (0.01 * guitar_stacks) 
+			
+			if randf() <= proc_chance:
+				if chain_lightning_scene:
+					var lightning = chain_lightning_scene.instantiate() as Node2D
+					get_tree().current_scene.add_child(lightning)
+					# Pass the sword's global position as the starting point of the beam
+					lightning.start_chain(global_position, entity, guitar_stacks)
 
 func apply_player_attack_speed() -> void:
 	# Use call_deferred to ensure we don't try to access nodes before they are ready

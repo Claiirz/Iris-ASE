@@ -1,6 +1,7 @@
 extends Area2D
 
 func _ready() -> void:
+	add_to_group("portal")
 	print("[DEBUG Portal] Portal initialized at position: ", global_position)
 	body_entered.connect(_on_entity_entered)
 	area_entered.connect(_on_entity_entered)

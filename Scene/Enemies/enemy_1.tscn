@@ -12,11 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://cwqvdslxcfbq0" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/effects (new)/enemy_afterdead_explosion_anim_spritesheet.png" id="5_m52bk"]
 [ext_resource type="Script" uid="uid://6tqbywrdd4g6" path="res://Scripts/Items/upgrade_data.gd" id="5_xmtim"]
 [ext_resource type="Script" uid="uid://dgrm7qhxp3riw" path="res://Scripts/fsmenemy/Bat/telegraph_state.gd" id="6_bf3ho"]
-[ext_resource type="Resource" uid="uid://c0ht380bsdwhn" path="res://Resources/Modular/anvil.tres" id="6_uv7m1"]
 [ext_resource type="Resource" uid="uid://c3nr8luf274ym" path="res://Resources/Modular/boots.tres" id="7_pjusm"]
-[ext_resource type="Resource" uid="uid://cj8v4l7x2r5a" path="res://Resources/Modular/crowbar.tres" id="8_8yf06"]
-[ext_resource type="Resource" uid="uid://ec4cjbxqf1xk" path="res://Resources/Modular/cutter.tres" id="9_0ef5i"]
-[ext_resource type="Resource" uid="uid://bgywcxrpl2qi1" path="res://Resources/Modular/gloves.tres" id="10_0s1pb"]
+[ext_resource type="Resource" uid="uid://bp10jkald4afc" path="res://Resources/Modular/guitar.tres" id="7_q3670"]
 [ext_resource type="Script" uid="uid://02j3210st2e3" path="res://Scripts/Handlers/mutation_component.gd" id="10_3kujk"]
 [ext_resource type="Script" uid="uid://duu51k5uio6r0" path="res://Scripts/fsmenemy/Bat/die_state.gd" id="11_cmy35"]
 [ext_resource type="PackedScene" uid="uid://b2c1c464hqjqa" path="res://Scene/xp_orb.tscn" id="11_xmtim"]
@@ -116,7 +113,7 @@ separation_force = 50.0
 stuck_check_interval = 1.0
 min_moved_distance = 6.0
 item_to_drop_scene = ExtResource("4_q3670")
-possible_drops = Array[ExtResource("5_xmtim")]([ExtResource("7_pjusm"), ExtResource("6_uv7m1"), ExtResource("8_8yf06"), ExtResource("9_0ef5i"), ExtResource("10_0s1pb")])
+possible_drops = Array[ExtResource("5_xmtim")]([ExtResource("7_pjusm"), ExtResource("7_q3670")])
 xp_orb_scene = ExtResource("11_xmtim")
 
 [node name="HitBox" type="Area2D" parent="." unique_id=354901139]

@@ -6,6 +6,12 @@ var max_floors: int = 10
 var saved_player_data: Dictionary = {}
 var has_saved_data: bool = false
 
+# Inside GameManager.gd (add to top with other variables)
+var difficulty_level: String = "Normal"
+var difficulty_multiplier: float = 1.0 # E.g., 0.75 for Easy, 1.5 for Hard
+
+# Optional: Reset these inside your existing reset_run() function
+
 func save_player_data(player: CharacterBody2D) -> void:
 	if not is_instance_valid(player):
 		return

@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cmvuc7jclhymn" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/Sword.png" id="1_d55eh"]
 [ext_resource type="Script" uid="uid://biw8xqr2wodkm" path="res://Scene/Weapons/Sword.gd" id="1_p73jl"]
 [ext_resource type="Texture2D" uid="uid://dbi5x2ynukccq" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/effects (new)/slash_effect_anim_spritesheet.png" id="2_p73jl"]
+[ext_resource type="PackedScene" uid="uid://bcsfhyk1svlrt" path="res://Scene/Effects/chain_lightning.tscn" id="3_jv6cs"]
 [ext_resource type="AudioStream" uid="uid://buopvg6tld8kj" path="res://Asset/sfx/playersfx/sword1.mp3" id="4_lutwn"]
 
 [sub_resource type="Animation" id="Animation_adgam"]
@@ -144,6 +145,7 @@ radius = 11.0
 [node name="Sword" type="Node2D" unique_id=2020742520]
 script = ExtResource("1_p73jl")
 sword_texture = ExtResource("1_d55eh")
+chain_lightning_scene = ExtResource("3_jv6cs")
 metadata/_edit_group_ = true
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1432108687]

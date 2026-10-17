@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dwqm2ddlhmvpa" path="res://Scene/Items/DroppedSword.tscn" id="3_q6w3m"]
 [ext_resource type="PackedScene" uid="uid://cms3fl0ttf82v" path="res://Scene/Effects/dash_effect.tscn" id="3_uubsr"]
 [ext_resource type="Script" uid="uid://bw58vo6ovvqqw" path="res://Scripts/Player/fsmplayer/finite_state_machine.gd" id="4_pmp2f"]
-[ext_resource type="PackedScene" uid="uid://ddobaqt5u27oo" path="res://Scene/Weapons/Sword2.tscn" id="5_0xel3"]
 [ext_resource type="Script" uid="uid://c4a821ya6j5km" path="res://Scripts/Player/fsmplayer/idle_state.gd" id="5_pmp2f"]
 [ext_resource type="Script" uid="uid://dsqaicjbohk2x" path="res://Scripts/Player/fsmplayer/run_state.gd" id="6_pmp2f"]
 [ext_resource type="Script" uid="uid://l46q1d8sr7j0" path="res://Scripts/Player/hurtbox.gd" id="8_8v44s"]
@@ -20,7 +19,11 @@
 [ext_resource type="PackedScene" uid="uid://crelu3prpsyy" path="res://Scene/UI/ThreatMeter.tscn" id="17_0xel3"]
 [ext_resource type="Script" uid="uid://0bdbavsduasy" path="res://Scripts/Player/debug_hud.gd" id="17_kme1g"]
 [ext_resource type="AudioStream" uid="uid://cp1wmi4nlmdhg" path="res://Asset/sfx/playersfx/arrowshoot.mp3" id="20_rp6ye"]
+[ext_resource type="Script" uid="uid://exqwr7ibxtx6" path="res://Scene/Characters/TargetIndicators.gd" id="21_ns8yf"]
 [ext_resource type="AudioStream" uid="uid://bjtol0rwad3j7" path="res://Asset/sfx/playersfx/dash.mp3" id="21_x67wc"]
+[ext_resource type="Texture2D" uid="uid://py83cvrguste" path="res://Asset/PlaceHolders/placeholder 32x32.png" id="22_ns8yf"]
+[ext_resource type="Script" uid="uid://c82s6uk1e6a0u" path="res://Scene/Characters/upgrade_inventory_ui.gd" id="23_beqhx"]
+[ext_resource type="PackedScene" uid="uid://c2xo2xrucwox4" path="res://Scene/UI/upgrade_slot_ui.tscn" id="24_kqenx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uwfu8"]
 atlas = ExtResource("2_wneh1")
@@ -263,15 +266,16 @@ _data = {
 radius = 14.0
 height = 44.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1182116428 node_paths=PackedStringArray("ammo_ui") groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1182116428 node_paths=PackedStringArray("equipped_weapon", "ammo_ui") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_ph5yk")
 stats = ExtResource("2_e5op4")
+equipped_weapon = NodePath("Sword")
 dash_effect_scene = ExtResource("3_uubsr")
 arrow_scene = ExtResource("3_fr445")
 ammo_ui = NodePath("Camera2D/AmmoUI")
 dropped_sword_scene = ExtResource("3_q6w3m")
-default_sword_scene = ExtResource("5_0xel3")
+default_sword_scene = ExtResource("8_i6irg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2066522144]
 texture_filter = 1
@@ -359,5 +363,26 @@ stream = ExtResource("20_rp6ye")
 
 [node name="DodgeSFX" type="AudioStreamPlayer2D" parent="." unique_id=1128233367]
 stream = ExtResource("21_x67wc")
+
+[node name="TargetIndicator" type="Node2D" parent="." unique_id=1676520933 node_paths=PackedStringArray("enemy_arrow", "portal_arrow")]
+script = ExtResource("21_ns8yf")
+enemy_arrow = NodePath("EnemyArrow")
+portal_arrow = NodePath("PortalArrow")
+
+[node name="EnemyArrow" type="Sprite2D" parent="TargetIndicator" unique_id=318342516]
+texture = ExtResource("22_ns8yf")
+
+[node name="PortalArrow" type="Sprite2D" parent="TargetIndicator" unique_id=1969046463]
+texture = ExtResource("22_ns8yf")
+
+[node name="UpgradeInventoryUI" type="HFlowContainer" parent="." unique_id=839661863 node_paths=PackedStringArray("upgrade_component")]
+offset_left = -149.0
+offset_top = -130.0
+offset_right = 152.0
+offset_bottom = -73.0
+alignment = 1
+script = ExtResource("23_beqhx")
+slot_scene = ExtResource("24_kqenx")
+upgrade_component = NodePath("../UpgradeComponent")
 
 [editable path="Sword"]

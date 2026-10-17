@@ -47,6 +47,8 @@ var external_pull_velocity: Vector2 = Vector2.ZERO
 @onready var separation_area: Area2D = $SeparationArea
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D  # Node alias for FSM compatibility
 @onready var screen_notifier: VisibleOnScreenNotifier2D = get_node_or_null("VisibleOnScreenNotifier2D")
+var is_stunned: bool = false
+var original_color: Color = Color.WHITE
 
 var path_update_timer: float = 0.0
 
@@ -61,6 +63,7 @@ var is_dropping_items: bool = false
 
 func _ready() -> void:
 	add_to_group("enemies")
+	original_color = modulate
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 
 	if has_node("HitBox"):
@@ -118,7 +121,23 @@ func _physics_process(delta: float) -> void:
 	if is_dead or is_frozen or not can_move:
 		velocity = Vector2.ZERO
 		return
+	
+	if get("is_dead") and is_dead:
+		return
 
+	# --- STUN INTERRUPT ---
+	if is_stunned:
+		# Slowly decay any external knockback velocity they might have
+		velocity = velocity.move_toward(Vector2.ZERO, 1000.0 * delta)
+		move_and_slide()
+		return # <-- This safely stops all the navigation code below from running!
+
+	# --- YOUR ORIGINAL AI LOGIC ---
+	if not player:
+		player = get_tree().get_first_node_in_group("player") as CharacterBody2D
+		if not player:
+			return
+	
 	if not player:
 		player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 		if not player:
@@ -416,3 +435,21 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 func apply_pull(pull_velocity: Vector2) -> void:
 	external_pull_velocity = pull_velocity
+	
+func apply_stun(duration: float) -> void:
+	# Don't apply stun if dead
+	if get("is_dead") and is_dead: 
+		return
+
+	is_stunned = true
+	velocity = Vector2.ZERO # Instantly stop moving
+	
+	# Visual feedback: Turn the enemy yellow/blue to indicate electricity
+	modulate = Color(1.5, 1.5, 0.4) 
+
+	# Wait for the duration, then remove stun
+	get_tree().create_timer(duration, false).timeout.connect(_remove_stun)
+
+func _remove_stun() -> void:
+	is_stunned = false
+	modulate = original_color

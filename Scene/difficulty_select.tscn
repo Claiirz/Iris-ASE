@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dh4ghjocr41ih"]
+
+[ext_resource type="Script" uid="uid://dbpf1don5a57u" path="res://difficulty_select.gd" id="1_mokm0"]
+
+[node name="DifficultySelect" type="Control" unique_id=510978494]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mokm0")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1073857253]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+color = Color(0.23810446, 0.17809057, 0.0154015515, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1346725408]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+alignment = 1
+
+[node name="EasyButton" type="Button" parent="." unique_id=480085789]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 44.0
+offset_right = 342.0
+offset_bottom = 87.0
+text = "ez"
+
+[node name="NormalButton" type="Button" parent="." unique_id=592529659]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 116.0
+offset_right = 342.0
+offset_bottom = 157.0
+text = "normal"
+
+[node name="HardButton" type="Button" parent="." unique_id=1726528331]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 183.0
+offset_right = 342.0
+offset_bottom = 219.0
+text = "HARRDDD"
+
+[connection signal="pressed" from="EasyButton" to="." method="_on_easy_button_pressed"]
+[connection signal="pressed" from="NormalButton" to="." method="_on_normal_button_pressed"]
+[connection signal="pressed" from="HardButton" to="." method="_on_hard_button_pressed"]
