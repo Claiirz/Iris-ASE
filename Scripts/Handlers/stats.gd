@@ -31,8 +31,8 @@ var current_defense: int = 10
 var current_attack: int = 10
 
 var health: int = 0: set = _on_health_set
-
 var stat_buffs: Array[StatBuff]
+var difficulty_modifier: float = 1.0
 
 func _init() -> void:
 	setup_stats.call_deferred()
@@ -50,10 +50,8 @@ func remove_buff(buff: StatBuff) -> void:
 	recalculate_stats.call_deferred()
 	
 func recalculate_stats() -> void:
-	# Map level (1 to 100) precisely to curve domain (0.0 to 1.0)
 	var stat_sample_pos: float = clamp((float(level) - 1.0) / 99.0, 0.0, 1.0)
 	
-	# Sample base stats from curves (Y-axis acts as multiplier: Y=1.0 is 100% base stat)
 	var sampled_hp: float = base_max_health * STAT_CURVES[BuffableStats.MAX_HEALTH].sample(stat_sample_pos)
 	var sampled_def: float = base_defense * STAT_CURVES[BuffableStats.DEFENSE].sample(stat_sample_pos)
 	var sampled_atk: float = base_attack * STAT_CURVES[BuffableStats.ATTACK].sample(stat_sample_pos)
@@ -61,7 +59,6 @@ func recalculate_stats() -> void:
 	var stat_multipliers: Dictionary = {"max_health": 1.0, "defense": 1.0, "attack": 1.0}
 	var stat_addends: Dictionary = {"max_health": 0.0, "defense": 0.0, "attack": 0.0}
 
-	# Process active buffs
 	for buff in stat_buffs:
 		var stat_name: String = BuffableStats.keys()[buff.stat].to_lower()
 		if buff.buff_type == StatBuff.BuffType.ADD:
@@ -69,12 +66,11 @@ func recalculate_stats() -> void:
 		else:
 			stat_multipliers[stat_name] += buff.buff_amount
 
-	# Calculate final values
-	current_max_health = int((sampled_hp + stat_addends["max_health"]) * stat_multipliers["max_health"])
-	current_defense = int((sampled_def + stat_addends["defense"]) * stat_multipliers["defense"])
-	current_attack = int((sampled_atk + stat_addends["attack"]) * stat_multipliers["attack"])
+	# UPDATED: Multiply final values by the difficulty_modifier
+	current_max_health = int((sampled_hp + stat_addends["max_health"]) * stat_multipliers["max_health"] * difficulty_modifier)
+	current_defense = int((sampled_def + stat_addends["defense"]) * stat_multipliers["defense"] * difficulty_modifier)
+	current_attack = int((sampled_atk + stat_addends["attack"]) * stat_multipliers["attack"] * difficulty_modifier)
 
-	# Keep health within new bounds & notify UI
 	health = clampi(health, 0, current_max_health)
 	health_changed.emit(health, current_max_health)
 
