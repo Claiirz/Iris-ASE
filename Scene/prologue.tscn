@@ -13,16 +13,20 @@ script = ExtResource("1_7lpfv")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1679135907]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 480.0
+offset_bottom = 270.0
 color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="." unique_id=976746670]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 221.0
+offset_top = 91.0
+offset_right = 261.0
+offset_bottom = 114.0
 
 [node name="SkipButton" type="Button" parent="." unique_id=2080248221]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 385.0
+offset_top = 227.0
+offset_right = 445.0
+offset_bottom = 248.0

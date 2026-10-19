@@ -12,6 +12,7 @@ var difficulty_multiplier: float = 1.0 # E.g., 0.75 for Easy, 1.5 for Hard
 
 # Optional: Reset these inside your existing reset_run() function
 
+
 func save_player_data(player: CharacterBody2D) -> void:
 	if not is_instance_valid(player):
 		return

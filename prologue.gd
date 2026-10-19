@@ -6,10 +6,10 @@ func _ready() -> void:
 	play_cutscene()
 
 func play_cutscene() -> void:
-	story_label.text = "Year 202X. The world is in ruin..."
+	story_label.text = "text1"
 	await get_tree().create_timer(3.0).timeout # wait() for 3 seconds
 	
-	story_label.text = "Only one hero remains."
+	story_label.text = "text2"
 	await get_tree().create_timer(3.0).timeout
 	
 	# Cutscene finishes, go to difficulty screen

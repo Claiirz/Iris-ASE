@@ -5,8 +5,8 @@ extends CharacterBody2D
 @export var stats: Stats
 
 # --- MOVEMENT & COMBAT SETTINGS ---
-@export var chase_speed: float = 65.0
-@export var accel: float = 10.0
+@export var chase_speed: float = 90.0
+@export var accel: float = 50.0
 @export var shoot_range: float = 280.0
 @export var chase_range: float = 500.0
 
@@ -48,61 +48,52 @@ func _ready() -> void:
 	original_color = modulate
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 	
+	# ==========================================
+	# UNIFIED STATS SETUP (Only do this ONCE)
+	# ==========================================
 	if get("stats") and stats:
-		
+		# 1. Duplicate the stats resource
 		stats = stats.duplicate()
 		
+		# 2. Apply the Hard Mode difficulty multiplier (2.5x)
 		stats.difficulty_modifier = GameManager.difficulty_multiplier
 		
+		# 3. Setup stats with the difficulty modifier applied
 		stats.setup_stats()
 		
-		stats.health_changed.connect(_on_health_changed)
-		stats.health_depleted.connect(die)
-		_on_health_changed(stats.health, stats.current_max_health)
-
-	# Wait 1 physics frame for NavigationServer to sync baked map data.
-	await get_tree().physics_frame
-
-	# Connect to avoidance signal for smooth pathfinding around objects.
-	# if nav_agent:
-	# 	nav_agent.velocity_computed.connect(_on_velocity_computed)
-
-	# Unique material instance for hit-flash shader.
-	if animated_sprite and animated_sprite.material:
-		animated_sprite.material = animated_sprite.material.duplicate()
-
-	# Duplicate & Setup Stats Safely.
-	if stats:
-		stats = stats.duplicate()
-		stats.setup_stats()
-		
-		# --- ADD DIFFICULTY SCALING HERE ---
-		# Increases health and damage by 20% for every floor past floor 1
-	
+		# 4. Apply Floor Multiplier on top of the difficulty modifier
 		var floor_mult: float = 1.0 + ((GameManager.current_floor - 1) * 0.2)
 		stats.current_max_health = int(stats.current_max_health * floor_mult)
 		stats.current_attack = int(stats.current_attack * floor_mult)
-		stats.health = stats.current_max_health
-		# -----------------------------------
 		
-		# Safeguard: Ensure health isn't zero on spawn
+		# 5. Set current health to the final calculated max health
+		stats.health = stats.current_max_health
 		if stats.health <= 0:
 			stats.health = stats.current_max_health
-
-		if not stats.health_depleted.is_connected(_on_health_depleted):
-			stats.health_depleted.connect(_on_health_depleted)
-
-		stats.health_changed.connect(_on_health_changed)
+		
+		# 6. Connect Signals (Ensure your script has either `die` or `_on_health_depleted`)
+		if not stats.health_depleted.is_connected(die):
+			stats.health_depleted.connect(die) 
+			
+		if not stats.health_changed.is_connected(_on_health_changed):
+			stats.health_changed.connect(_on_health_changed)
+			
 		_on_health_changed(stats.health, stats.current_max_health)
 
-	# Trigger Mutation via external component
+	# Wait 1 physics frame for NavigationServer
+	await get_tree().physics_frame
+	
+	if nav_agent and nav_agent.has_signal("velocity_computed"):
+		nav_agent.velocity_computed.connect(_on_velocity_computed)
+
+	if animated_sprite and animated_sprite.material:
+		animated_sprite.material = animated_sprite.material.duplicate()
+
 	if mutation_component:
 		mutation_component.setup_mutation(self)
 
-	# Check if spawned while Time Stop is active
 	if player and "is_time_stopped" in player and player.is_time_stopped:
 		call_deferred("freeze_time")
-
 
 func _physics_process(_delta: float) -> void:
 	if is_dead or is_frozen:

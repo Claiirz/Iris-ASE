@@ -220,7 +220,7 @@ func die() -> void:
 	else:
 		queue_free()
 
-func lunge_forward(speed: float = 320.0, duration: float = 0.12) -> void:
+func lunge_forward(speed: float = 880.0, duration: float = 0.12) -> void:
 	if not player:
 		return
 	

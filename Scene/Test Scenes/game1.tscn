@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cpfdnia34xnmb" path="res://Scene/Enemies/enemy_2.tscn" id="8_b1d1g"]
 [ext_resource type="PackedScene" uid="uid://blj7mchukkgp7" path="res://Scene/Characters/Player.tscn" id="8_b2lmk"]
 [ext_resource type="PackedScene" uid="uid://c0cgjri6bk8t0" path="res://boss_uiBar.tscn" id="9_xnt2d"]
+[ext_resource type="Script" uid="uid://dyr51h120vre2" path="res://Scripts/threat_system.gd" id="13_tk7u7"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eow3j"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -98,7 +99,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(480, -368, 480, 272, -336, 272, -336, -368)])
 source_geometry_mode = 2
 
-[sub_resource type="Resource" id="Resource_cxl5n"]
+[sub_resource type="Resource" id="Resource_wluyb"]
 resource_local_to_scene = true
 script = ExtResource("4_x4pud")
 base_attack = 1
@@ -152,6 +153,12 @@ ground_layer = NodePath("../TileMap/Ground")
 player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=1182116428 instance=ExtResource("8_b2lmk")]
-stats = SubResource("Resource_cxl5n")
+stats = SubResource("Resource_wluyb")
 
 [node name="BossUI" parent="." unique_id=2138250990 instance=ExtResource("9_xnt2d")]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2139993950]
+
+[node name="ThreatSystem" type="Node" parent="." unique_id=346441026 node_paths=PackedStringArray("environment_modulate")]
+script = ExtResource("13_tk7u7")
+environment_modulate = NodePath("../CanvasModulate")

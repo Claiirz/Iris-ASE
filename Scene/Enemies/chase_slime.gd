@@ -27,8 +27,8 @@ func update(delta: float) -> void:
 	var dir = enemy.global_position.direction_to(next_pos)
 
 	# Get speed and accel safely with fallbacks
-	var chase_speed = enemy.get("chase_speed") if "chase_speed" in enemy else 60.0
-	var accel = enemy.get("accel") if "accel" in enemy else 10.0
+	var chase_speed = enemy.get("chase_speed") if "chase_speed" in enemy else 90.0
+	var accel = enemy.get("accel") if "accel" in enemy else 45.0
 
 	enemy.velocity = enemy.velocity.lerp(dir * chase_speed, delta * accel)
 	

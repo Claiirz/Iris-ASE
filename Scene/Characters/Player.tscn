@@ -266,6 +266,17 @@ _data = {
 radius = 14.0
 height = 44.0
 
+[sub_resource type="Gradient" id="Gradient_kqenx"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u2m2a"]
+gradient = SubResource("Gradient_kqenx")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.9, 0.9)
+
 [node name="Player" type="CharacterBody2D" unique_id=1182116428 node_paths=PackedStringArray("equipped_weapon", "ammo_ui") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_ph5yk")
@@ -384,5 +395,13 @@ alignment = 1
 script = ExtResource("23_beqhx")
 slot_scene = ExtResource("24_kqenx")
 upgrade_component = NodePath("../UpgradeComponent")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1716624507]
+energy = 1.26
+range_z_min = -100
+range_z_max = 100
+range_layer_max = 5
+range_item_cull_mask = 127
+texture = SubResource("GradientTexture2D_u2m2a")
 
 [editable path="Sword"]

@@ -64,34 +64,54 @@ var is_dropping_items: bool = false
 func _ready() -> void:
 	add_to_group("enemies")
 	original_color = modulate
+	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 	
+	# ==========================================
+	# UNIFIED STATS SETUP (Only do this ONCE)
+	# ==========================================
 	if get("stats") and stats:
-		# 1. Duplicate the stats resource so enemies don't share the same HP pool
+		# 1. Duplicate the stats resource
 		stats = stats.duplicate()
 		
-		# 2. Apply the difficulty multiplier from GameManager
+		# 2. Apply the Hard Mode difficulty multiplier (2.5x)
 		stats.difficulty_modifier = GameManager.difficulty_multiplier
 		
-		# 3. Setup stats with the new modifier applied
+		# 3. Setup stats with the difficulty modifier applied
 		stats.setup_stats()
 		
-		# 4. Connect signals
-		stats.health_changed.connect(_on_health_changed)
-		stats.health_depleted.connect(die)
+		# 4. Apply Floor Multiplier on top of the difficulty modifier
+		var floor_mult: float = 1.0 + ((GameManager.current_floor - 1) * 0.2)
+		stats.current_max_health = int(stats.current_max_health * floor_mult)
+		stats.current_attack = int(stats.current_attack * floor_mult)
+		
+		# 5. Set current health to the final calculated max health
+		stats.health = stats.current_max_health
+		if stats.health <= 0:
+			stats.health = stats.current_max_health
+		
+		# 6. Connect Signals (Ensure your script has either `die` or `_on_health_depleted`)
+		if not stats.health_depleted.is_connected(die):
+			stats.health_depleted.connect(die) 
+			
+		if not stats.health_changed.is_connected(_on_health_changed):
+			stats.health_changed.connect(_on_health_changed)
+			
 		_on_health_changed(stats.health, stats.current_max_health)
-	
-	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
+	# ==========================================
 
+	# HitBox connections (enemy_1 specific, keep if needed)
 	if has_node("HitBox"):
 		var hitbox = $HitBox as Area2D
 		hitbox.body_entered.connect(_on_hitbox_body_entered)
 		hitbox.area_entered.connect(_on_hitbox_area_entered)
 
+	# Movement delay
 	can_move = false
 	get_tree().create_timer(0.5).timeout.connect(func():
 		can_move = true
 	)
 
+	# Wait 1 physics frame for NavigationServer
 	await get_tree().physics_frame
 	
 	if nav_agent and nav_agent.has_signal("velocity_computed"):
@@ -100,37 +120,18 @@ func _ready() -> void:
 	if animated_sprite and animated_sprite.material:
 		animated_sprite.material = animated_sprite.material.duplicate()
 
-	# Duplicate & Setup Stats Safely
-	if stats:
-		stats = stats.duplicate()
-		stats.setup_stats()
-		
-		# Difficulty scaling per floor
-		var floor_mult: float = 1.0 + ((GameManager.current_floor - 1) * 0.2)
-		stats.current_max_health = int(stats.current_max_health * floor_mult)
-		stats.current_attack = int(stats.current_attack * floor_mult)
-		stats.health = stats.current_max_health
-		
-		if stats.health <= 0:
-			stats.health = stats.current_max_health
-
-		if not stats.health_depleted.is_connected(_on_health_depleted):
-			stats.health_depleted.connect(_on_health_depleted)
-
-		stats.health_changed.connect(_on_health_changed)
-		_on_health_changed(stats.health, stats.current_max_health)
-
 	if mutation_component:
 		mutation_component.setup_mutation(self)
 
 	if player and "is_time_stopped" in player and player.is_time_stopped:
 		call_deferred("freeze_time")
 
-	if screen_notifier:
+	if get("screen_notifier") and screen_notifier:
 		screen_notifier.screen_entered.connect(_on_screen_entered)
 		screen_notifier.screen_exited.connect(_on_screen_exited)
 
-	last_stuck_check_pos = global_position
+	if "last_stuck_check_pos" in self:
+		last_stuck_check_pos = global_position
 
 
 func _physics_process(delta: float) -> void:

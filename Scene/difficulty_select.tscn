@@ -29,7 +29,7 @@ offset_left = 151.0
 offset_top = 44.0
 offset_right = 342.0
 offset_bottom = 87.0
-text = "ez"
+text = "easy"
 
 [node name="NormalButton" type="Button" parent="." unique_id=592529659]
 layout_mode = 0
@@ -45,7 +45,7 @@ offset_left = 151.0
 offset_top = 183.0
 offset_right = 342.0
 offset_bottom = 219.0
-text = "HARRDDD"
+text = "hard"
 
 [connection signal="pressed" from="EasyButton" to="." method="_on_easy_button_pressed"]
 [connection signal="pressed" from="NormalButton" to="." method="_on_normal_button_pressed"]

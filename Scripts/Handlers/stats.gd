@@ -67,9 +67,9 @@ func recalculate_stats() -> void:
 			stat_multipliers[stat_name] += buff.buff_amount
 
 	# UPDATED: Multiply final values by the difficulty_modifier
-	current_max_health = int((sampled_hp + stat_addends["max_health"]) * stat_multipliers["max_health"] * difficulty_modifier)
-	current_defense = int((sampled_def + stat_addends["defense"]) * stat_multipliers["defense"] * difficulty_modifier)
-	current_attack = int((sampled_atk + stat_addends["attack"]) * stat_multipliers["attack"] * difficulty_modifier)
+	current_max_health = int(round((sampled_hp + stat_addends["max_health"]) * stat_multipliers["max_health"] * difficulty_modifier))
+	current_defense = int(round((sampled_def + stat_addends["defense"]) * stat_multipliers["defense"] * difficulty_modifier))
+	current_attack = int(round((sampled_atk + stat_addends["attack"]) * stat_multipliers["attack"] * difficulty_modifier))
 
 	health = clampi(health, 0, current_max_health)
 	health_changed.emit(health, current_max_health)
