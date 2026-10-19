@@ -47,6 +47,18 @@ func _ready() -> void:
 	add_to_group("enemies")
 	original_color = modulate
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
+	
+	if get("stats") and stats:
+		
+		stats = stats.duplicate()
+		
+		stats.difficulty_modifier = GameManager.difficulty_multiplier
+		
+		stats.setup_stats()
+		
+		stats.health_changed.connect(_on_health_changed)
+		stats.health_depleted.connect(die)
+		_on_health_changed(stats.health, stats.current_max_health)
 
 	# Wait 1 physics frame for NavigationServer to sync baked map data.
 	await get_tree().physics_frame

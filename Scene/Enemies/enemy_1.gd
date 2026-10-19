@@ -64,6 +64,22 @@ var is_dropping_items: bool = false
 func _ready() -> void:
 	add_to_group("enemies")
 	original_color = modulate
+	
+	if get("stats") and stats:
+		# 1. Duplicate the stats resource so enemies don't share the same HP pool
+		stats = stats.duplicate()
+		
+		# 2. Apply the difficulty multiplier from GameManager
+		stats.difficulty_modifier = GameManager.difficulty_multiplier
+		
+		# 3. Setup stats with the new modifier applied
+		stats.setup_stats()
+		
+		# 4. Connect signals
+		stats.health_changed.connect(_on_health_changed)
+		stats.health_depleted.connect(die)
+		_on_health_changed(stats.health, stats.current_max_health)
+	
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 
 	if has_node("HitBox"):
