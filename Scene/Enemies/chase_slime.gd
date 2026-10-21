@@ -4,15 +4,18 @@ var fsm: Node
 var enemy: CharacterBody2D
 
 func enter() -> void:
-	await get_tree().physics_frame
+	# Use enemy.get_tree() instead of get_tree()
+	if not enemy or not enemy.is_inside_tree():
+		return 
+
+	await enemy.get_tree().physics_frame
 	
-	var nav_region = get_tree().get_first_node_in_group("nav_region")
-	if nav_region and nav_region.is_baking():
+	# Use enemy.get_tree() here as well
+	var nav_region = enemy.get_tree().get_first_node_in_group("nav_region")
+	if nav_region and nav_region.has_method("is_baking") and nav_region.is_baking():
 		await nav_region.bake_finished
 		
-	var sprite = enemy.get_node_or_null("AnimatedSprite2D")
-	if sprite:
-		sprite.play("chase")
+	enemy.animated_sprite.play("chase")
 
 func update(delta: float) -> void:
 	# Safely fetch player and navigation agent without crashing

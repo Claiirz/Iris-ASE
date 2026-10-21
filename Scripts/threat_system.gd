@@ -21,7 +21,6 @@ var current_threat: float = 0.0
 var anchor_position: Vector2 = Vector2.ZERO
 var time_camping: float = 0.0
 
-# 1. State lock to prevent multiple bosses
 var is_boss_active: bool = false 
 
 signal threat_changed(current_threat: float, max_threat: float)
@@ -34,7 +33,7 @@ func _ready() -> void:
 		anchor_position = player.global_position
 
 func _process(delta: float) -> void:
-	# 2. Halt all threat calculations if the boss is currently active
+
 	if not player or not is_instance_valid(player) or is_boss_active:
 		return
 
@@ -59,13 +58,17 @@ func _process(delta: float) -> void:
 		_trigger_threat_penalty()
 
 func _trigger_threat_penalty() -> void:
-	# 3. Lock the system at 100%
+
 	is_boss_active = true
 	current_threat = max_threat 
 	threat_changed.emit(current_threat, max_threat)
 	max_threat_reached.emit()
 	
-	# 4. Tween the environment darkness
+	if player and is_instance_valid(player):
+		var player_light = player.get_node_or_null("PointLight2D")
+		if player_light:
+			_flicker_light(player_light)
+
 	if environment_modulate:
 		var tween = get_tree().create_tween()
 		var dark_scary_color = Color(0.15, 0.05, 0.05) # Deep, dark red
@@ -79,13 +82,13 @@ func _trigger_threat_penalty() -> void:
 			boss_instance.global_position = player.global_position + spawn_offset
 			get_tree().current_scene.add_child(boss_instance)
 			
-			# 5. Listen for the boss's death to reset the arena
+
 			boss_instance.tree_exited.connect(_on_boss_defeated)
 	else:
 		push_warning("ThreatSystem Warning: Boss Scene is not assigned in the Inspector!")
 
 func _on_boss_defeated() -> void:
-	# 6. Reset the lock and bring the lights back on when the boss is freed from memory
+
 	is_boss_active = false
 	current_threat = 0.0
 	time_camping = 0.0
@@ -93,3 +96,22 @@ func _on_boss_defeated() -> void:
 	if environment_modulate:
 		var tween = get_tree().create_tween()
 		tween.tween_property(environment_modulate, "color", Color(1.0, 1.0, 1.0), 2.0)
+		
+func _flicker_light(light: PointLight2D) -> void:
+	var flicker_count = randi_range(4, 7)
+	for i in range(flicker_count):
+
+		if not is_instance_valid(light): 
+			return
+			
+		light.enabled = true
+		await get_tree().create_timer(randf_range(0.05, 0.15)).timeout
+		
+		if not is_instance_valid(light): 
+			return
+			
+		light.enabled = false
+		await get_tree().create_timer(randf_range(0.05, 0.25)).timeout
+
+	if is_instance_valid(light):
+		light.enabled = true

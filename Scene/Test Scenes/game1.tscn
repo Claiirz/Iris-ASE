@@ -26,6 +26,9 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 3.5971737, -8, 8, -8, 8, 8, -8, 8)])
 agent_radius = 0.0
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wluyb"]
+polygon = PackedVector2Array(-8, -6.017394, -6.991638, -6.9343305, -6.017393, -8, 5.960087, -8, 8, -5.960086, 8, 4.8712244, 6.017395, 6.93433, 2.0057983, 6.877022, 2.0057983, 6.017394, -2.0057983, 6.017394, -2.0631065, 6.7624054, -6.0747013, 6.877022, -8, 4.8712244)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e2o6t"]
 texture = ExtResource("1_x4ggo")
 0:0/0 = 0
@@ -45,6 +48,7 @@ texture = ExtResource("1_x4ggo")
 3:1/0 = 0
 4:1/0 = 0
 5:1/0 = 0
+5:1/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_wluyb")
 5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:1/0 = 0
 7:1/0 = 0
@@ -88,6 +92,7 @@ texture = ExtResource("1_x4ggo")
 5:7/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_4r3jh"]
+occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 5
 physics_layer_0/collision_mask = 0
 navigation_layer_0/layers = 2
@@ -109,28 +114,31 @@ metadata/_custom_type_script = "uid://btgpbshlgbuot"
 script = ExtResource("1_5b5qi")
 
 [node name="TileMap" type="Node2D" parent="." unique_id=1983090551]
+z_index = -1
 texture_filter = 1
 
 [node name="Ground" type="TileMapLayer" parent="TileMap" unique_id=571157232]
-light_mask = 0
 visibility_layer = 2
+z_index = -1
 use_parent_material = true
 tile_set = SubResource("TileSet_4r3jh")
 collision_enabled = false
 
 [node name="Object" type="TileMapLayer" parent="TileMap" unique_id=181102321 groups=["nav_obstacles", "navigation_polygon_source_geometry_group"]]
-light_mask = 0
 visibility_layer = 5
-z_index = 1
+z_index = -1
 tile_set = SubResource("TileSet_4r3jh")
+y_sort_origin = -1
 
 [node name="GroundGenerator" type="Node2D" parent="." unique_id=1783040297 node_paths=PackedStringArray("ground_layer", "object_generator")]
+z_index = -1
 script = ExtResource("7_uiav5")
 ground_layer = NodePath("../TileMap/Ground")
 object_generator = NodePath("../ObjectGenerator")
 floor_tiles = Array[Vector2i]([Vector2i(2, 1), Vector2i(3, 1), Vector2i(2, 2)])
 
 [node name="ObjectGenerator" type="Node2D" parent="." unique_id=1391370952 node_paths=PackedStringArray("ground_layer", "object_layer", "nav_region")]
+z_index = -1
 script = ExtResource("6_siop2")
 ground_layer = NodePath("../TileMap/Ground")
 object_layer = NodePath("../TileMap/Object")
@@ -157,8 +165,8 @@ stats = SubResource("Resource_wluyb")
 
 [node name="BossUI" parent="." unique_id=2138250990 instance=ExtResource("9_xnt2d")]
 
-[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2139993950]
-
 [node name="ThreatSystem" type="Node" parent="." unique_id=346441026 node_paths=PackedStringArray("environment_modulate")]
 script = ExtResource("13_tk7u7")
 environment_modulate = NodePath("../CanvasModulate")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2139993950]

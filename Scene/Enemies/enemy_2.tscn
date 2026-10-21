@@ -185,7 +185,7 @@ debug_color = Color(0.9922742, 0, 0.26061273, 0.41960785)
 texture_filter = 1
 material = SubResource("ShaderMaterial_m4sbg")
 sprite_frames = SubResource("SpriteFrames_jq34m")
-animation = &"chase"
+animation = &"die"
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=624047615]
 collision_layer = 4

@@ -30,3 +30,5 @@ offset_left = 385.0
 offset_top = 227.0
 offset_right = 445.0
 offset_bottom = 248.0
+
+[connection signal="pressed" from="SkipButton" to="." method="_on_skip_button_pressed"]

@@ -237,9 +237,9 @@ func die() -> void:
 	if has_node("FSM"):
 		var fsm = $FSM
 		if fsm.has_method("transition_to"):
-			fsm.transition_to("die")
+			fsm.transition_to("Die")
 		elif fsm.has_method("change_state"):
-			fsm.change_state("die")
+			fsm.change_state("Die")
 	else:
 		queue_free()
 

@@ -5,10 +5,12 @@ var fsm: Node
 var enemy: CharacterBody2D
 
 @export var projectile_scene: PackedScene
-@export var shoot_speed: float = 60.0    # Slows down while shooting
-@export var attack_range: float = 200.0  # Distance threshold: if player exceeds this, switch back to Chase
-@export var fire_rate: float = 1.2       # Seconds between shots
+# INCREASED to 80.0. Adjust this in the Inspector so it is slightly slower than your normal chase speed.
+@export var shoot_speed: float = 50.0    
+@export var attack_range: float = 200.0  
+@export var fire_rate: float = 1.2       
 @onready var shoot_sfx: AudioStreamPlayer2D = get_node_or_null("ShootSlime")
+
 var shoot_timer: float = 0.0
 var reposition_timer: float = 0.0
 var random_offset: Vector2 = Vector2.ZERO
@@ -17,23 +19,23 @@ func enter() -> void:
 	shoot_timer = 0.3
 	reposition_timer = 0.0
 	
-	# Fetch SFX from enemy if it exists there
 	if enemy:
 		shoot_sfx = enemy.get_node_or_null("ShootSlime")
 	
 	var sprite = enemy.get_node_or_null("AnimatedSprite2D")
 	if sprite:
-		sprite.play("chase") # Or your walking animation
+		sprite.play("chase")
 
 func _shoot_sfx() -> void:
 	if shoot_sfx:
 		shoot_sfx.play()
 
 func update(delta: float) -> void:
-	if not enemy:
+	if not enemy or not enemy.is_inside_tree():
 		return
 		
-	var player = enemy.get("player") if "player" in enemy else enemy.get_tree().get_first_node_in_group("player")
+	# Safer player fetch that won't throw null errors
+	var player = enemy.player if "player" in enemy and enemy.player else enemy.get_tree().get_first_node_in_group("player")
 	var nav_agent = enemy.get_node_or_null("NavigationAgent2D")
 	
 	if not player or not nav_agent:
@@ -41,13 +43,11 @@ func update(delta: float) -> void:
 
 	var distance = enemy.global_position.distance_to(player.global_position)
 
-	# --- 1. CHECK IF PLAYER FLED ---
-	# If the player moves further away than attack_range, switch back to Chase state!
 	if distance > attack_range:
-		fsm.transition_to("Chase") # NOTE: Make sure this matches your FSM node name ("Chase" or "chase")
+		# Changed "Chase" to "chase". Ensure this matches the exact key in your FSM!
+		fsm.transition_to("chase") 
 		return
 
-	# --- 2. RANDOM REPOSITIONING LOGIC ---
 	reposition_timer -= delta
 	if reposition_timer <= 0.0:
 		reposition_timer = randf_range(1.5, 3.0)
@@ -59,7 +59,9 @@ func update(delta: float) -> void:
 	var next_pos = nav_agent.get_next_path_position()
 	var dir = enemy.global_position.direction_to(next_pos)
 
-	enemy.velocity = enemy.velocity.lerp(dir * shoot_speed, delta * 5.0)
+	# REPLACED '5.0' with enemy.accel so the slime remains responsive, just with a lower top speed.
+	var current_accel = enemy.get("accel") if "accel" in enemy else 10.0
+	enemy.velocity = enemy.velocity.lerp(dir * shoot_speed, delta * current_accel)
 	
 	var sprite = enemy.get_node_or_null("AnimatedSprite2D")
 	if sprite and dir.x != 0:
@@ -67,16 +69,13 @@ func update(delta: float) -> void:
 
 	enemy.move_and_slide()
 
-	# --- 3. PROJECTILE FIRING LOGIC ---
 	shoot_timer -= delta
 	if shoot_timer <= 0.0:
 		shoot_timer = fire_rate
 		_shoot_sfx()
 		shoot_projectile(player)
 
-
 func shoot_projectile(player: Node2D) -> void:
-	
 	if not projectile_scene:
 		push_warning("ShootState Warning: Projectile Scene is not assigned in the Inspector!")
 		return

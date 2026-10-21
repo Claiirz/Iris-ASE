@@ -267,7 +267,8 @@ radius = 14.0
 height = 44.0
 
 [sub_resource type="Gradient" id="Gradient_kqenx"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.74757284)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_u2m2a"]
 gradient = SubResource("Gradient_kqenx")
@@ -387,6 +388,7 @@ texture = ExtResource("22_ns8yf")
 texture = ExtResource("22_ns8yf")
 
 [node name="UpgradeInventoryUI" type="HFlowContainer" parent="." unique_id=839661863 node_paths=PackedStringArray("upgrade_component")]
+texture_filter = 1
 offset_left = -149.0
 offset_top = -130.0
 offset_right = 152.0
@@ -397,11 +399,15 @@ slot_scene = ExtResource("24_kqenx")
 upgrade_component = NodePath("../UpgradeComponent")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1716624507]
+position = Vector2(1, 1)
+scale = Vector2(2, 2)
+enabled = false
 energy = 1.26
 range_z_min = -100
 range_z_max = 100
 range_layer_max = 5
-range_item_cull_mask = 127
+shadow_enabled = true
+shadow_filter = 1
 texture = SubResource("GradientTexture2D_u2m2a")
 
 [editable path="Sword"]
