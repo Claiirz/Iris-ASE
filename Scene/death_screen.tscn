@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://b1vcqaas0pucy"]
+
+[ext_resource type="Script" uid="uid://bb77n5okxghv" path="res://death_screen.gd" id="1_elwbp"]
+
+[node name="DeathScreen" type="CanvasLayer" unique_id=553491154]
+process_mode = 3
+layer = 20
+script = ExtResource("1_elwbp")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=847241643]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.3764706)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=39562403]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.5
+offset_top = -73.5
+offset_right = 85.5
+offset_bottom = 73.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="you died" type="Label" parent="VBoxContainer" unique_id=1179758287]
+layout_mode = 2
+text = "you died"
+
+[node name="FloorLabel" type="Label" parent="VBoxContainer" unique_id=1781329567]
+layout_mode = 2
+
+[node name="TimeLabel" type="Label" parent="VBoxContainer" unique_id=316987971]
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="VBoxContainer" unique_id=348707204]
+process_mode = 3
+layout_mode = 2
+text = "restart"
+
+[node name="MainMenuButton" type="Button" parent="VBoxContainer" unique_id=600823914]
+process_mode = 3
+layout_mode = 2
+text = "return to main menu"
+
+[connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

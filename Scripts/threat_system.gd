@@ -16,6 +16,10 @@ extends Node
 @export var boss_spawn_distance: float = 250.0 
 @export var environment_modulate: CanvasModulate # Assign your CanvasModulate node here
 
+@export var vignette: TextureRect
+@export var threat_sound: AudioStreamPlayer
+@export var threat_music: AudioStreamPlayer
+
 var player: CharacterBody2D = null
 var current_threat: float = 0.0
 var anchor_position: Vector2 = Vector2.ZERO
@@ -58,23 +62,40 @@ func _process(delta: float) -> void:
 		_trigger_threat_penalty()
 
 func _trigger_threat_penalty() -> void:
-
 	is_boss_active = true
 	current_threat = max_threat 
 	threat_changed.emit(current_threat, max_threat)
 	max_threat_reached.emit()
 	
+	if threat_sound:
+		threat_sound.play()
+	
+	if threat_music:
+		threat_music.play()
+	
+	# 1. Trigger the flickering light
 	if player and is_instance_valid(player):
 		var player_light = player.get_node_or_null("PointLight2D")
 		if player_light:
 			_flicker_light(player_light)
-
-	if environment_modulate:
-		var tween = get_tree().create_tween()
-		var dark_scary_color = Color(0.15, 0.05, 0.05) # Deep, dark red
-		tween.tween_property(environment_modulate, "color", dark_scary_color, 3.0)
-		await tween.finished # Wait 3 seconds for the darkness to settle
+			
+	# 2. Setup the parallel fade effects
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true) 
 	
+	if environment_modulate:
+		var dark_scary_color = Color(0.15, 0.05, 0.05) 
+		tween.tween_property(environment_modulate, "color", dark_scary_color, 3.0)
+		
+	if vignette:
+	
+		vignette.modulate = Color(0.0, 0.0, 0.0, 1.0)
+		tween.tween_property(vignette, "modulate", Color(0.1, 0.1, 0.1, 1.0), 3.0)
+		
+	# Wait exactly 3 seconds for both fading effects to finish simultaneously
+	await tween.finished 
+	
+	# 3. Spawn the boss immediately after the fade
 	if boss_scene and player and is_instance_valid(player):
 		var boss_instance = boss_scene.instantiate() as Node2D
 		if boss_instance:
@@ -82,20 +103,25 @@ func _trigger_threat_penalty() -> void:
 			boss_instance.global_position = player.global_position + spawn_offset
 			get_tree().current_scene.add_child(boss_instance)
 			
-
 			boss_instance.tree_exited.connect(_on_boss_defeated)
 	else:
 		push_warning("ThreatSystem Warning: Boss Scene is not assigned in the Inspector!")
 
 func _on_boss_defeated() -> void:
-
 	is_boss_active = false
 	current_threat = 0.0
 	time_camping = 0.0
 	
+	# Setup the parallel fade-out effects
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	
 	if environment_modulate:
-		var tween = get_tree().create_tween()
 		tween.tween_property(environment_modulate, "color", Color(1.0, 1.0, 1.0), 2.0)
+		
+	if vignette:
+		# Fade the entire color object back to 0.0 alpha
+		tween.tween_property(vignette, "modulate", Color(1.0, 1.0, 1.0, 0.0), 2.0)
 		
 func _flicker_light(light: PointLight2D) -> void:
 	var flicker_count = randi_range(4, 7)

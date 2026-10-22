@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://blj7mchukkgp7" path="res://Scene/Characters/Player.tscn" id="8_b2lmk"]
 [ext_resource type="PackedScene" uid="uid://c0cgjri6bk8t0" path="res://boss_uiBar.tscn" id="9_xnt2d"]
 [ext_resource type="Script" uid="uid://dyr51h120vre2" path="res://Scripts/threat_system.gd" id="13_tk7u7"]
+[ext_resource type="AudioStream" uid="uid://cnkcopcnp4ghm" path="res://Asset/sfx/enemysfx/mleckert82-spooky-ambience-212885.mp3" id="14_tk7u7"]
+[ext_resource type="AudioStream" uid="uid://446rms34bt74" path="res://Asset/sfx/enemysfx/twinfishaudio-soundtrack-3-chase-scene-233359.mp3" id="15_6hp7a"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eow3j"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -110,6 +112,17 @@ script = ExtResource("4_x4pud")
 base_attack = 1
 metadata/_custom_type_script = "uid://btgpbshlgbuot"
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wluyb"]
+blend_mode = 2
+
+[sub_resource type="Gradient" id="Gradient_wluyb"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u2m2a"]
+gradient = SubResource("Gradient_wluyb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
 [node name="Game" type="Node2D" unique_id=1466410273]
 script = ExtResource("1_5b5qi")
 
@@ -165,8 +178,33 @@ stats = SubResource("Resource_wluyb")
 
 [node name="BossUI" parent="." unique_id=2138250990 instance=ExtResource("9_xnt2d")]
 
-[node name="ThreatSystem" type="Node" parent="." unique_id=346441026 node_paths=PackedStringArray("environment_modulate")]
+[node name="ThreatSystem" type="Node" parent="." unique_id=346441026 node_paths=PackedStringArray("environment_modulate", "vignette", "threat_sound", "threat_music")]
 script = ExtResource("13_tk7u7")
 environment_modulate = NodePath("../CanvasModulate")
+vignette = NodePath("../CanvasLayer/Vignette")
+threat_sound = NodePath("ThreatMaxSound")
+threat_music = NodePath("ThreatMaxMusic")
+
+[node name="ThreatMaxSound" type="AudioStreamPlayer" parent="ThreatSystem" unique_id=278346592]
+stream = ExtResource("14_tk7u7")
+volume_db = -18.0
+
+[node name="ThreatMaxMusic" type="AudioStreamPlayer" parent="ThreatSystem" unique_id=239520506]
+stream = ExtResource("15_6hp7a")
+volume_db = -11.203
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2139993950]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=564275685]
+layer = 20
+
+[node name="Vignette" type="TextureRect" parent="CanvasLayer" unique_id=2092484206]
+modulate = Color(0.99969536, 0.99969536, 0.99969536, 0)
+material = SubResource("CanvasItemMaterial_wluyb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_u2m2a")
+expand_mode = 1

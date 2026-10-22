@@ -95,6 +95,7 @@ func _update_animation_speed() -> void:
 	# Update the AnimationPlayer speed
 	if anim_player:
 		anim_player.speed_scale = attack_speed * speed_multiplier
+	print("speed_scale: ", anim_player.speed_scale, " | multiplier: ", speed_multiplier)
 
 func calculate_damage() -> Dictionary:
 	var player = get_parent()
@@ -125,9 +126,9 @@ func calculate_damage() -> Dictionary:
 
 # --- ATTACK TRIGGER (Non-Combo) ---
 func trigger_attack() -> void:
-	# Prevent spamming if already swinging
-	if anim_player and anim_player.is_playing():
+	if anim_player and anim_player.is_playing() and anim_player.speed_scale > 0.0:
 		return
+	anim_player.stop()
 
 	# Reset targets hit from previous swing
 	reset_hit_targets()

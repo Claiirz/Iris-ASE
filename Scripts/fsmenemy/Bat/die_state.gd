@@ -28,7 +28,7 @@ func enter() -> void:
 				child.set_deferred("disabled", true)
 
 	# 4. Spawn loot drops & give ammo
-	if "dropped_sword_scene" in enemy and enemy.dropped_sword_scene and randf() <= 0.5:
+	if "dropped_sword_scene" in enemy and enemy.dropped_sword_scene and randf() <= 0.01:
 		var drop = enemy.dropped_sword_scene.instantiate()
 		drop.global_position = enemy.global_position
 		enemy.get_tree().current_scene.call_deferred("add_child", drop)

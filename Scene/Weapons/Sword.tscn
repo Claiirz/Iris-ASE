@@ -161,12 +161,14 @@ root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_liw1m")
 
 [node name="SlashSprite" type="Sprite2D" parent="." unique_id=1759495289]
+visible = false
 texture_filter = 1
 position = Vector2(-0.32422113, 0)
 scale = Vector2(0.75781256, 1.6250001)
 texture = ExtResource("2_p73jl")
 offset = Vector2(33.5, 0)
 hframes = 3
+frame = 2
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=173766647]
 position = Vector2(9, 0.99999994)
@@ -178,6 +180,7 @@ collision_mask = 4
 texture_filter = 1
 position = Vector2(7, -1)
 shape = SubResource("CapsuleShape2D_4r3jh")
+disabled = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1260688405]
 stream = ExtResource("4_lutwn")

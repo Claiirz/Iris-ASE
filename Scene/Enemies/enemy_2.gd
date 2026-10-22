@@ -34,6 +34,7 @@ var is_frozen: bool = false # Keeps time-stop momentum locked at zero
 # --- LOOT DROP TESTING ---
 @export var item_to_drop_scene: PackedScene
 @export var possible_drops: Array[UpgradeData] = [] # Drag upgrades here in Inspector
+@export_range(0.0, 1.0) var item_drop_chance: float = 0.25
 
 # --- LOOT & XP DROPS ---
 @export var xp_orb_scene: PackedScene         # Drag XpOrb.tscn here in Inspector
@@ -251,7 +252,8 @@ func _drop_random_item() -> void:
 	call_deferred("_spawn_dropped_item")
 
 func _spawn_dropped_item() -> void:
-	if item_to_drop_scene and not possible_drops.is_empty():
+	# 1. Spawn Item Upgrade (Now with a drop chance!)
+	if item_to_drop_scene and not possible_drops.is_empty() and randf() <= item_drop_chance:
 		var item_instance = item_to_drop_scene.instantiate() as Node2D
 		if item_instance:
 			item_instance.global_position = global_position
@@ -262,6 +264,7 @@ func _spawn_dropped_item() -> void:
 				item_instance.resource = selected_drop
 			get_tree().current_scene.add_child(item_instance)
 
+	# 2. Spawn XP Orb (This still drops 100% of the time)
 	if xp_orb_scene:
 		var xp_instance = xp_orb_scene.instantiate() as Node2D
 		if xp_instance:

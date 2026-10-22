@@ -73,6 +73,8 @@ var current_arrows: int
 @export var dropped_sword_scene: PackedScene
 @export var default_sword_scene: PackedScene
 var equipped_sword_scene: PackedScene
+signal health_changed(new_health: float)
+@export var death_screen_scene: PackedScene
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -414,10 +416,13 @@ func swap_sword(new_sword_scene: PackedScene, drop_position: Vector2) -> void:
 
 func take_damage(amount: int) -> void:
 	if is_dead or is_invulnerable: return
-
+	
 	if stats:
 		stats.health -= max(1, amount - stats.current_defense)
 		print("Player took damage! Current HP: ", stats.health)
+		
+		# --> NEW: Tell the health bar that the health just changed
+		health_changed.emit(stats.health)
 
 	start_invincibility()
 	flash_hit_effect()
@@ -447,19 +452,38 @@ func die() -> void:
 	if is_dead: return
 	is_dead = true
 	
-	get_tree().paused = false
-	Engine.time_scale = 1.0
 	set_physics_process(false)
 	
-	if has_node("CollisionShape2D"): $CollisionShape2D.set_deferred("disabled", true)
-	if sword: sword.visible = false
+	if has_node("CollisionShape2D"): 
+		$CollisionShape2D.set_deferred("disabled", true)
+	if sword: 
+		sword.visible = false
 
+	# Play the death fade effect
 	var death_tween = create_tween()
 	death_tween.tween_property(animated_sprite, "modulate", COLOR_DEAD, 0.2)
 	death_tween.tween_property(animated_sprite, "modulate:a", 0.0, 0.5)
+	
+	# Spawn the death screen ONLY after the player sprite finishes fading
 	death_tween.finished.connect(func():
-		GameManager.reset_run()
-		get_tree().reload_current_scene()
+		if death_screen_scene:
+			var death_screen = death_screen_scene.instantiate()
+			
+			# Add to root so it sits on top of everything
+			get_tree().root.add_child(death_screen) 
+			
+			# Fetch stats directly from the GameManager singleton
+			var current_floor = GameManager.current_floor if "current_floor" in GameManager else 1
+			var time_played_seconds = GameManager.time_played if "time_played" in GameManager else 0
+			
+			var mins = int(time_played_seconds) / 60
+			var secs = int(time_played_seconds) % 60
+			var time_string = "%02d:%02d" % [mins, secs]
+			
+			death_screen.set_stats(current_floor, time_string)
+			
+			# Hide the remaining player node completely
+			hide()
 	)
 
 func look_at_mouse() -> void:

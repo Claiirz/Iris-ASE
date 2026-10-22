@@ -204,7 +204,6 @@ avoidance_enabled = true
 radius = 16.0
 avoidance_layers = 0
 avoidance_mask = 2
-debug_enabled = true
 
 [node name="FSM" type="Node" parent="." unique_id=481096503 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_80xxg")

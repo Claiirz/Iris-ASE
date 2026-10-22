@@ -441,8 +441,6 @@ whirlwind_scene = ExtResource("3_g41pc")
 metadata/_edit_group_ = true
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1432108687]
-position = Vector2(0.005, 0)
-rotation = -1.3177236
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D" unique_id=173404010]
 texture_filter = 1
