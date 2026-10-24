@@ -49,30 +49,20 @@ func _ready() -> void:
 	original_color = modulate
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 	
-	# ==========================================
-	# UNIFIED STATS SETUP (Only do this ONCE)
-	# ==========================================
 	if get("stats") and stats:
-		# 1. Duplicate the stats resource
+
 		stats = stats.duplicate()
-		
-		# 2. Apply the Hard Mode difficulty multiplier (2.5x)
 		stats.difficulty_modifier = GameManager.difficulty_multiplier
-		
-		# 3. Setup stats with the difficulty modifier applied
 		stats.setup_stats()
 		
-		# 4. Apply Floor Multiplier on top of the difficulty modifier
 		var floor_mult: float = 1.0 + ((GameManager.current_floor - 1) * 0.2)
 		stats.current_max_health = int(stats.current_max_health * floor_mult)
 		stats.current_attack = int(stats.current_attack * floor_mult)
 		
-		# 5. Set current health to the final calculated max health
 		stats.health = stats.current_max_health
 		if stats.health <= 0:
 			stats.health = stats.current_max_health
-		
-		# 6. Connect Signals (Ensure your script has either `die` or `_on_health_depleted`)
+
 		if not stats.health_depleted.is_connected(die):
 			stats.health_depleted.connect(die) 
 			
@@ -150,24 +140,21 @@ func _on_health_changed(cur_hp: int, max_hp: int) -> void:
 
 func _play_hurt_sound() -> void:
 	if hurt_sfx and hurt_sfx.stream:
-		# Add slight pitch variation so taking rapid hits doesn't sound repetitive
+	
 		hurt_sfx.pitch_scale = randf_range(0.85, 1.15)
 		hurt_sfx.play()
 		
 func _dead_hurt_sound() -> void:
 	if dead_sfx:
-		# 1. Unparent dead_sfx so queue_free() on the enemy won't stop it
+		
 		remove_child(dead_sfx)
 		get_tree().current_scene.add_child(dead_sfx)
 		
-		# 2. Keep the sound positioned where the enemy died
 		dead_sfx.global_position = global_position
 		
-		# 3. Play the audio with slight pitch variation
 		dead_sfx.pitch_scale = randf_range(0.9, 1.1)
 		dead_sfx.play()
 		
-		# 4. Automatically free the audio player node once playback ends
 		dead_sfx.finished.connect(dead_sfx.queue_free)
 
 func take_damage(amount: int, is_crit: bool = false) -> void:
@@ -252,7 +239,7 @@ func _drop_random_item() -> void:
 	call_deferred("_spawn_dropped_item")
 
 func _spawn_dropped_item() -> void:
-	# 1. Spawn Item Upgrade (Now with a drop chance!)
+
 	if item_to_drop_scene and not possible_drops.is_empty() and randf() <= item_drop_chance:
 		var item_instance = item_to_drop_scene.instantiate() as Node2D
 		if item_instance:
@@ -264,7 +251,7 @@ func _spawn_dropped_item() -> void:
 				item_instance.resource = selected_drop
 			get_tree().current_scene.add_child(item_instance)
 
-	# 2. Spawn XP Orb (This still drops 100% of the time)
+	# Spawn XP Orb
 	if xp_orb_scene:
 		var xp_instance = xp_orb_scene.instantiate() as Node2D
 		if xp_instance:

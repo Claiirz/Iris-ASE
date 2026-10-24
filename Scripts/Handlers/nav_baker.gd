@@ -1,7 +1,7 @@
 extends NavigationRegion2D
 
 @export_group("Dependencies")
-@export var object_layer: TileMapLayer # Drag Object layer here.
+@export var object_layer: TileMapLayer
 
 @export_group("Grid Dimensions")
 @export var map_width: int = 150

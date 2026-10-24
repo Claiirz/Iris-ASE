@@ -330,9 +330,7 @@ func die() -> void:
 		return
 
 	is_dead = true
-	
 	remove_from_group("enemies")
-	
 	# --- NOTIFY SPAWNER OF KILL ---
 	var spawner = get_tree().get_first_node_in_group("spawner")
 	if spawner and spawner.has_method("notify_enemy_killed"):
@@ -348,7 +346,6 @@ func die() -> void:
 		elif fsm.has_method("change_state"):
 			fsm.change_state("die")
 		
-		# Fallback cleanup timer in case FSM state fails to queue_free
 		get_tree().create_timer(1.5).timeout.connect(func():
 			if is_instance_valid(self):
 				queue_free()
@@ -374,7 +371,6 @@ func _on_screen_entered() -> void:
 
 
 func _on_screen_exited() -> void:
-	# Keep physics active so enemies pathfind toward screen instead of freezing!
 	if animated_sprite:
 		animated_sprite.pause()
 

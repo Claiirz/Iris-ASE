@@ -1,6 +1,58 @@
 [gd_scene format=3 uid="uid://8vb8b3a22ikb"]
 
 [ext_resource type="Script" uid="uid://ca37xdwqelou7" path="res://Scripts/main_menu.gd" id="1_06t4h"]
+[ext_resource type="Texture2D" uid="uid://lgtuaht5onl" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/bg_01_sky.png" id="2_ltq12"]
+[ext_resource type="Texture2D" uid="uid://koy54axjo3uf" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/bg_02_mountains.png" id="3_2r1um"]
+[ext_resource type="Texture2D" uid="uid://d3cni1sehmngb" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/bg_03_jungle.png" id="4_8v54x"]
+[ext_resource type="Texture2D" uid="uid://deekiefs2ga5x" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/bg_04_ruins.png" id="5_4rhbj"]
+[ext_resource type="Texture2D" uid="uid://b26f4d2s3crhp" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/bg_05_portal.png" id="6_6oknl"]
+[ext_resource type="Texture2D" uid="uid://dyk6jvlq62cfc" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/bg_05b_portal_glow.png" id="7_ik20c"]
+[ext_resource type="Texture2D" uid="uid://yjrpexoih427" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/bg_06_foreground.png" id="8_w8jo4"]
+[ext_resource type="Texture2D" uid="uid://btxu0x3oiftn8" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/bg_07_legibility_gradient.png" id="9_6wp1i"]
+[ext_resource type="Script" uid="uid://c1um1r43oalb0" path="res://Scene/UI/v_box_container.gd" id="10_4rhbj"]
+[ext_resource type="Texture2D" uid="uid://d3odkpas0rvmw" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_normal_9slice.png" id="10_6bwqe"]
+[ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="11_6oknl"]
+[ext_resource type="Texture2D" uid="uid://cyc1cuq2q1ar6" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_pressed_9slice.png" id="11_e4gx1"]
+[ext_resource type="Texture2D" uid="uid://b2dui7gya5qrv" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_hover_9slice.png" id="12_bmtta"]
+[ext_resource type="Texture2D" uid="uid://bn7kafy5d1n1a" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_disabled_9slice.png" id="13_xe4qa"]
+[ext_resource type="Texture2D" uid="uid://brqfxupyf68je" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_focus_9slice.png" id="14_2r1um"]
+[ext_resource type="Texture2D" uid="uid://d1ktpeqabctmx" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/title_logo.png" id="17_6oknl"]
+[ext_resource type="Texture2D" uid="uid://dhrm1f45nt7u5" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/selector_arrow.png" id="18_ik20c"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u2m2a"]
+texture = ExtResource("10_6bwqe")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4r3jh"]
+texture = ExtResource("11_e4gx1")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_875wk"]
+texture = ExtResource("12_bmtta")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jsjvo"]
+texture = ExtResource("13_xe4qa")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lcof7"]
+texture = ExtResource("14_2r1um")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
 [node name="Main Menu" type="Node2D" unique_id=1390517236]
 script = ExtResource("1_06t4h")
@@ -8,18 +60,75 @@ script = ExtResource("1_06t4h")
 [node name="Control" type="Control" parent="." unique_id=896848286]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 480.0
+offset_bottom = 270.0
 
-[node name="Start" type="Button" parent="Control" unique_id=2109982512]
+[node name="Bg01_Sky" type="TextureRect" parent="Control" unique_id=172449116]
+texture_filter = 1
 layout_mode = 0
-offset_left = 224.0
-offset_top = 131.0
-offset_right = 270.0
-offset_bottom = 162.0
-text = "Start"
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("2_ltq12")
+expand_mode = 1
+
+[node name="Bg02_Mountains" type="TextureRect" parent="Control" unique_id=773738449]
+texture_filter = 1
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("3_2r1um")
+expand_mode = 1
+
+[node name="Bg03_Jungle" type="TextureRect" parent="Control" unique_id=1089751766]
+texture_filter = 1
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 269.0
+texture = ExtResource("4_8v54x")
+expand_mode = 1
+
+[node name="Bg04_Ruins" type="TextureRect" parent="Control" unique_id=1312256015]
+texture_filter = 1
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("5_4rhbj")
+expand_mode = 1
+
+[node name="Bg05_Portal" type="TextureRect" parent="Control" unique_id=933653656]
+texture_filter = 1
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 269.0
+texture = ExtResource("6_6oknl")
+expand_mode = 1
+
+[node name="Bg05b_Portal" type="TextureRect" parent="Control" unique_id=1230051822]
+texture_filter = 1
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("7_ik20c")
+expand_mode = 1
+
+[node name="Bg06_Foreground" type="TextureRect" parent="Control" unique_id=37046544]
+texture_filter = 1
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 269.0
+texture = ExtResource("8_w8jo4")
+expand_mode = 1
+
+[node name="Bg07_LegibilityGradient" type="TextureRect" parent="Control" unique_id=735515989]
+texture_filter = 1
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("9_6wp1i")
+expand_mode = 1
 
 [node name="Quit" type="Button" parent="Control" unique_id=419049192]
+visible = false
 layout_mode = 0
 offset_left = 227.0
 offset_top = 192.0
@@ -27,5 +136,114 @@ offset_right = 269.0
 offset_bottom = 223.0
 text = "Quit"
 
-[connection signal="pressed" from="Control/Start" to="." method="_on_start_pressed"]
+[node name="Start" type="Button" parent="Control" unique_id=2109982512]
+visible = false
+layout_mode = 0
+offset_left = 224.0
+offset_top = 131.0
+offset_right = 270.0
+offset_bottom = 162.0
+text = "Start"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=892470098 node_paths=PackedStringArray("selector_arrow")]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 86.0
+offset_right = 155.0
+offset_bottom = 191.0
+theme_override_constants/separation = 11
+script = ExtResource("10_4rhbj")
+selector_arrow = NodePath("../../SelectorArrow")
+
+[node name="START" type="Button" parent="Control/VBoxContainer" unique_id=1282665712]
+texture_filter = 1
+custom_minimum_size = Vector2(128, 24)
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/icon_max_width = 0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("11_6oknl")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_u2m2a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_4r3jh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_875wk")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_jsjvo")
+theme_override_styles/focus = SubResource("StyleBoxTexture_lcof7")
+text = "START"
+
+[node name="CONTINUE" type="Button" parent="Control/VBoxContainer" unique_id=127171994]
+texture_filter = 1
+custom_minimum_size = Vector2(128, 24)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_6oknl")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_u2m2a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_4r3jh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_875wk")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_jsjvo")
+theme_override_styles/focus = SubResource("StyleBoxTexture_lcof7")
+disabled = true
+text = "CONTINUE"
+
+[node name="SETTING" type="Button" parent="Control/VBoxContainer" unique_id=975151411]
+texture_filter = 1
+custom_minimum_size = Vector2(128, 24)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_6oknl")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_u2m2a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_4r3jh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_875wk")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_jsjvo")
+theme_override_styles/focus = SubResource("StyleBoxTexture_lcof7")
+text = "SETTINGS"
+
+[node name="QUIT" type="Button" parent="Control/VBoxContainer" unique_id=899421711]
+texture_filter = 1
+custom_minimum_size = Vector2(128, 24)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_6oknl")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_u2m2a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_4r3jh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_875wk")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_jsjvo")
+theme_override_styles/focus = SubResource("StyleBoxTexture_lcof7")
+text = "QUIT"
+
+[node name="TitleLogo" type="Sprite2D" parent="." unique_id=2083433543]
+texture_filter = 1
+position = Vector2(124.14444, 42.625)
+scale = Vector2(0.73888886, 0.73888886)
+texture = ExtResource("17_6oknl")
+
+[node name="SelectorArrow" type="TextureRect" parent="." unique_id=1510084283]
+texture_filter = 1
+offset_right = 8.0
+offset_bottom = 8.0
+texture = ExtResource("18_ik20c")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=110732199]
+offset_left = 34.0
+offset_top = 260.0
+offset_right = 122.0
+offset_bottom = 264.0
+theme_override_colors/default_color = Color(0.36862746, 0.34901962, 0.3254902, 1)
+theme_override_fonts/normal_font = ExtResource("11_6oknl")
+theme_override_font_sizes/normal_font_size = 3
+text = "V0.1 KELOMPOK IRIS - ASE LAB"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="." unique_id=1487578071]
+offset_left = 41.0
+offset_top = 58.0
+offset_right = 132.0
+offset_bottom = 64.0
+theme_override_colors/default_color = Color(0.36862746, 0.34901962, 0.3254902, 1)
+theme_override_fonts/normal_font = ExtResource("11_6oknl")
+theme_override_font_sizes/normal_font_size = 3
+text = "NOTHING IS PERMANENT."
+
 [connection signal="pressed" from="Control/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Control/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/START" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/QUIT" to="." method="_on_quit_pressed"]
