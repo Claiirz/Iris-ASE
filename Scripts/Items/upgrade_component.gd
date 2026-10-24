@@ -6,6 +6,7 @@ signal stats_updated
 var upgrade_stacks: Dictionary = {}
 @onready var player: CharacterBody2D = owner as CharacterBody2D
 signal upgrade_added(upgrade: UpgradeData, total_stacks: int)
+var upgrade_resources: Dictionary = {}
 
 func apply_upgrade(upgrade: UpgradeData) -> void:
 	if not upgrade:
@@ -20,6 +21,8 @@ func apply_upgrade(upgrade: UpgradeData) -> void:
 
 	# Sync visuals (sword attack speed animation)
 	sync_player_visuals()
+	
+	upgrade_resources[upgrade.type] = upgrade
 	
 	upgrade_added.emit(upgrade, upgrade_stacks[item_type])
 

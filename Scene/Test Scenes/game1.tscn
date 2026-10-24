@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://udrks5jt140q" path="res://Scene/Test Scenes/game_1.gd" id="1_5b5qi"]
 [ext_resource type="Texture2D" uid="uid://bhv4pq1as4sqg" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/full tilemap.png" id="1_x4ggo"]
 [ext_resource type="PackedScene" uid="uid://dxwe8lbeex71e" path="res://Scene/portal.tscn" id="2_cxl5n"]
+[ext_resource type="Texture2D" uid="uid://s2htn1nejg68" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/tiles/Tileset-frame0.png" id="3_stoq0"]
 [ext_resource type="PackedScene" uid="uid://bdqaswtl5odrv" path="res://Scene/Enemies/enemy_1.tscn" id="3_uiav5"]
 [ext_resource type="Script" uid="uid://btgpbshlgbuot" path="res://Scripts/Handlers/stats.gd" id="4_x4pud"]
 [ext_resource type="Script" uid="uid://dxhwwc3no1phl" path="res://Scripts/Handlers/EnemySpawner.gd" id="5_tefqq"]
@@ -15,6 +16,7 @@
 [ext_resource type="Script" uid="uid://dyr51h120vre2" path="res://Scripts/threat_system.gd" id="13_tk7u7"]
 [ext_resource type="AudioStream" uid="uid://cnkcopcnp4ghm" path="res://Asset/sfx/enemysfx/mleckert82-spooky-ambience-212885.mp3" id="14_tk7u7"]
 [ext_resource type="AudioStream" uid="uid://446rms34bt74" path="res://Asset/sfx/enemysfx/twinfishaudio-soundtrack-3-chase-scene-233359.mp3" id="15_6hp7a"]
+[ext_resource type="PackedScene" uid="uid://dhdo04ayntpkk" path="res://Scene/Enemies/stalker.tscn" id="15_bt3b4"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eow3j"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -93,12 +95,159 @@ texture = ExtResource("1_x4ggo")
 2:7/0 = 0
 5:7/0 = 0
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_stoq0"]
+polygon = PackedVector2Array(8, -4.873226, 6.0915337, -2.74119, 4.9747524, -0.10152531, 3.9594965, 3.0457659, 3.9594965, 8, 8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bt3b4"]
+polygon = PackedVector2Array(3.9594965, -8, 1.0152559, 1.4213572, 1.0152559, 3.3503428, 4.2640734, 6.903737, 8, 6.903737, 8, -8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_cyoqj"]
+polygon = PackedVector2Array(-8, -4.9747515, -6.193058, 0.81220436, -4.9747515, 8, -8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_462cf"]
+polygon = PackedVector2Array(-5.177803, -8, -4.061022, 0.10152531, -3.9594965, 3.5533943, -8, 6.903737, -8, -8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0tjno"]
+polygon = PackedVector2Array(8, -7.0052624, 4.9747524, -5.177803, 4.061022, 0.40610218, 3.2488174, 4.9747515, 3.1472921, 8, 8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_sv7fh"]
+polygon = PackedVector2Array(3.1472921, -8, 0.20305061, 2.2335625, 1.9289856, 4.467124, 4.5686493, 5.9900084, 8, 5.888482, 8, -8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_nfpxx"]
+polygon = PackedVector2Array(-7.106788, -8, -5.177803, -4.6701756, -4.264073, -0.20305157, -4.061022, 8, -3.1472921, 5.5839043, 0.40610218, -2.8427162, 1.015255, 5.3808537, 2.030511, 8, -8, 8, -8, -8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0c8gp"]
+polygon = PackedVector2Array(1.9289856, -8, 4.873226, 1.725934, -0.30457592, 4.7717, -8, 5.9900074, -8, -8, -3.9594955, -8, -3.5533934, -8, -3.3503428, -6.8022118, -2.5381384, -8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_18myq"]
+texture = ExtResource("3_stoq0")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+8:8/0 = 0
+9:8/0 = 0
+10:8/0 = 0
+11:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+6:9/0 = 0
+7:9/0 = 0
+8:9/0 = 0
+9:9/0 = 0
+10:9/0 = 0
+11:9/0 = 0
+0:10/0 = 0
+0:10/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_stoq0")
+0:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -5.2159023, 5.5756207, -0.8992939, 3.956892, 8, 8, 8)
+1:10/0 = 0
+1:10/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_cyoqj")
+1:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -5.3957615, -5.5756207, 3.5971756, -4.6763268, 8, -8, 8)
+2:10/0 = 0
+2:10/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_0tjno")
+2:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 5.3957615, -5.036044, 4.136751, -0.17985725, 3.4173164, 5.036045, 3.4173164, 8, 8, 8)
+3:10/0 = 0
+3:10/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_nfpxx")
+3:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -5.5756207, -4.6763268, -4.6763268, -0.5395756, -4.136751, 8, 0.35971832, -2.3381624, 1.978445, 8, -8, 8)
+0:11/0 = 0
+0:11/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_bt3b4")
+0:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(3.5971737, -8, 0.8992939, 4.3166103, 8, 8, 8, -8)
+1:11/0 = 0
+1:11/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_462cf")
+1:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.856186, -8, -4.136751, 4.136751, -8, 8, -8, -8)
+2:11/0 = 0
+2:11/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_sv7fh")
+2:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(2.877739, -8, 0.35971832, 1.978447, 4.4964676, 5.3957634, 8, 5.5756207, 8, -8)
+3:11/0 = 0
+3:11/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_0c8gp")
+3:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 1.7985878, -8, 4.6763268, 0.5395775, 0.35971832, 3.956892, -8, 5.5756207)
+
 [sub_resource type="TileSet" id="TileSet_4r3jh"]
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 5
 physics_layer_0/collision_mask = 0
 navigation_layer_0/layers = 2
 sources/0 = SubResource("TileSetAtlasSource_e2o6t")
+sources/2 = SubResource("TileSetAtlasSource_18myq")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ryrav"]
 vertices = PackedVector2Array(470, 262, -326, 262, -326, -358, 470, -358)
@@ -106,16 +255,27 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(480, -368, 480, 272, -336, 272, -336, -368)])
 source_geometry_mode = 2
 
-[sub_resource type="Resource" id="Resource_wluyb"]
+[sub_resource type="Resource" id="Resource_stoq0"]
 resource_local_to_scene = true
 script = ExtResource("4_x4pud")
 base_attack = 1
 metadata/_custom_type_script = "uid://btgpbshlgbuot"
 
+[sub_resource type="Gradient" id="Gradient_stoq0"]
+offsets = PackedFloat32Array(0.5409836, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.1882353)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4r3jh"]
+gradient = SubResource("Gradient_stoq0")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wluyb"]
 blend_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_wluyb"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_u2m2a"]
 gradient = SubResource("Gradient_wluyb")
@@ -148,7 +308,7 @@ z_index = -1
 script = ExtResource("7_uiav5")
 ground_layer = NodePath("../TileMap/Ground")
 object_generator = NodePath("../ObjectGenerator")
-floor_tiles = Array[Vector2i]([Vector2i(2, 1), Vector2i(3, 1), Vector2i(2, 2)])
+pattern_base_coords = Vector2i(8, 0)
 
 [node name="ObjectGenerator" type="Node2D" parent="." unique_id=1391370952 node_paths=PackedStringArray("ground_layer", "object_layer", "nav_region")]
 z_index = -1
@@ -157,6 +317,9 @@ ground_layer = NodePath("../TileMap/Ground")
 object_layer = NodePath("../TileMap/Object")
 density = 0.02
 use_noise_clustering = true
+border_tile_coords = Vector2i(6, 3)
+rock_base_coords = Array[Vector2i]([Vector2i(0, 10), Vector2i(2, 10)])
+rock_sizes_in_tiles = Array[Vector2i]([Vector2i(2, 2), Vector2i(2, 2)])
 nav_region = NodePath("../NavigationRegion2D")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=99220952 node_paths=PackedStringArray("object_layer")]
@@ -174,16 +337,18 @@ ground_layer = NodePath("../TileMap/Ground")
 player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=1182116428 instance=ExtResource("8_b2lmk")]
-stats = SubResource("Resource_wluyb")
+stats = SubResource("Resource_stoq0")
 
 [node name="BossUI" parent="." unique_id=2138250990 instance=ExtResource("9_xnt2d")]
 
 [node name="ThreatSystem" type="Node" parent="." unique_id=346441026 node_paths=PackedStringArray("environment_modulate", "vignette", "threat_sound", "threat_music")]
 script = ExtResource("13_tk7u7")
 environment_modulate = NodePath("../CanvasModulate")
-vignette = NodePath("../CanvasLayer/Vignette")
+vignette = NodePath("../CanvasLayer/ThreatVignette")
 threat_sound = NodePath("ThreatMaxSound")
 threat_music = NodePath("ThreatMaxMusic")
+stalker_scene = ExtResource("15_bt3b4")
+stalker_spawn_delay = 1.0
 
 [node name="ThreatMaxSound" type="AudioStreamPlayer" parent="ThreatSystem" unique_id=278346592]
 stream = ExtResource("14_tk7u7")
@@ -198,7 +363,13 @@ volume_db = -11.203
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=564275685]
 layer = 20
 
-[node name="Vignette" type="TextureRect" parent="CanvasLayer" unique_id=2092484206]
+[node name="SubtleVignette" type="TextureRect" parent="CanvasLayer" unique_id=1526416231]
+offset_right = 480.0
+offset_bottom = 270.0
+texture = SubResource("GradientTexture2D_4r3jh")
+expand_mode = 1
+
+[node name="ThreatVignette" type="TextureRect" parent="CanvasLayer" unique_id=2092484206]
 modulate = Color(0.99969536, 0.99969536, 0.99969536, 0)
 material = SubResource("CanvasItemMaterial_wluyb")
 anchors_preset = 15

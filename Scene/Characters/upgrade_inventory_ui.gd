@@ -10,9 +10,29 @@ func _ready() -> void:
 	if upgrade_component and upgrade_component.has_signal("upgrade_added"):
 		upgrade_component.upgrade_added.connect(_on_upgrade_added)
 		
-		# Optional: Clear placeholder slots from the editor
-		for child in get_children():
-			child.queue_free()
+	# Clear placeholder slots from the editor
+	for child in get_children():
+		child.queue_free()
+
+	# NEW: Wait one frame for the player to fully load, then rebuild the UI
+	call_deferred("_sync_existing_upgrades")
+
+func _sync_existing_upgrades() -> void:
+	if not upgrade_component:
+		return
+		
+	# Fetch BOTH dictionaries from the component
+	var saved_resources = upgrade_component.get("upgrade_resources")
+	var saved_stacks = upgrade_component.get("upgrade_stacks")
+	
+	if saved_resources is Dictionary and saved_stacks is Dictionary:
+		# Loop through the types we have saved
+		for upgrade_type in saved_resources:
+			var resource = saved_resources[upgrade_type]
+			var stacks = saved_stacks[upgrade_type]
+			
+			# Pass the RESOURCE and the STACKS to the UI builder
+			_on_upgrade_added(resource, stacks)
 
 func _on_upgrade_added(upgrade, current_stacks: int) -> void:
 	# If we already have a slot for this item, just update the number

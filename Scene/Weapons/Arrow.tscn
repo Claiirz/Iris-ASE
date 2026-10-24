@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dmgqx01im1pht"]
 
 [ext_resource type="Script" uid="uid://uox1av4e7ad4" path="res://Scripts/arrow.gd" id="1_e81i5"]
-[ext_resource type="Texture2D" uid="uid://py83cvrguste" path="res://Asset/PlaceHolders/placeholder 32x32.png" id="1_wuvox"]
+[ext_resource type="Texture2D" uid="uid://d0re434acu04q" path="res://Scene/Weapons/Arrow_(item)_JE1_BE1.webp" id="2_e81i5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4r3jh"]
 
@@ -13,6 +13,7 @@ position = Vector2(10, 0)
 shape = SubResource("CircleShape2D_4r3jh")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=990327751]
-position = Vector2(5, 0)
-scale = Vector2(1.0625, 0.3125)
-texture = ExtResource("1_wuvox")
+position = Vector2(5, -1.0000008)
+rotation = 0.7853982
+scale = Vector2(0.17499998, 0.1625)
+texture = ExtResource("2_e81i5")

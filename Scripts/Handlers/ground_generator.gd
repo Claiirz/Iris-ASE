@@ -9,11 +9,11 @@ extends Node2D
 @export var map_height: int = 150 # Map Size Y
 
 @export_group("TileSet Configuration")
-@export var source_id: int = 0
+@export var source_id: int = 2
 
-@export var floor_tiles: Array[Vector2i] = [
-	Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0)
-]
+# We replace the random array with the exact location and size of your pattern
+@export var pattern_base_coords: Vector2i = Vector2i(0, 0) # Top-left tile of the 4x4 block in the atlas
+@export var pattern_size: Vector2i = Vector2i(4, 4)
 
 
 func _ready() -> void:
@@ -34,7 +34,14 @@ func generate_floor() -> void:
 	for x in range(-half_w, half_w):
 		for y in range(-half_h, half_h):
 			var cell = Vector2i(x, y)
-			var chosen_tile = floor_tiles.pick_random() if not floor_tiles.is_empty() else Vector2i.ZERO
+			
+			# posmod wraps the coordinates safely into a 0-3 grid loop
+			var offset_x = posmod(x, pattern_size.x)
+			var offset_y = posmod(y, pattern_size.y)
+			
+			# Add the offset to the base atlas coordinate
+			var chosen_tile = pattern_base_coords + Vector2i(offset_x, offset_y)
+			
 			ground_layer.set_cell(cell, source_id, chosen_tile)
 
 	# Trigger Object Spawning

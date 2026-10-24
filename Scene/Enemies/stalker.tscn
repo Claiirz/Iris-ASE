@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://dhdo04ayntpkk"]
+
+[ext_resource type="Texture2D" uid="uid://bkmjmo3d3kbwg" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/enemies/Sprite-stalker.png" id="1_4boq0"]
+[ext_resource type="Script" uid="uid://bspcylx1201qt" path="res://Scene/Enemies/stalker.gd" id="1_4w3a1"]
+[ext_resource type="AudioStream" uid="uid://cue33xg2vh0xr" path="res://Asset/sfx/enemysfx/freesound_community-disturbance_signal_01-101241.mp3" id="3_7fqfe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4w3a1"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fqfe"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxbmm"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(640, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1ax6"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(960, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5pto"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(1280, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y87yn"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(1600, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4p3p"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(1920, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es5xn"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(2240, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c00sd"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(2560, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oha0n"]
+atlas = ExtResource("1_4boq0")
+region = Rect2(2880, 0, 320, 320)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4r3jh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4w3a1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fqfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxbmm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1ax6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5pto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y87yn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4p3p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_es5xn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c00sd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oha0n")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2m2a"]
+
+[sub_resource type="Gradient" id="Gradient_7fqfe"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d1ax6"]
+gradient = SubResource("Gradient_7fqfe")
+fill_to = Vector2(0, 0)
+
+[node name="Stalker" type="Area2D" unique_id=1445539837]
+process_mode = 3
+collision_mask = 2
+script = ExtResource("1_4w3a1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=302881848]
+sprite_frames = SubResource("SpriteFrames_4r3jh")
+autoplay = "default"
+frame_progress = 0.7757294
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=860352819]
+shape = SubResource("RectangleShape2D_u2m2a")
+
+[node name="JumpscareUI" type="CanvasLayer" parent="." unique_id=336882856]
+layer = 10000
+
+[node name="TextureRect" type="TextureRect" parent="JumpscareUI" unique_id=1411077289]
+offset_right = 512.0
+offset_bottom = 512.0
+texture = SubResource("GradientTexture2D_d1ax6")
+
+[node name="ColorRect" type="ColorRect" parent="JumpscareUI" unique_id=759274828]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="JumpscareUI" unique_id=383425592]
+stream = ExtResource("3_7fqfe")
+volume_db = 5.438

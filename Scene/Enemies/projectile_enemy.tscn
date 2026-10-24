@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cci3sme0t5auj"]
 
 [ext_resource type="Script" uid="uid://bgumoi5v37k26" path="res://Scene/Enemies/projectile_enemy.gd" id="1_8qpx5"]
-[ext_resource type="Texture2D" uid="uid://py83cvrguste" path="res://Asset/PlaceHolders/placeholder 32x32.png" id="1_jewcp"]
+[ext_resource type="Texture2D" uid="uid://q8gbueujbhgi" path="res://Asset/PlaceHolders/Slimeball_JE2_BE2.webp" id="2_8qpx5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2m2a"]
 radius = 4.0
@@ -15,6 +15,7 @@ script = ExtResource("1_8qpx5")
 shape = SubResource("CircleShape2D_u2m2a")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=259008522]
-position = Vector2(1.7881393e-07, 1.4901161e-07)
-scale = Vector2(0.18749999, 0.18749999)
-texture = ExtResource("1_jewcp")
+texture_filter = 1
+position = Vector2(0, 4.172325e-07)
+scale = Vector2(0.0625, 0.0625)
+texture = ExtResource("2_8qpx5")

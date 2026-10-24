@@ -14,9 +14,14 @@
 [ext_resource type="Script" uid="uid://dgrm7qhxp3riw" path="res://Scripts/fsmenemy/Bat/telegraph_state.gd" id="6_bf3ho"]
 [ext_resource type="Resource" uid="uid://c3nr8luf274ym" path="res://Resources/Modular/boots.tres" id="7_pjusm"]
 [ext_resource type="Resource" uid="uid://bp10jkald4afc" path="res://Resources/Modular/guitar.tres" id="7_q3670"]
+[ext_resource type="Resource" uid="uid://cj8v4l7x2r5a" path="res://Resources/Modular/crowbar.tres" id="8_8yf06"]
+[ext_resource type="Resource" uid="uid://ec4cjbxqf1xk" path="res://Resources/Modular/cutter.tres" id="9_0ef5i"]
+[ext_resource type="Resource" uid="uid://bgywcxrpl2qi1" path="res://Resources/Modular/gloves.tres" id="10_0s1pb"]
 [ext_resource type="Script" uid="uid://02j3210st2e3" path="res://Scripts/Handlers/mutation_component.gd" id="10_3kujk"]
 [ext_resource type="Script" uid="uid://duu51k5uio6r0" path="res://Scripts/fsmenemy/Bat/die_state.gd" id="11_cmy35"]
+[ext_resource type="Resource" uid="uid://c0ht380bsdwhn" path="res://Resources/Modular/anvil.tres" id="11_kleqx"]
 [ext_resource type="PackedScene" uid="uid://b2c1c464hqjqa" path="res://Scene/xp_orb.tscn" id="11_xmtim"]
+[ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="21_0ef5i"]
 [ext_resource type="AudioStream" uid="uid://cn0cdjirj0yft" path="res://Asset/sfx/enemysfx/slap.wav" id="21_uv7m1"]
 [ext_resource type="AudioStream" uid="uid://51a0wvnrw2bb" path="res://Asset/sfx/enemysfx/splat_quick.wav" id="22_pjusm"]
 
@@ -102,6 +107,7 @@ radius = 4.1666665
 height = 8.333333
 
 [sub_resource type="LabelSettings" id="LabelSettings_u2m2a"]
+font_size = 8
 
 [node name="Enemy1" type="CharacterBody2D" unique_id=1795360975]
 collision_layer = 4
@@ -113,8 +119,9 @@ separation_force = 50.0
 stuck_check_interval = 1.0
 min_moved_distance = 6.0
 item_to_drop_scene = ExtResource("4_q3670")
-possible_drops = Array[ExtResource("5_xmtim")]([ExtResource("7_pjusm"), ExtResource("7_q3670")])
+possible_drops = Array[ExtResource("5_xmtim")]([ExtResource("7_pjusm"), ExtResource("7_q3670"), ExtResource("8_8yf06"), ExtResource("9_0ef5i"), ExtResource("10_0s1pb"), ExtResource("11_kleqx")])
 xp_orb_scene = ExtResource("11_xmtim")
+xp_drop_amount = 10
 
 [node name="HitBox" type="Area2D" parent="." unique_id=354901139]
 collision_layer = 4
@@ -166,9 +173,16 @@ script = ExtResource("6_bf3ho")
 script = ExtResource("11_cmy35")
 
 [node name="HPLabel" type="Label" parent="." unique_id=318942770]
+visible = false
+offset_left = -40.0
+offset_top = -18.0
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = -2.0
+theme_override_fonts/font = ExtResource("21_0ef5i")
+theme_override_font_sizes/font_size = 8
 label_settings = SubResource("LabelSettings_u2m2a")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MutationComponent" type="Node" parent="." unique_id=682851705]
 script = ExtResource("10_3kujk")

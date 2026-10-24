@@ -1,4 +1,4 @@
-extends ProgressBar
+extends TextureProgressBar
 
 func _ready() -> void:
 	# Wait one frame to ensure the player and stats are fully loaded

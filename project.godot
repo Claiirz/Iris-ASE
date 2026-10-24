@@ -25,9 +25,11 @@ GameManager="*uid://b3xr4c0t6wqpp"
 
 window/size/viewport_width=480
 window/size/viewport_height=270
+window/size/mode=3
 window/size/extend_to_title=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+mouse_cursor/custom_image="uid://bftxdsdyodim5"
 
 [editor_plugins]
 

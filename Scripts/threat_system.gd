@@ -20,6 +20,10 @@ extends Node
 @export var threat_sound: AudioStreamPlayer
 @export var threat_music: AudioStreamPlayer
 
+@export_category("Stalker Entity Settings")
+@export var stalker_scene: PackedScene
+@export var stalker_spawn_delay: float = 30.0 # Adjustable spawn time
+
 var player: CharacterBody2D = null
 var current_threat: float = 0.0
 var anchor_position: Vector2 = Vector2.ZERO
@@ -106,6 +110,10 @@ func _trigger_threat_penalty() -> void:
 			boss_instance.tree_exited.connect(_on_boss_defeated)
 	else:
 		push_warning("ThreatSystem Warning: Boss Scene is not assigned in the Inspector!")
+	
+	# NEW: Start the countdown timer for the invincible stalker
+	if stalker_scene:
+		get_tree().create_timer(stalker_spawn_delay).timeout.connect(_spawn_stalker)
 
 func _on_boss_defeated() -> void:
 	is_boss_active = false
@@ -141,3 +149,18 @@ func _flicker_light(light: PointLight2D) -> void:
 
 	if is_instance_valid(light):
 		light.enabled = true
+
+func _spawn_stalker() -> void:
+	# Optional: If the player managed to defeat the boss before the 30 seconds are up, cancel the stalker.
+	# Remove this 'if' block if you want the stalker to spawn even if the boss is dead!
+	if not is_boss_active: 
+		return
+		
+	if player and is_instance_valid(player) and stalker_scene:
+		var stalker = stalker_scene.instantiate() as Node2D
+		
+		# Spawn it far off-screen so the player doesn't see it instantly appear
+		var spawn_offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * 800.0
+		stalker.global_position = player.global_position + spawn_offset
+		
+		get_tree().current_scene.add_child(stalker)

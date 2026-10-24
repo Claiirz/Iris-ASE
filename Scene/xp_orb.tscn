@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b2c1c464hqjqa"]
 
 [ext_resource type="Script" uid="uid://jdry8f2aggna" path="res://Scene/xp_orb.gd" id="1_5ydr8"]
-[ext_resource type="Texture2D" uid="uid://py83cvrguste" path="res://Asset/PlaceHolders/placeholder 32x32.png" id="1_uoxff"]
+[ext_resource type="Texture2D" uid="uid://dudbf5ugaw1ci" path="res://Asset/PlaceHolders/Experience_Orb.png" id="2_5ydr8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2m2a"]
 
@@ -9,7 +9,9 @@
 script = ExtResource("1_5ydr8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1921263388]
-texture = ExtResource("1_uoxff")
+texture_filter = 1
+scale = Vector2(0.17999999, 0.17999999)
+texture = ExtResource("2_5ydr8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=772500442]
 shape = SubResource("CircleShape2D_u2m2a")

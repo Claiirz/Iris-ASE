@@ -10,6 +10,7 @@ var has_saved_data: bool = false
 var difficulty_level: String = "Normal"
 var difficulty_multiplier: float = 1.0 # E.g., 0.75 for Easy, 1.5 for Hard
 
+var saved_upgrade_resources: Dictionary = {}
 # Optional: Reset these inside your existing reset_run() function
 
 func save_player_data(player: CharacterBody2D) -> void:
@@ -40,6 +41,9 @@ func save_player_data(player: CharacterBody2D) -> void:
 
 	has_saved_data = true
 	print("[DEBUG GameManager] Player stats, items, ammo, and weapon saved successfully!")
+	
+	if player.has_node("UpgradeComponent"):
+		saved_upgrade_resources = player.get_node("UpgradeComponent").upgrade_resources.duplicate()
 
 func restore_player_data(player: CharacterBody2D) -> void:
 	if not has_saved_data or not is_instance_valid(player):
@@ -68,6 +72,9 @@ func restore_player_data(player: CharacterBody2D) -> void:
 		player.upgrade_component.set_upgrade_stacks(saved_player_data["upgrade_stacks"])
 
 	print("[DEBUG GameManager] Player stats and items restored on Floor ", current_floor)
+	
+	if player.has_node("UpgradeComponent") and not saved_upgrade_resources.is_empty():
+		player.get_node("UpgradeComponent").upgrade_resources = saved_upgrade_resources.duplicate()
 
 func reset_run() -> void:
 	current_floor = 1

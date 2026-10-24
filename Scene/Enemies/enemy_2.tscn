@@ -15,12 +15,17 @@
 [ext_resource type="Resource" uid="uid://c0ht380bsdwhn" path="res://Resources/Modular/anvil.tres" id="7_m4sbg"]
 [ext_resource type="Resource" uid="uid://ec4cjbxqf1xk" path="res://Resources/Modular/cutter.tres" id="8_b24iy"]
 [ext_resource type="Script" uid="uid://djuky8wksagtj" path="res://Scene/Enemies/ranged_state.gd" id="8_efy2c"]
+[ext_resource type="Resource" uid="uid://bgywcxrpl2qi1" path="res://Resources/Modular/gloves.tres" id="9_2jvfk"]
 [ext_resource type="Script" uid="uid://duu51k5uio6r0" path="res://Scripts/fsmenemy/Bat/die_state.gd" id="9_7b4q2"]
 [ext_resource type="PackedScene" uid="uid://cci3sme0t5auj" path="res://Scene/Enemies/projectile_enemy.tscn" id="9_f7afj"]
+[ext_resource type="Resource" uid="uid://bp10jkald4afc" path="res://Resources/Modular/guitar.tres" id="10_61n4t"]
 [ext_resource type="Script" uid="uid://02j3210st2e3" path="res://Scripts/Handlers/mutation_component.gd" id="10_ruj5p"]
+[ext_resource type="Resource" uid="uid://cj8v4l7x2r5a" path="res://Resources/Modular/crowbar.tres" id="11_ek7iu"]
+[ext_resource type="PackedScene" uid="uid://b2c1c464hqjqa" path="res://Scene/xp_orb.tscn" id="12_61n4t"]
 [ext_resource type="AudioStream" uid="uid://d3t1e2bf6ucbe" path="res://Asset/sfx/enemysfx/slimeshoot.mp3" id="17_0rsd3"]
 [ext_resource type="AudioStream" uid="uid://cn0cdjirj0yft" path="res://Asset/sfx/enemysfx/slap.wav" id="18_7b4q2"]
 [ext_resource type="AudioStream" uid="uid://b3scix6m3qig" path="res://Asset/sfx/enemysfx/slimedead.mp3" id="19_ruj5p"]
+[ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="22_ek7iu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7rq4n"]
 radius = 8.0
@@ -165,13 +170,16 @@ radius = 4.1666665
 height = 8.333333
 
 [sub_resource type="LabelSettings" id="LabelSettings_kyy8y"]
+font_size = 8
 
 [node name="Enemy2" type="CharacterBody2D" unique_id=10258498]
 script = ExtResource("1_nox1f")
 stats = ExtResource("2_la3cr")
 dropped_sword_scene = ExtResource("3_80xxg")
 item_to_drop_scene = ExtResource("4_cjkdp")
-possible_drops = Array[ExtResource("5_7knv5")]([ExtResource("6_0rsd3"), ExtResource("7_m4sbg"), ExtResource("8_b24iy")])
+possible_drops = Array[ExtResource("5_7knv5")]([ExtResource("6_0rsd3"), ExtResource("7_m4sbg"), ExtResource("8_b24iy"), ExtResource("9_2jvfk"), ExtResource("10_61n4t"), ExtResource("11_ek7iu")])
+xp_orb_scene = ExtResource("12_61n4t")
+xp_drop_amount = 25
 
 [node name="HitBox" type="Area2D" parent="." unique_id=5357137]
 collision_layer = 4
@@ -220,9 +228,15 @@ script = ExtResource("8_efy2c")
 projectile_scene = ExtResource("9_f7afj")
 
 [node name="HPLabel" type="Label" parent="." unique_id=1368962101]
-offset_right = 40.0
-offset_bottom = 23.0
+visible = false
+offset_left = -20.0
+offset_top = -17.0
+offset_right = 20.0
+offset_bottom = -9.0
+theme_override_fonts/font = ExtResource("22_ek7iu")
+theme_override_font_sizes/font_size = 8
 label_settings = SubResource("LabelSettings_kyy8y")
+horizontal_alignment = 1
 
 [node name="MutationComponent" type="Node" parent="." unique_id=275131682]
 script = ExtResource("10_ruj5p")
