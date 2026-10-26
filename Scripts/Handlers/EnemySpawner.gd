@@ -7,8 +7,8 @@ extends Node2D
 
 @export_group("Spawn Settings")
 @export var min_spawn_distance: float = 250.0          # Off-camera distance threshold
-@export var min_timer_delay: float = 2               # Minimum wave interval (seconds)
-@export var max_timer_delay: float = 5             # Maximum wave interval (seconds)
+@export var min_timer_delay: float = 0.3               # Minimum wave interval (seconds)
+@export var max_timer_delay: float = 2             # Maximum wave interval (seconds)
 @export var min_group_spawn: int = 2                   # Minimum enemies per wave
 @export var max_group_spawn: int = 3                   # Maximum enemies per wave
 @export var max_active_on_screen: int = 30           # Prevents lagging by limiting simultaneous active enemies

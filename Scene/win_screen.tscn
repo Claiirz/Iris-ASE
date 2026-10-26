@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bryuc0ijnob4s"]
+
+[ext_resource type="Script" uid="uid://c75wl5kdrbps2" path="res://Scene/win_screen.gd" id="1_kafqp"]
+
+[node name="WinScreen" type="Control" unique_id=586075348]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_kafqp")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=641550559]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 441.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1139173190]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 73.0
+offset_right = 286.0
+offset_bottom = 96.0
+text = "YOU WON?"
+
+[node name="Button" type="Button" parent="." unique_id=1942682879]
+layout_mode = 0
+offset_left = 204.0
+offset_top = 148.0
+offset_right = 275.0
+offset_bottom = 179.0
+text = "RETURN"

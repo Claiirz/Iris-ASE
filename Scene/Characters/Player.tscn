@@ -23,9 +23,9 @@
 [ext_resource type="AudioStream" uid="uid://cp1wmi4nlmdhg" path="res://Asset/sfx/playersfx/arrowshoot.mp3" id="20_rp6ye"]
 [ext_resource type="Script" uid="uid://exqwr7ibxtx6" path="res://Scene/Characters/TargetIndicators.gd" id="21_ns8yf"]
 [ext_resource type="AudioStream" uid="uid://bjtol0rwad3j7" path="res://Asset/sfx/playersfx/dash.mp3" id="21_x67wc"]
-[ext_resource type="Texture2D" uid="uid://py83cvrguste" path="res://Asset/PlaceHolders/placeholder 32x32.png" id="22_ns8yf"]
 [ext_resource type="Script" uid="uid://c82s6uk1e6a0u" path="res://Scene/Characters/upgrade_inventory_ui.gd" id="23_beqhx"]
 [ext_resource type="PackedScene" uid="uid://c2xo2xrucwox4" path="res://Scene/UI/upgrade_slot_ui.tscn" id="24_kqenx"]
+[ext_resource type="Texture2D" uid="uid://dhrm1f45nt7u5" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/selector_arrow.png" id="25_2f0nu"]
 [ext_resource type="Script" uid="uid://d3ihiauiopdqa" path="res://Scene/Test Scenes/health_bar.gd" id="25_dq7si"]
 [ext_resource type="Texture2D" uid="uid://yw3a53ma8bcs" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/hp_bar_under.png" id="27_2f0nu"]
 [ext_resource type="Texture2D" uid="uid://cyhxs5ker38x4" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/hp_bar_over.png" id="28_ab81y"]
@@ -393,16 +393,16 @@ stream = ExtResource("20_rp6ye")
 stream = ExtResource("21_x67wc")
 
 [node name="TargetIndicator" type="Node2D" parent="." unique_id=1676520933 node_paths=PackedStringArray("enemy_arrow", "portal_arrow")]
-visible = false
 script = ExtResource("21_ns8yf")
 enemy_arrow = NodePath("EnemyArrow")
 portal_arrow = NodePath("PortalArrow")
 
 [node name="EnemyArrow" type="Sprite2D" parent="TargetIndicator" unique_id=318342516]
-texture = ExtResource("22_ns8yf")
+texture = ExtResource("25_2f0nu")
 
 [node name="PortalArrow" type="Sprite2D" parent="TargetIndicator" unique_id=1969046463]
-texture = ExtResource("22_ns8yf")
+texture_filter = 1
+texture = ExtResource("25_2f0nu")
 
 [node name="UpgradeInventoryUI" type="HFlowContainer" parent="." unique_id=839661863 node_paths=PackedStringArray("upgrade_component")]
 texture_filter = 1

@@ -12,27 +12,19 @@ func _on_entity_entered(entity: Node2D) -> void:
 		print("[DEBUG Portal] Player detected via ", entity.name, "! Triggering floor transition...")
 		set_deferred("monitoring", false)
 		
-		# FIX: Defer the transition logic so it runs safely AFTER the physics step
+		# Defer the transition logic so it runs safely AFTER the physics step
 		call_deferred("_change_floor", player_node)
 	else:
 		print("[DEBUG Portal] Ignored non-player contact.")
 
-# Moved the transition logic into its own safely-deferred function
 func _change_floor(player_node: Node2D) -> void:
-	# 1. Save player inventory/stats before reloading scene
+	# 1. Save player inventory/stats before changing scenes
 	GameManager.save_player_data(player_node)
 	
-	# 2. Advance floor and reload level
-	if GameManager.current_floor < GameManager.max_floors:
-		GameManager.current_floor += 1
-		print("[DEBUG Portal] Advancing to Floor: ", GameManager.current_floor)
-		get_tree().reload_current_scene()
-	else:
-		print("[DEBUG Portal] All Floors Cleared! Victory!")
-		GameManager.reset_run()
-		get_tree().reload_current_scene()
+	# 2. Hand everything over to the GameManager's load_next_floor logic
+	GameManager.load_next_floor()
 
-func _find_player_node(node: Node) -> Node2D:
+func _find_player_node(node: Node) -> Node2D: # (or leave your existing helper)
 	if not node:
 		return null
 	if node.is_in_group("player"):
