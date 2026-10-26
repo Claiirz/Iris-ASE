@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://dvq8yhiq7c5pl"]
 
 [ext_resource type="Script" uid="uid://bor4tkklctkvj" path="res://prologue.gd" id="1_7lpfv"]
+[ext_resource type="Texture2D" uid="uid://bx350tu8n0von" path="res://Scene/UI/chronofall_prolog_vonis/mockup/prolog_panel_01_1280x720.png" id="2_1kpfm"]
+[ext_resource type="Texture2D" uid="uid://bx46ydiyrgb6m" path="res://Scene/UI/chronofall_prolog_vonis/mockup/prolog_panel_02_1280x720.png" id="3_jocqh"]
+[ext_resource type="Texture2D" uid="uid://wj26bt0h480e" path="res://Scene/UI/chronofall_prolog_vonis/mockup/prolog_panel_03_1280x720.png" id="4_vu32g"]
+[ext_resource type="Texture2D" uid="uid://dv5pox2uru4l8" path="res://Scene/UI/chronofall_prolog_vonis/mockup/prolog_panel_04_1280x720.png" id="5_kexau"]
+[ext_resource type="Texture2D" uid="uid://blvb5e3xishq0" path="res://Scene/UI/chronofall_prolog_vonis/mockup/prolog_panel_05_1280x720.png" id="6_3w1fl"]
+[ext_resource type="PackedScene" uid="uid://dh4ghjocr41ih" path="res://Scene/difficulty_select.tscn" id="7_jocqh"]
 
 [node name="Prologue" type="Control" unique_id=613726649]
 layout_mode = 3
@@ -10,6 +16,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7lpfv")
+panel_images = Array[Texture2D]([ExtResource("2_1kpfm"), ExtResource("3_jocqh"), ExtResource("4_vu32g"), ExtResource("5_kexau"), ExtResource("6_3w1fl")])
+next_scene = ExtResource("7_jocqh")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1679135907]
 layout_mode = 0
@@ -25,10 +33,39 @@ offset_right = 261.0
 offset_bottom = 114.0
 
 [node name="SkipButton" type="Button" parent="." unique_id=2080248221]
+visible = false
 layout_mode = 0
 offset_left = 385.0
 offset_top = 227.0
 offset_right = 445.0
 offset_bottom = 248.0
+
+[node name="PanelDisplay" type="TextureRect" parent="." unique_id=729835575]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CaptionBox" type="ColorRect" parent="." unique_id=1022927625]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.8156863)
+
+[node name="CaptionText" type="Label" parent="CaptionBox" unique_id=1417827403]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="SkipButton" to="." method="_on_skip_button_pressed"]

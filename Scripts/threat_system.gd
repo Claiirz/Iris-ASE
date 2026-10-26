@@ -2,7 +2,7 @@ class_name ThreatSystem
 extends Node
 
 @export_category("Zone Settings")
-@export var tile_size: float = 16.0         
+@export var tile_size: float = 16.0          
 @export var zone_width_tiles: int = 5      
 @export var max_threat: float = 100.0
 
@@ -14,7 +14,7 @@ extends Node
 @export_category("Boss Spawn Settings")
 @export var boss_scene: PackedScene        
 @export var boss_spawn_distance: float = 250.0 
-@export var environment_modulate: CanvasModulate # Assign your CanvasModulate node here
+@export var environment_modulate: CanvasModulate 
 
 @export var vignette: TextureRect
 @export var threat_sound: AudioStreamPlayer
@@ -22,7 +22,7 @@ extends Node
 
 @export_category("Stalker Entity Settings")
 @export var stalker_scene: PackedScene
-@export var stalker_spawn_delay: float = 30.0 # Adjustable spawn time
+@export var stalker_spawn_delay: float = 30.0 
 
 var player: CharacterBody2D = null
 var current_threat: float = 0.0
@@ -35,14 +35,15 @@ signal threat_changed(current_threat: float, max_threat: float)
 signal max_threat_reached()
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	
 	await get_tree().physics_frame
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 	if player:
 		anchor_position = player.global_position
 
 func _process(delta: float) -> void:
-
-	if not player or not is_instance_valid(player) or is_boss_active:
+	if get_tree().paused or not player or not is_instance_valid(player) or is_boss_active:
 		return
 
 	var zone_radius = (zone_width_tiles * tile_size) / 2.0
@@ -76,14 +77,12 @@ func _trigger_threat_penalty() -> void:
 	
 	if threat_music:
 		threat_music.play()
-	
-	# 1. Trigger the flickering light
+
 	if player and is_instance_valid(player):
 		var player_light = player.get_node_or_null("PointLight2D")
 		if player_light:
 			_flicker_light(player_light)
-			
-	# 2. Setup the parallel fade effects
+
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true) 
 	
@@ -92,14 +91,11 @@ func _trigger_threat_penalty() -> void:
 		tween.tween_property(environment_modulate, "color", dark_scary_color, 3.0)
 		
 	if vignette:
-	
 		vignette.modulate = Color(0.0, 0.0, 0.0, 1.0)
 		tween.tween_property(vignette, "modulate", Color(0.1, 0.1, 0.1, 1.0), 3.0)
-		
-	# Wait exactly 3 seconds for both fading effects to finish simultaneously
+
 	await tween.finished 
-	
-	# 3. Spawn the boss immediately after the fade
+
 	if boss_scene and player and is_instance_valid(player):
 		var boss_instance = boss_scene.instantiate() as Node2D
 		if boss_instance:
@@ -110,17 +106,15 @@ func _trigger_threat_penalty() -> void:
 			boss_instance.tree_exited.connect(_on_boss_defeated)
 	else:
 		push_warning("ThreatSystem Warning: Boss Scene is not assigned in the Inspector!")
-	
-	# NEW: Start the countdown timer for the invincible stalker
+
 	if stalker_scene:
-		get_tree().create_timer(stalker_spawn_delay).timeout.connect(_spawn_stalker)
+		get_tree().create_timer(stalker_spawn_delay, false).timeout.connect(_spawn_stalker)
 
 func _on_boss_defeated() -> void:
 	is_boss_active = false
 	current_threat = 0.0
 	time_camping = 0.0
 	
-	# Setup the parallel fade-out effects
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
 	
@@ -128,38 +122,32 @@ func _on_boss_defeated() -> void:
 		tween.tween_property(environment_modulate, "color", Color(1.0, 1.0, 1.0), 2.0)
 		
 	if vignette:
-		# Fade the entire color object back to 0.0 alpha
 		tween.tween_property(vignette, "modulate", Color(1.0, 1.0, 1.0, 0.0), 2.0)
 		
 func _flicker_light(light: PointLight2D) -> void:
 	var flicker_count = randi_range(4, 7)
 	for i in range(flicker_count):
-
 		if not is_instance_valid(light): 
 			return
 			
 		light.enabled = true
-		await get_tree().create_timer(randf_range(0.05, 0.15)).timeout
+		await get_tree().create_timer(randf_range(0.05, 0.15), false).timeout
 		
 		if not is_instance_valid(light): 
 			return
 			
 		light.enabled = false
-		await get_tree().create_timer(randf_range(0.05, 0.25)).timeout
+		await get_tree().create_timer(randf_range(0.05, 0.25), false).timeout
 
 	if is_instance_valid(light):
 		light.enabled = true
 
 func _spawn_stalker() -> void:
-	# Optional: If the player managed to defeat the boss before the 30 seconds are up, cancel the stalker.
-	# Remove this 'if' block if you want the stalker to spawn even if the boss is dead!
 	if not is_boss_active: 
 		return
 		
 	if player and is_instance_valid(player) and stalker_scene:
 		var stalker = stalker_scene.instantiate() as Node2D
-		
-		# Spawn it far off-screen so the player doesn't see it instantly appear
 		var spawn_offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * 800.0
 		stalker.global_position = player.global_position + spawn_offset
 		

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://c0ht380bsdwhn"]
 
-[ext_resource type="Texture2D" uid="uid://dsaa3dmn3y14d" path="res://Asset/PlaceHolders/anvil.webp" id="1_5ha7l"]
+[ext_resource type="Texture2D" uid="uid://djy8vms2sxuiw" path="res://Asset/chronofall_items_enemies_pause/items_enemies/sprites/items/item_anvil.png" id="1_5ha7l"]
 [ext_resource type="Script" uid="uid://6tqbywrdd4g6" path="res://Scripts/Items/upgrade_data.gd" id="1_cpbnr"]
 
 [resource]

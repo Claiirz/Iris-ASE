@@ -1,0 +1,486 @@
+[gd_scene format=3 uid="uid://devhhc1hs4wik"]
+
+[ext_resource type="Texture2D" uid="uid://dehlu7sye6yt0" path="res://Asset/chronofall_items_enemies_pause/pause/sprites/pause_panel_9slice.png" id="1_ky1kc"]
+[ext_resource type="Script" uid="uid://d0lq1xbtrejrr" path="res://Scene/UI/pause_menu.gd" id="1_rtaci"]
+[ext_resource type="Texture2D" uid="uid://c0xfvo47l87nk" path="res://Asset/chronofall_items_enemies_pause/pause/sprites/pause_title_plate_9slice.png" id="2_eioln"]
+[ext_resource type="Texture2D" uid="uid://dhrm1f45nt7u5" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/selector_arrow.png" id="3_cfikv"]
+[ext_resource type="Texture2D" uid="uid://d3odkpas0rvmw" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_normal_9slice.png" id="4_5a8oy"]
+[ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="4_ohlb7"]
+[ext_resource type="Texture2D" uid="uid://cyc1cuq2q1ar6" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_pressed_9slice.png" id="5_ohlb7"]
+[ext_resource type="Texture2D" uid="uid://cr48fv0twvhbv" path="res://Asset/chronofall_items_enemies_pause/pause/sprites/pause_divider.png" id="5_prdqc"]
+[ext_resource type="Texture2D" uid="uid://b2dui7gya5qrv" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_hover_9slice.png" id="6_i6qjk"]
+[ext_resource type="Texture2D" uid="uid://fpidil6yuftw" path="res://Asset/chronofall_items_enemies_pause/pause/sprites/icon_vonis.png" id="6_iptps"]
+[ext_resource type="Texture2D" uid="uid://bkuh8e8mo0yfd" path="res://Asset/chronofall_items_enemies_pause/pause/sprites/icon_era.png" id="7_3ly1v"]
+[ext_resource type="Texture2D" uid="uid://bn7kafy5d1n1a" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_disabled_9slice.png" id="7_tkva0"]
+[ext_resource type="Texture2D" uid="uid://bsargc3a47s1t" path="res://Asset/chronofall_items_enemies_pause/pause/sprites/icon_clock.png" id="8_embhp"]
+[ext_resource type="Texture2D" uid="uid://brqfxupyf68je" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_focus_9slice.png" id="8_xxl6g"]
+[ext_resource type="Texture2D" uid="uid://dusp4xvclp6r8" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/icon_fragment.png" id="9_kg4n3"]
+[ext_resource type="Texture2D" uid="uid://dg8multgonslj" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/icon_echo.png" id="10_5a8oy"]
+[ext_resource type="Texture2D" uid="uid://ceolbghy24n4y" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/panel_stone_9slice.png" id="17_i6qjk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ohlb7"]
+texture = ExtResource("4_5a8oy")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_prdqc"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("4_5a8oy")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3ly1v"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("5_ohlb7")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iptps"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_i6qjk")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kg4n3"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("7_tkva0")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_embhp"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("8_xxl6g")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_18myq"]
+texture = ExtResource("17_i6qjk")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cyoqj"]
+texture = ExtResource("4_5a8oy")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_462cf"]
+texture = ExtResource("5_ohlb7")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sv7fh"]
+texture = ExtResource("6_i6qjk")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nfpxx"]
+texture = ExtResource("7_tkva0")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0c8gp"]
+texture = ExtResource("8_xxl6g")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[node name="PauseMenuUI" type="CanvasLayer" unique_id=2009692121]
+process_mode = 3
+layer = 20
+script = ExtResource("1_rtaci")
+
+[node name="DimOverlay" type="ColorRect" parent="." unique_id=510594809]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.16862746, 0.16862746, 0.16862746, 0.81960785)
+
+[node name="MainContainer" type="HBoxContainer" parent="." unique_id=766189679]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = -130.0
+offset_right = 252.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="NavPanel" type="NinePatchRect" parent="MainContainer" unique_id=151454090]
+custom_minimum_size = Vector2(200, 260)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(14, 0)
+texture = ExtResource("1_ky1kc")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="TitlePlate" type="NinePatchRect" parent="MainContainer/NavPanel" unique_id=11020860]
+layout_mode = 0
+offset_left = 50.0
+offset_top = -10.0
+offset_right = 154.0
+offset_bottom = 16.0
+texture = ExtResource("2_eioln")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="TitleLabel" type="Label" parent="MainContainer/NavPanel/TitlePlate" unique_id=195372764]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -11.5
+offset_right = 49.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_ohlb7")
+text = "|| PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NavButtons" type="VBoxContainer" parent="MainContainer/NavPanel" unique_id=709860526]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -50.5
+offset_right = 64.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" type="Button" parent="MainContainer/NavPanel/NavButtons" unique_id=1436855382]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBoxTexture_prdqc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3ly1v")
+theme_override_styles/hover = SubResource("StyleBoxTexture_iptps")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_kg4n3")
+theme_override_styles/focus = SubResource("StyleBoxTexture_embhp")
+text = "RESUME"
+
+[node name="SettingsButton" type="Button" parent="MainContainer/NavPanel/NavButtons" unique_id=2146406363]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBoxTexture_prdqc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3ly1v")
+theme_override_styles/hover = SubResource("StyleBoxTexture_iptps")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_kg4n3")
+theme_override_styles/focus = SubResource("StyleBoxTexture_embhp")
+text = "SETTINGS"
+
+[node name="AbandonButton" type="Button" parent="MainContainer/NavPanel/NavButtons" unique_id=1657498415]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBoxTexture_prdqc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3ly1v")
+theme_override_styles/hover = SubResource("StyleBoxTexture_iptps")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_kg4n3")
+theme_override_styles/focus = SubResource("StyleBoxTexture_embhp")
+text = "ABANDON"
+
+[node name="SelectorArrow" type="TextureRect" parent="MainContainer/NavPanel" unique_id=765065067]
+layout_mode = 0
+offset_right = 17.0
+offset_bottom = 17.0
+texture = ExtResource("3_cfikv")
+
+[node name="InfoPanel" type="NinePatchRect" parent="MainContainer" unique_id=1595092213]
+custom_minimum_size = Vector2(261.145, 260)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(18.465, 0)
+texture = ExtResource("1_ky1kc")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="HeaderLabel" type="Label" parent="MainContainer/InfoPanel" unique_id=584903448]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.0
+offset_top = 8.0
+offset_right = 44.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 11
+text = "RUN INFO"
+
+[node name="Divider" type="TextureRect" parent="MainContainer/InfoPanel" unique_id=115522898]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 23.0
+offset_right = 238.0
+offset_bottom = 32.0
+texture = ExtResource("5_prdqc")
+
+[node name="StatsContainer" type="VBoxContainer" parent="MainContainer/InfoPanel" unique_id=459142693]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="VonisRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=710221604]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainContainer/InfoPanel/StatsContainer/VonisRow" unique_id=1464989898]
+layout_mode = 2
+texture = ExtResource("6_iptps")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainContainer/InfoPanel/StatsContainer/VonisRow" unique_id=1820637491]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 10
+text = "VONIS :"
+
+[node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/VonisRow" unique_id=1077859595]
+layout_mode = 2
+
+[node name="EraRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=1173218174]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainContainer/InfoPanel/StatsContainer/EraRow" unique_id=314799560]
+layout_mode = 2
+texture = ExtResource("7_3ly1v")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainContainer/InfoPanel/StatsContainer/EraRow" unique_id=689813932]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 10
+text = "ERA :"
+
+[node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/EraRow" unique_id=274265010]
+layout_mode = 2
+
+[node name="TimeRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=292909684]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainContainer/InfoPanel/StatsContainer/TimeRow" unique_id=140839883]
+layout_mode = 2
+texture = ExtResource("8_embhp")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainContainer/InfoPanel/StatsContainer/TimeRow" unique_id=926723919]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 10
+text = "WAKTU :"
+
+[node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/TimeRow" unique_id=518518211]
+layout_mode = 2
+
+[node name="FragmentRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=1645999405]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainContainer/InfoPanel/StatsContainer/FragmentRow" unique_id=1871604005]
+layout_mode = 2
+texture = ExtResource("9_kg4n3")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainContainer/InfoPanel/StatsContainer/FragmentRow" unique_id=840656019]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 10
+text = "FRAGMENT :"
+
+[node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/FragmentRow" unique_id=305362826]
+layout_mode = 2
+
+[node name="EchoRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=695005586]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainContainer/InfoPanel/StatsContainer/EchoRow" unique_id=1235733393]
+layout_mode = 2
+texture = ExtResource("10_5a8oy")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainContainer/InfoPanel/StatsContainer/EchoRow" unique_id=501279016]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 10
+text = "ECHO :"
+
+[node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/EchoRow" unique_id=1331513953]
+layout_mode = 2
+
+[node name="FooterNote" type="Label" parent="MainContainer/InfoPanel" unique_id=995051976]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -133.0
+offset_top = -14.0
+offset_right = 125.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 7
+text = "THREAT METER DIBEKUKAN SELAMA JEDA"
+
+[node name="ConfirmModal" type="Control" parent="." unique_id=857066618]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModalPanel" type="NinePatchRect" parent="ConfirmModal" unique_id=640989626]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -63.0
+offset_right = 88.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ky1kc")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="ModalTitle" type="Label" parent="ConfirmModal/ModalPanel" unique_id=129932075]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.12
+anchor_right = 0.5
+anchor_bottom = 0.12
+offset_left = -88.0
+offset_right = 88.0
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxTexture_18myq")
+text = "ABANDON RUN?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ModalSubtitle" type="Label" parent="ConfirmModal/ModalPanel" unique_id=1065358816]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "RUN DIHITUNG KALAH. KEMBALI KE HUB. ECHO TETAP DIDAPAT: 24"
+
+[node name="ModalButtons" type="HBoxContainer" parent="ConfirmModal/ModalPanel" unique_id=1440324097]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.663
+anchor_right = 0.5
+anchor_bottom = 0.663
+offset_left = -65.5
+offset_top = -20.0
+offset_right = 62.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CancelButton" type="Button" parent="ConfirmModal/ModalPanel/ModalButtons" unique_id=1417245754]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_cyoqj")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_462cf")
+theme_override_styles/hover = SubResource("StyleBoxTexture_sv7fh")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_nfpxx")
+theme_override_styles/focus = SubResource("StyleBoxTexture_0c8gp")
+text = "CANCEL"
+
+[node name="YesButton" type="Button" parent="ConfirmModal/ModalPanel/ModalButtons" unique_id=1962270518]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_cyoqj")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_462cf")
+theme_override_styles/hover = SubResource("StyleBoxTexture_sv7fh")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_nfpxx")
+theme_override_styles/focus = SubResource("StyleBoxTexture_0c8gp")
+text = "Yes"

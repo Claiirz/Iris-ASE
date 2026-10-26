@@ -1,6 +1,57 @@
 [gd_scene format=3 uid="uid://dh4ghjocr41ih"]
 
 [ext_resource type="Script" uid="uid://dbpf1don5a57u" path="res://difficulty_select.gd" id="1_mokm0"]
+[ext_resource type="Texture2D" uid="uid://c53owcsaapyh1" path="res://Scene/UI/chronofall_prolog_vonis/sprites/vonis_bg.png" id="2_tmxew"]
+[ext_resource type="Texture2D" uid="uid://bnbbxcs4fik4l" path="res://Scene/UI/chronofall_prolog_vonis/sprites/vonis_card.png" id="3_ayibm"]
+[ext_resource type="Texture2D" uid="uid://bsdqbh0pnd2yr" path="res://Scene/UI/chronofall_prolog_vonis/sprites/vonis_card_focus.png" id="4_gnbdn"]
+[ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="5_ayibm"]
+[ext_resource type="Texture2D" uid="uid://upjprsn64007" path="res://Scene/UI/chronofall_prolog_vonis/sprites/stamp_ringan.png" id="5_eqeki"]
+[ext_resource type="Texture2D" uid="uid://cw6hiw3ka438d" path="res://Scene/UI/chronofall_prolog_vonis/sprites/stamp_sedang.png" id="6_0sa54"]
+[ext_resource type="Texture2D" uid="uid://d3odkpas0rvmw" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_normal_9slice.png" id="6_yai4h"]
+[ext_resource type="Texture2D" uid="uid://b2dui7gya5qrv" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_hover_9slice.png" id="7_fexxy"]
+[ext_resource type="Texture2D" uid="uid://c4r1ir1rtlknu" path="res://Scene/UI/chronofall_prolog_vonis/sprites/stamp_berat.png" id="7_p8g0y"]
+[ext_resource type="Texture2D" uid="uid://bn7kafy5d1n1a" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_disabled_9slice.png" id="8_cfwsp"]
+[ext_resource type="Texture2D" uid="uid://brqfxupyf68je" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_focus_9slice.png" id="9_eqeki"]
+[ext_resource type="Texture2D" uid="uid://cyc1cuq2q1ar6" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_pressed_9slice.png" id="10_0sa54"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tmxew"]
+texture = ExtResource("6_yai4h")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ayibm"]
+texture = ExtResource("10_0sa54")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gnbdn"]
+texture = ExtResource("7_fexxy")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f8tpt"]
+texture = ExtResource("8_cfwsp")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5f8fg"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+texture = ExtResource("9_eqeki")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
 [node name="DifficultySelect" type="Control" unique_id=510978494]
 layout_mode = 3
@@ -11,42 +62,101 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mokm0")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1073857253]
+[node name="ColorRect" type="TextureRect" parent="." unique_id=667448904]
 layout_mode = 0
 offset_right = 480.0
 offset_bottom = 270.0
-color = Color(0.23810446, 0.17809057, 0.0154015515, 1)
+texture = ExtResource("2_tmxew")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1346725408]
+[node name="VBoxContainer" type="HBoxContainer" parent="." unique_id=1105677499]
+texture_filter = 1
 layout_mode = 0
+offset_top = 2.0
 offset_right = 480.0
-offset_bottom = 270.0
+offset_bottom = 269.0
+theme_override_constants/separation = 20
+accessibility_region = true
 alignment = 1
 
-[node name="EasyButton" type="Button" parent="." unique_id=480085789]
-layout_mode = 0
-offset_left = 151.0
-offset_top = 44.0
-offset_right = 342.0
-offset_bottom = 87.0
-text = "easy"
+[node name="EasyButton" type="TextureButton" parent="VBoxContainer" unique_id=1547597809]
+texture_filter = 1
+custom_minimum_size = Vector2(118.12, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("3_ayibm")
+texture_focused = ExtResource("4_gnbdn")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="NormalButton" type="Button" parent="." unique_id=592529659]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/EasyButton" unique_id=604316951]
 layout_mode = 0
-offset_left = 151.0
-offset_top = 116.0
-offset_right = 342.0
-offset_bottom = 157.0
-text = "normal"
+offset_left = 64.0
+offset_top = 157.0
+offset_right = 116.0
+offset_bottom = 209.0
+texture = ExtResource("5_eqeki")
 
-[node name="HardButton" type="Button" parent="." unique_id=1726528331]
+[node name="NormalButton" type="TextureButton" parent="VBoxContainer" unique_id=1376620842]
+texture_filter = 1
+custom_minimum_size = Vector2(118.12, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("3_ayibm")
+texture_focused = ExtResource("4_gnbdn")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/NormalButton" unique_id=1752403988]
 layout_mode = 0
-offset_left = 151.0
-offset_top = 183.0
-offset_right = 342.0
-offset_bottom = 219.0
-text = "hard"
+offset_left = 65.0
+offset_top = 158.0
+offset_right = 117.0
+offset_bottom = 210.0
+texture = ExtResource("6_0sa54")
 
-[connection signal="pressed" from="EasyButton" to="." method="_on_easy_button_pressed"]
-[connection signal="pressed" from="NormalButton" to="." method="_on_normal_button_pressed"]
-[connection signal="pressed" from="HardButton" to="." method="_on_hard_button_pressed"]
+[node name="HardButton" type="TextureButton" parent="VBoxContainer" unique_id=1595104445]
+texture_filter = 1
+custom_minimum_size = Vector2(118.12, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("3_ayibm")
+texture_focused = ExtResource("4_gnbdn")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HardButton" unique_id=901869058]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 158.0
+offset_right = 117.0
+offset_bottom = 210.0
+texture = ExtResource("7_p8g0y")
+
+[node name="AcceptButton" type="Button" parent="." unique_id=1715891092]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -43.0
+offset_right = 64.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBoxTexture_tmxew")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ayibm")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gnbdn")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f8tpt")
+theme_override_styles/focus = SubResource("StyleBoxTexture_5f8fg")
+text = "TERIMA VONIS"
+
+[connection signal="pressed" from="VBoxContainer/EasyButton" to="." method="_on_easy_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/NormalButton" to="." method="_on_normal_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HardButton" to="." method="_on_hard_button_pressed"]

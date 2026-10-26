@@ -405,7 +405,6 @@ texture = ExtResource("22_ns8yf")
 texture = ExtResource("22_ns8yf")
 
 [node name="UpgradeInventoryUI" type="HFlowContainer" parent="." unique_id=839661863 node_paths=PackedStringArray("upgrade_component")]
-visible = false
 texture_filter = 1
 offset_left = 134.0
 offset_top = -130.0

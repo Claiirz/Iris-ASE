@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://bp10jkald4afc"]
 
-[ext_resource type="Texture2D" uid="uid://cebusg82m5oal" path="res://Asset/PlaceHolders/bf90886f454d.png" id="1_cqh8w"]
+[ext_resource type="Texture2D" uid="uid://dpgh3t1wa6q" path="res://Asset/chronofall_items_enemies_pause/items_enemies/sprites/items/item_guitar.png" id="1_cqh8w"]
 [ext_resource type="Script" uid="uid://6tqbywrdd4g6" path="res://Scripts/Items/upgrade_data.gd" id="2_wf818"]
 
 [resource]

@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://cnkcopcnp4ghm" path="res://Asset/sfx/enemysfx/mleckert82-spooky-ambience-212885.mp3" id="14_tk7u7"]
 [ext_resource type="AudioStream" uid="uid://446rms34bt74" path="res://Asset/sfx/enemysfx/twinfishaudio-soundtrack-3-chase-scene-233359.mp3" id="15_6hp7a"]
 [ext_resource type="PackedScene" uid="uid://dhdo04ayntpkk" path="res://Scene/Enemies/stalker.tscn" id="15_bt3b4"]
+[ext_resource type="PackedScene" uid="uid://devhhc1hs4wik" path="res://Scene/UI/pause_menu_ui.tscn" id="18_cyoqj"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eow3j"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -255,7 +256,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(480, -368, 480, 272, -336, 272, -336, -368)])
 source_geometry_mode = 2
 
-[sub_resource type="Resource" id="Resource_stoq0"]
+[sub_resource type="Resource" id="Resource_cyoqj"]
 resource_local_to_scene = true
 script = ExtResource("4_x4pud")
 base_attack = 1
@@ -337,7 +338,7 @@ ground_layer = NodePath("../TileMap/Ground")
 player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=1182116428 instance=ExtResource("8_b2lmk")]
-stats = SubResource("Resource_stoq0")
+stats = SubResource("Resource_cyoqj")
 
 [node name="BossUI" parent="." unique_id=2138250990 instance=ExtResource("9_xnt2d")]
 
@@ -379,3 +380,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_u2m2a")
 expand_mode = 1
+
+[node name="PauseMenuUI" parent="." unique_id=2009692121 instance=ExtResource("18_cyoqj")]
+main_menu_scene_path = "res://Scene/UI/main_menu.tscn"
