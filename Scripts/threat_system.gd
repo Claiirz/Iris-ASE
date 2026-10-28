@@ -19,6 +19,7 @@ extends Node
 @export var vignette: TextureRect
 @export var threat_sound: AudioStreamPlayer
 @export var threat_music: AudioStreamPlayer
+@export var game_music: AudioStreamPlayer
 
 @export_category("Stalker Entity Settings")
 @export var stalker_scene: PackedScene
@@ -41,6 +42,10 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 	if player:
 		anchor_position = player.global_position
+	
+	# SAFEGUARD: Only play if the node exists
+	if game_music:
+		game_music.play()
 
 func _process(delta: float) -> void:
 	if get_tree().paused or not player or not is_instance_valid(player) or is_boss_active:
@@ -71,6 +76,10 @@ func _trigger_threat_penalty() -> void:
 	current_threat = max_threat 
 	threat_changed.emit(current_threat, max_threat)
 	max_threat_reached.emit()
+	
+	# SAFEGUARD: Stop normal music
+	if game_music:
+		game_music.stop()
 	
 	if threat_sound:
 		threat_sound.play()
@@ -114,6 +123,12 @@ func _on_boss_defeated() -> void:
 	is_boss_active = false
 	current_threat = 0.0
 	time_camping = 0.0
+	
+	# Bring the normal music back and stop the boss music
+	if threat_music:
+		threat_music.stop()
+	if game_music:
+		game_music.play()
 	
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)

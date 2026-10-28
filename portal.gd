@@ -11,20 +11,16 @@ func _on_entity_entered(entity: Node2D) -> void:
 	if player_node:
 		print("[DEBUG Portal] Player detected via ", entity.name, "! Triggering floor transition...")
 		set_deferred("monitoring", false)
-		
-		# Defer the transition logic so it runs safely AFTER the physics step
+
 		call_deferred("_change_floor", player_node)
 	else:
 		print("[DEBUG Portal] Ignored non-player contact.")
 
 func _change_floor(player_node: Node2D) -> void:
-	# 1. Save player inventory/stats before changing scenes
 	GameManager.save_player_data(player_node)
-	
-	# 2. Hand everything over to the GameManager's load_next_floor logic
 	GameManager.load_next_floor()
 
-func _find_player_node(node: Node) -> Node2D: # (or leave your existing helper)
+func _find_player_node(node: Node) -> Node2D:
 	if not node:
 		return null
 	if node.is_in_group("player"):

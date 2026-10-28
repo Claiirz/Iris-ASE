@@ -29,6 +29,7 @@ func update(_delta: float) -> void:
 			# Flip sprite according to the new bounced direction
 			if enemy.dash_direction.x != 0:
 				enemy.animated_sprite.flip_h = enemy.dash_direction.x < 0
+	enemy.animated_sprite.play("dash")
 
 func _on_dash_end() -> void:
 	fsm.transition_to("chase")

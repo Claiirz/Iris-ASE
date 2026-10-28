@@ -70,11 +70,16 @@ var is_dead: bool = false
 var current_arrows: int
 @onready var arrow_sfx: AudioStreamPlayer2D = get_node_or_null("ArrowSFX")
 @onready var dodge_sfx: AudioStreamPlayer2D = get_node_or_null("DodgeSFX")
+@onready var hurt_sfx: AudioStreamPlayer2D = get_node_or_null("HurtSFX")
 @export var dropped_sword_scene: PackedScene
 @export var default_sword_scene: PackedScene
 var equipped_sword_scene: PackedScene
 signal health_changed(new_health: float)
 @export var death_screen_scene: PackedScene
+
+@export_category("Footstep Settings")
+@export var footstep_sounds: Array[AudioStream] # Drag your 10 SFX into this array in the Inspector
+@onready var footstep_sfx: AudioStreamPlayer2D = get_node_or_null("FootstepSFX")
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -98,9 +103,12 @@ func _ready() -> void:
 		attack_timer.wait_time = stats_component.attack_cooldown
 		attack_timer.timeout.connect(_on_attack_timer_timeout)
 
-	if animated_sprite and animated_sprite.material:
-		animated_sprite.material = animated_sprite.material.duplicate()
-
+	if animated_sprite:
+		animated_sprite.frame_changed.connect(_on_sprite_frame_changed)
+		
+		if animated_sprite.material:
+			animated_sprite.material = animated_sprite.material.duplicate()
+	
 	if fsm:
 		fsm.init(self)
 
@@ -121,6 +129,21 @@ func _ready() -> void:
 
 	update_ui()
 	print("[DEBUG Player] Player initialized successfully on Floor ", GameManager.current_floor)
+
+func _on_sprite_frame_changed() -> void:
+	print("Anim: ", animated_sprite.animation, " | Frame: ", animated_sprite.frame, " | Velocity: ", velocity.length())
+	
+	if animated_sprite.animation == "run" and velocity.length() > 0:
+		if animated_sprite.frame == 2 or animated_sprite.frame == 5:
+			_play_random_footstep()
+
+func _play_random_footstep() -> void:
+	if footstep_sfx and footstep_sounds.size() > 0:
+		var random_index = randi() % footstep_sounds.size()
+		footstep_sfx.stream = footstep_sounds[random_index]
+		
+		footstep_sfx.pitch_scale = randf_range(0.9, 1.1) 
+		footstep_sfx.play()
 
 func _equip_saved_sword(sword_scene: PackedScene) -> void:
 	if not sword_scene: return
@@ -421,10 +444,10 @@ func take_damage(amount: int) -> void:
 		stats.health -= max(1, amount - stats.current_defense)
 		print("Player took damage! Current HP: ", stats.health)
 		
-		# --> NEW: Tell the health bar that the health just changed
 		health_changed.emit(stats.health)
 
 	start_invincibility()
+	hurt_sfx.play()
 	flash_hit_effect()
 
 func start_invincibility() -> void:

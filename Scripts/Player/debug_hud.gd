@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
 	if player.get("stats") and player.stats:
 		current_lvl = player.stats.level
 		current_exp = player.stats.experience
-		atk_dmg = player.stats.current_attack # <--- Pulls scaled attack from resource!
+		atk_dmg = player.stats.current_attack # <--- Pulls scaled attack from resource
 	
 	# Get final calculated movement speed
 	var speed: float = player.get_current_move_speed() if player.has_method("get_current_move_speed") else player.max_speed

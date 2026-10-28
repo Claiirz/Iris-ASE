@@ -9,7 +9,7 @@ extends CharacterBody2D
 @export var accel: float = 10.0
 @export var dash_trigger_distance: float = 90.0
 @export var dash_duration: float = 0.3
-@export var telegraph_duration: float = 0.2
+@export var telegraph_duration: float = 0.5
 
 # --- LOOT DROPS ---
 @export var dropped_sword_scene: PackedScene

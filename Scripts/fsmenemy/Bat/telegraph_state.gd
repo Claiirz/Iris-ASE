@@ -13,10 +13,12 @@ func enter() -> void:
 	
 	await get_tree().create_timer(enemy.telegraph_duration).timeout
 	enemy.animated_sprite.modulate = Color.WHITE
+	
 	fsm.transition_to("dash")
 
 # ADD THIS: Prevents the "Nonexistent function 'update'" crash!
 func update(_delta: float) -> void:
+	enemy.animated_sprite.play("tele")
 	pass
 
 func exit() -> void:

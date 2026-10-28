@@ -4,7 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dr4duiqw8eet3" path="res://Asset/PlaceHolders/Stars_Background_Black.png" id="2_5nq74"]
 [ext_resource type="Texture2D" uid="uid://b3uqweab2vuyj" path="res://Asset/PlaceHolders/FallingStar_Sprites.png" id="3_lmiyg"]
 [ext_resource type="Texture2D" uid="uid://bkmjmo3d3kbwg" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/enemies/Sprite-stalker.png" id="4_5nq74"]
-[ext_resource type="Texture2D" uid="uid://cly3rb5kysetn" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/knight_idle_spritesheet.png" id="5_lmiyg"]
+[ext_resource type="Texture2D" uid="uid://cs42siu35p2x4" path="res://Asset/PlaceHolders/green_guy_idle_spritesheet.png" id="5_lmiyg"]
+[ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="6_j8abl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8abl"]
 atlas = ExtResource("3_lmiyg")
@@ -210,6 +211,7 @@ offset_bottom = 40.0
 script = ExtResource("1_uwfja")
 
 [node name="StarsBackgroundBlack" type="Sprite2D" parent="." unique_id=1725231509]
+texture_filter = 1
 position = Vector2(240, 136.5)
 scale = Vector2(0.93359375, 0.8821656)
 texture = ExtResource("2_5nq74")
@@ -261,8 +263,9 @@ frame_progress = 0.7326853
 [node name="EndingUI" type="CanvasLayer" parent="." unique_id=1574460936]
 
 [node name="Label" type="Label" parent="EndingUI" unique_id=2146316382]
-offset_left = 185.0
-offset_top = 38.0
-offset_right = 301.0
-offset_bottom = 61.0
+offset_left = 108.0
+offset_top = 36.0
+offset_right = 364.0
+offset_bottom = 59.0
+theme_override_fonts/font = ExtResource("6_j8abl")
 text = "is this the end?"

@@ -308,8 +308,10 @@ theme_override_fonts/font = ExtResource("4_ohlb7")
 theme_override_font_sizes/font_size = 10
 text = "VONIS :"
 
-[node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/VonisRow" unique_id=1077859595]
+[node name="VonisValue" type="Label" parent="MainContainer/InfoPanel/StatsContainer/VonisRow" unique_id=1077859595]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 14
 
 [node name="EraRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=1173218174]
 layout_mode = 2
@@ -325,8 +327,10 @@ theme_override_fonts/font = ExtResource("4_ohlb7")
 theme_override_font_sizes/font_size = 10
 text = "ERA :"
 
-[node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/EraRow" unique_id=274265010]
+[node name="EraValue" type="Label" parent="MainContainer/InfoPanel/StatsContainer/EraRow" unique_id=274265010]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 14
 
 [node name="TimeRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=292909684]
 layout_mode = 2
@@ -342,8 +346,10 @@ theme_override_fonts/font = ExtResource("4_ohlb7")
 theme_override_font_sizes/font_size = 10
 text = "WAKTU :"
 
-[node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/TimeRow" unique_id=518518211]
+[node name="TimeValue" type="Label" parent="MainContainer/InfoPanel/StatsContainer/TimeRow" unique_id=518518211]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 14
 
 [node name="FragmentRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=1645999405]
 layout_mode = 2
@@ -361,6 +367,9 @@ text = "FRAGMENT :"
 
 [node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/FragmentRow" unique_id=305362826]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 14
+text = "-"
 
 [node name="EchoRow" type="HBoxContainer" parent="MainContainer/InfoPanel/StatsContainer" unique_id=695005586]
 layout_mode = 2
@@ -378,6 +387,9 @@ text = "ECHO :"
 
 [node name="Label2" type="Label" parent="MainContainer/InfoPanel/StatsContainer/EchoRow" unique_id=1331513953]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ohlb7")
+theme_override_font_sizes/font_size = 14
+text = "-"
 
 [node name="FooterNote" type="Label" parent="MainContainer/InfoPanel" unique_id=995051976]
 layout_mode = 1
@@ -386,9 +398,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -133.0
+offset_left = -124.83
 offset_top = -14.0
-offset_right = 125.0
+offset_right = 151.83505
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -412,10 +424,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -113.0
-offset_top = -63.0
-offset_right = 88.0
-offset_bottom = 33.0
+offset_left = -71.0
+offset_top = -37.0
+offset_right = 73.0
+offset_bottom = 13.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_ky1kc")
@@ -431,12 +443,13 @@ anchor_left = 0.5
 anchor_top = 0.12
 anchor_right = 0.5
 anchor_bottom = 0.12
-offset_left = -88.0
-offset_right = 88.0
-offset_bottom = 24.0
+offset_left = -58.0
+offset_top = 1.6399994
+offset_right = 59.33333
+offset_bottom = 17.64
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("4_ohlb7")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxTexture_18myq")
 text = "ABANDON RUN?"
 horizontal_alignment = 1
@@ -451,22 +464,21 @@ text = "RUN DIHITUNG KALAH. KEMBALI KE HUB. ECHO TETAP DIDAPAT: 24"
 
 [node name="ModalButtons" type="HBoxContainer" parent="ConfirmModal/ModalPanel" unique_id=1440324097]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.663
-anchor_right = 0.5
-anchor_bottom = 0.663
-offset_left = -65.5
-offset_top = -20.0
-offset_right = 62.5
-offset_bottom = 20.0
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 33.0
+offset_top = -1.0
+offset_right = -37.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CancelButton" type="Button" parent="ConfirmModal/ModalPanel/ModalButtons" unique_id=1417245754]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_ohlb7")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 6
 theme_override_styles/normal = SubResource("StyleBoxTexture_cyoqj")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_462cf")
 theme_override_styles/hover = SubResource("StyleBoxTexture_sv7fh")
@@ -477,7 +489,7 @@ text = "CANCEL"
 [node name="YesButton" type="Button" parent="ConfirmModal/ModalPanel/ModalButtons" unique_id=1962270518]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_ohlb7")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 6
 theme_override_styles/normal = SubResource("StyleBoxTexture_cyoqj")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_462cf")
 theme_override_styles/hover = SubResource("StyleBoxTexture_sv7fh")

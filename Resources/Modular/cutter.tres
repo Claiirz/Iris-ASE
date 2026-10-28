@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://ec4cjbxqf1xk"]
 
 [ext_resource type="Script" uid="uid://6tqbywrdd4g6" path="res://Scripts/Items/upgrade_data.gd" id="1_l3yfi"]
-[ext_resource type="Texture2D" uid="uid://pixkbq2arqym" path="res://Asset/chronofall_items_enemies_pause/items_enemies/sprites/items/item_cutter_gloves.png" id="1_ycxrq"]
+[ext_resource type="Texture2D" uid="uid://d3wkp6q63sktt" path="res://Asset/chronofall_items_enemies_pause/items_enemies/sprites/items/cutter_32x32_8x.png" id="1_ycxrq"]
 
 [resource]
 script = ExtResource("1_l3yfi")

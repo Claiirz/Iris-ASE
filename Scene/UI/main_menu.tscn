@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://brqfxupyf68je" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_focus_9slice.png" id="14_2r1um"]
 [ext_resource type="Texture2D" uid="uid://d1ktpeqabctmx" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/title_logo.png" id="17_6oknl"]
 [ext_resource type="Texture2D" uid="uid://dhrm1f45nt7u5" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/selector_arrow.png" id="18_ik20c"]
+[ext_resource type="AudioStream" uid="uid://bt7ybc3sogprw" path="res://Asset/sfx/leberch-night-ambience-595682.mp3" id="19_w8jo4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u2m2a"]
 texture = ExtResource("10_6bwqe")
@@ -242,6 +243,10 @@ theme_override_colors/default_color = Color(0.36862746, 0.34901962, 0.3254902, 1
 theme_override_fonts/normal_font = ExtResource("11_6oknl")
 theme_override_font_sizes/normal_font_size = 3
 text = "NOTHING IS PERMANENT."
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1970122339]
+stream = ExtResource("19_w8jo4")
+autoplay = true
 
 [connection signal="pressed" from="Control/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Control/Start" to="." method="_on_start_pressed"]

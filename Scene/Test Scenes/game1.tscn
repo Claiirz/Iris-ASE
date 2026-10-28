@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://446rms34bt74" path="res://Asset/sfx/enemysfx/twinfishaudio-soundtrack-3-chase-scene-233359.mp3" id="15_6hp7a"]
 [ext_resource type="PackedScene" uid="uid://dhdo04ayntpkk" path="res://Scene/Enemies/stalker.tscn" id="15_bt3b4"]
 [ext_resource type="PackedScene" uid="uid://devhhc1hs4wik" path="res://Scene/UI/pause_menu_ui.tscn" id="18_cyoqj"]
+[ext_resource type="AudioStream" uid="uid://c3mh0c1tohk5i" path="res://Asset/sfx/psychronic-pixel-requiem-415886.mp3" id="19_462cf"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eow3j"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -342,12 +343,13 @@ stats = SubResource("Resource_cyoqj")
 
 [node name="BossUI" parent="." unique_id=2138250990 instance=ExtResource("9_xnt2d")]
 
-[node name="ThreatSystem" type="Node" parent="." unique_id=346441026 node_paths=PackedStringArray("environment_modulate", "vignette", "threat_sound", "threat_music")]
+[node name="ThreatSystem" type="Node" parent="." unique_id=346441026 node_paths=PackedStringArray("environment_modulate", "vignette", "threat_sound", "threat_music", "game_music")]
 script = ExtResource("13_tk7u7")
 environment_modulate = NodePath("../CanvasModulate")
 vignette = NodePath("../CanvasLayer/ThreatVignette")
 threat_sound = NodePath("ThreatMaxSound")
 threat_music = NodePath("ThreatMaxMusic")
+game_music = NodePath("gamemus")
 stalker_scene = ExtResource("15_bt3b4")
 stalker_spawn_delay = 1.0
 
@@ -358,6 +360,12 @@ volume_db = -18.0
 [node name="ThreatMaxMusic" type="AudioStreamPlayer" parent="ThreatSystem" unique_id=239520506]
 stream = ExtResource("15_6hp7a")
 volume_db = -11.203
+
+[node name="gamemus" type="AudioStreamPlayer" parent="ThreatSystem" unique_id=1458363772]
+stream = ExtResource("19_462cf")
+volume_db = -15.634
+autoplay = true
+parameters/looping = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2139993950]
 

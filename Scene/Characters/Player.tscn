@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://by0d1oiipwhff" path="res://Scripts/Player/fsmplayer/player.gd" id="1_ph5yk"]
 [ext_resource type="Resource" uid="uid://sylvf2rb3yps" path="res://Resources/Player_stat.tres" id="2_e5op4"]
-[ext_resource type="Texture2D" uid="uid://cly3rb5kysetn" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/knight_idle_spritesheet.png" id="2_wneh1"]
-[ext_resource type="Texture2D" uid="uid://ccp1g063dgvfv" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/knight_run_spritesheet.png" id="3_8e2c0"]
 [ext_resource type="PackedScene" uid="uid://dmgqx01im1pht" path="res://Scene/Weapons/Arrow.tscn" id="3_fr445"]
 [ext_resource type="PackedScene" uid="uid://dwqm2ddlhmvpa" path="res://Scene/Items/DroppedSword.tscn" id="3_q6w3m"]
 [ext_resource type="PackedScene" uid="uid://cms3fl0ttf82v" path="res://Scene/Effects/dash_effect.tscn" id="3_uubsr"]
@@ -13,11 +11,23 @@
 [ext_resource type="PackedScene" uid="uid://b1vcqaas0pucy" path="res://Scene/death_screen.tscn" id="7_mdmmb"]
 [ext_resource type="Script" uid="uid://l46q1d8sr7j0" path="res://Scripts/Player/hurtbox.gd" id="8_8v44s"]
 [ext_resource type="PackedScene" uid="uid://cw5pywctokxlc" path="res://Scene/Weapons/Sword.tscn" id="8_i6irg"]
+[ext_resource type="Texture2D" uid="uid://cs42siu35p2x4" path="res://Asset/PlaceHolders/green_guy_idle_spritesheet.png" id="8_kqln3"]
+[ext_resource type="AudioStream" uid="uid://b4vt3b7kgwsmq" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_01.wav" id="8_w63eb"]
+[ext_resource type="Texture2D" uid="uid://c1uxm3dgmjpq2" path="res://Asset/PlaceHolders/green_guy_run_spritesheet.png" id="9_kqln3"]
+[ext_resource type="AudioStream" uid="uid://djos4ntwtxqoy" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_02.wav" id="9_yqkp6"]
+[ext_resource type="AudioStream" uid="uid://drm47gamsk87t" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_03.wav" id="10_8h2rp"]
+[ext_resource type="AudioStream" uid="uid://c37uarw4vemdu" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_04.wav" id="11_qr5bl"]
+[ext_resource type="AudioStream" uid="uid://bnsik46ffunc0" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_05.wav" id="12_4ldfl"]
 [ext_resource type="Script" uid="uid://lovhox44juuy" path="res://Scripts/Player/fsmplayer/dodge_state.gd" id="12_8f4vj"]
+[ext_resource type="AudioStream" uid="uid://qv43h1w3v0wo" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_06.wav" id="13_hfug7"]
 [ext_resource type="PackedScene" uid="uid://claqqsgd1y0ci" path="res://Scene/UI/AmmoUI.tscn" id="14_a01wv"]
+[ext_resource type="AudioStream" uid="uid://dfx4w3v0ksnbe" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_07.wav" id="14_j4c6s"]
+[ext_resource type="AudioStream" uid="uid://6ysuykvxl2t2" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_08.wav" id="15_6klex"]
 [ext_resource type="Script" uid="uid://bx6ww1ei3gn4b" path="res://Scene/Characters/stats_component.gd" id="15_fr445"]
+[ext_resource type="AudioStream" uid="uid://cfwq841buvdyf" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_09.wav" id="16_80gaf"]
 [ext_resource type="Script" uid="uid://cbmacx8umo32y" path="res://Scripts/Items/upgrade_component.gd" id="16_kme1g"]
 [ext_resource type="PackedScene" uid="uid://crelu3prpsyy" path="res://Scene/UI/ThreatMeter.tscn" id="17_0xel3"]
+[ext_resource type="AudioStream" uid="uid://bmc4pvtilf1pg" path="res://Asset/sfx/playersfx/Footsteps_Rock_Run/Footsteps_Rock_Run_10.wav" id="17_6wxiw"]
 [ext_resource type="Script" uid="uid://0bdbavsduasy" path="res://Scripts/Player/debug_hud.gd" id="17_kme1g"]
 [ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="17_kqln3"]
 [ext_resource type="AudioStream" uid="uid://cp1wmi4nlmdhg" path="res://Asset/sfx/playersfx/arrowshoot.mp3" id="20_rp6ye"]
@@ -31,75 +41,76 @@
 [ext_resource type="Texture2D" uid="uid://cyhxs5ker38x4" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/hp_bar_over.png" id="28_ab81y"]
 [ext_resource type="Texture2D" uid="uid://dobhjeguaj8ex" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/hp_bar_progress.png" id="29_mqs5k"]
 [ext_resource type="Texture2D" uid="uid://lbe7o7mdim7" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/icon_hp.png" id="31_3y4xc"]
+[ext_resource type="AudioStream" uid="uid://d0c8v66icl0tl" path="res://Asset/sfx/playersfx/Voice_Male_V2_Hit_Short_Mono_06.wav" id="32_2f0nu"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uwfu8"]
-atlas = ExtResource("2_wneh1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_2f0nu"]
+atlas = ExtResource("8_kqln3")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tnia3"]
-atlas = ExtResource("2_wneh1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ab81y"]
+atlas = ExtResource("8_kqln3")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e30d2"]
-atlas = ExtResource("2_wneh1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqs5k"]
+atlas = ExtResource("8_kqln3")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dewun"]
-atlas = ExtResource("2_wneh1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_3y4xc"]
+atlas = ExtResource("8_kqln3")
 region = Rect2(48, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a6hnc"]
-atlas = ExtResource("2_wneh1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3mot"]
+atlas = ExtResource("8_kqln3")
 region = Rect2(64, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d36ei"]
-atlas = ExtResource("2_wneh1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_253ci"]
+atlas = ExtResource("8_kqln3")
 region = Rect2(80, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i042p"]
-atlas = ExtResource("3_8e2c0")
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ch2q"]
+atlas = ExtResource("9_kqln3")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bj1fc"]
-atlas = ExtResource("3_8e2c0")
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6x77"]
+atlas = ExtResource("9_kqln3")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ttcec"]
-atlas = ExtResource("3_8e2c0")
+[sub_resource type="AtlasTexture" id="AtlasTexture_75ksu"]
+atlas = ExtResource("9_kqln3")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xtsbm"]
-atlas = ExtResource("3_8e2c0")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ng0ul"]
+atlas = ExtResource("9_kqln3")
 region = Rect2(48, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ttee0"]
-atlas = ExtResource("3_8e2c0")
+[sub_resource type="AtlasTexture" id="AtlasTexture_w63eb"]
+atlas = ExtResource("9_kqln3")
 region = Rect2(64, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f4aal"]
-atlas = ExtResource("3_8e2c0")
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqkp6"]
+atlas = ExtResource("9_kqln3")
 region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u2m2a"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uwfu8")
+"texture": SubResource("AtlasTexture_2f0nu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tnia3")
+"texture": SubResource("AtlasTexture_ab81y")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e30d2")
+"texture": SubResource("AtlasTexture_mqs5k")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dewun")
+"texture": SubResource("AtlasTexture_3y4xc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a6hnc")
+"texture": SubResource("AtlasTexture_c3mot")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_d36ei")
+"texture": SubResource("AtlasTexture_253ci")
 }],
 "loop": 1,
 "name": &"idle",
@@ -107,22 +118,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i042p")
+"texture": SubResource("AtlasTexture_8ch2q")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bj1fc")
+"texture": SubResource("AtlasTexture_b6x77")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ttcec")
+"texture": SubResource("AtlasTexture_75ksu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xtsbm")
+"texture": SubResource("AtlasTexture_ng0ul")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ttee0")
+"texture": SubResource("AtlasTexture_w63eb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f4aal")
+"texture": SubResource("AtlasTexture_yqkp6")
 }],
 "loop": 1,
 "name": &"run",
@@ -296,13 +307,14 @@ ammo_ui = NodePath("Camera2D/AmmoUI")
 dropped_sword_scene = ExtResource("3_q6w3m")
 default_sword_scene = ExtResource("8_i6irg")
 death_screen_scene = ExtResource("7_mdmmb")
+footstep_sounds = Array[AudioStream]([ExtResource("8_w63eb"), ExtResource("9_yqkp6"), ExtResource("10_8h2rp"), ExtResource("11_qr5bl"), ExtResource("12_4ldfl"), ExtResource("13_hfug7"), ExtResource("14_j4c6s"), ExtResource("15_6klex"), ExtResource("16_80gaf"), ExtResource("17_6wxiw")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2066522144]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_u2m2a")
-animation = &"idle"
+animation = &"run"
 autoplay = "idle"
-frame_progress = 0.15666544
+frame_progress = 0.23693375
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1194454256]
 collision_layer = 2
@@ -398,6 +410,7 @@ enemy_arrow = NodePath("EnemyArrow")
 portal_arrow = NodePath("PortalArrow")
 
 [node name="EnemyArrow" type="Sprite2D" parent="TargetIndicator" unique_id=318342516]
+texture_filter = 1
 texture = ExtResource("25_2f0nu")
 
 [node name="PortalArrow" type="Sprite2D" parent="TargetIndicator" unique_id=1969046463]
@@ -444,5 +457,10 @@ script = ExtResource("25_dq7si")
 texture_filter = 1
 position = Vector2(-227, -120)
 texture = ExtResource("31_3y4xc")
+
+[node name="HurtSFX" type="AudioStreamPlayer2D" parent="." unique_id=590039497]
+stream = ExtResource("32_2f0nu")
+
+[node name="FootstepSFX" type="AudioStreamPlayer2D" parent="." unique_id=70081247]
 
 [editable path="Sword"]

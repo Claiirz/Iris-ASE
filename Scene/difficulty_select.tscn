@@ -11,8 +11,13 @@
 [ext_resource type="Texture2D" uid="uid://b2dui7gya5qrv" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_hover_9slice.png" id="7_fexxy"]
 [ext_resource type="Texture2D" uid="uid://c4r1ir1rtlknu" path="res://Scene/UI/chronofall_prolog_vonis/sprites/stamp_berat.png" id="7_p8g0y"]
 [ext_resource type="Texture2D" uid="uid://bn7kafy5d1n1a" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_disabled_9slice.png" id="8_cfwsp"]
+[ext_resource type="Texture2D" uid="uid://b5davt2d7j0b0" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/icon_nemesis_hunting.png" id="9_cr2rk"]
 [ext_resource type="Texture2D" uid="uid://brqfxupyf68je" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_focus_9slice.png" id="9_eqeki"]
+[ext_resource type="Texture2D" uid="uid://ck40mf0haelqy" path="res://Scene/UI/chronofall_prolog_vonis/sprites/icon_enemy_swarm.png" id="9_wmrvl"]
 [ext_resource type="Texture2D" uid="uid://cyc1cuq2q1ar6" path="res://Asset/PlaceHolders/chronofall_mainmenu/sprites/btn_pressed_9slice.png" id="10_0sa54"]
+[ext_resource type="Texture2D" uid="uid://crg3x7ca1jhv3" path="res://Scene/UI/chronofall_prolog_vonis/sprites/pip_on.png" id="10_2x6hq"]
+[ext_resource type="Texture2D" uid="uid://lbe7o7mdim7" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/ui stufarrrasrrsr/sprites/icon_hp.png" id="10_tfb1b"]
+[ext_resource type="Texture2D" uid="uid://bc8iuxkcnl4wr" path="res://Scene/UI/chronofall_prolog_vonis/sprites/pip_off.png" id="11_vmyh3"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tmxew"]
 texture = ExtResource("6_yai4h")
@@ -63,6 +68,7 @@ grow_vertical = 2
 script = ExtResource("1_mokm0")
 
 [node name="ColorRect" type="TextureRect" parent="." unique_id=667448904]
+texture_filter = 1
 layout_mode = 0
 offset_right = 480.0
 offset_bottom = 270.0
@@ -92,11 +98,121 @@ stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/EasyButton" unique_id=604316951]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 157.0
-offset_right = 116.0
-offset_bottom = 209.0
+offset_left = 76.0
+offset_top = 168.0
+offset_right = 128.0
+offset_bottom = 220.0
+scale = Vector2(0.78, 0.78)
 texture = ExtResource("5_eqeki")
+
+[node name="Label" type="Label" parent="VBoxContainer/EasyButton" unique_id=248851076]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 80.0
+offset_right = 92.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 10
+text = "Ringan"
+
+[node name="Label2" type="Label" parent="VBoxContainer/EasyButton" unique_id=321594065]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 72.0
+offset_right = 80.0
+offset_bottom = 77.0
+theme_override_colors/font_color = Color(0.41568628, 0.3764706, 0.29803923, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "PENGASINGAN"
+
+[node name="Label3" type="Label" parent="VBoxContainer/EasyButton" unique_id=1709884744]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 102.0
+offset_right = 68.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Nyawa awal"
+
+[node name="Label6" type="Label" parent="VBoxContainer/EasyButton" unique_id=1299902975]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 102.0
+offset_right = 132.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 7
+text = "100"
+
+[node name="Label4" type="Label" parent="VBoxContainer/EasyButton" unique_id=1727762834]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 125.0
+offset_right = 68.0
+offset_bottom = 133.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Nemesis"
+
+[node name="Label5" type="Label" parent="VBoxContainer/EasyButton" unique_id=1328929284]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 151.0
+offset_right = 68.0
+offset_bottom = 159.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Musuh"
+
+[node name="IconEnemySwarm" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=1577552357]
+texture_filter = 1
+position = Vector2(17, 152)
+texture = ExtResource("9_wmrvl")
+
+[node name="IconHp" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=103211400]
+position = Vector2(17, 103)
+texture = ExtResource("10_tfb1b")
+
+[node name="IconNemesisHunting" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=639172701]
+position = Vector2(17, 127)
+texture = ExtResource("9_cr2rk")
+
+[node name="PipOn" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=790547414]
+texture_filter = 1
+position = Vector2(92, 128)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=89749812]
+texture_filter = 1
+position = Vector2(101, 128)
+texture = ExtResource("11_vmyh3")
+
+[node name="PipOff2" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=903155567]
+texture_filter = 1
+position = Vector2(110, 128)
+texture = ExtResource("11_vmyh3")
+
+[node name="PipOn2" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=226012077]
+texture_filter = 1
+position = Vector2(92, 153)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff3" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=834913016]
+texture_filter = 1
+position = Vector2(101, 153)
+texture = ExtResource("11_vmyh3")
+
+[node name="PipOff4" type="Sprite2D" parent="VBoxContainer/EasyButton" unique_id=99651330]
+texture_filter = 1
+position = Vector2(110, 153)
+texture = ExtResource("11_vmyh3")
 
 [node name="NormalButton" type="TextureButton" parent="VBoxContainer" unique_id=1376620842]
 texture_filter = 1
@@ -110,11 +226,121 @@ stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/NormalButton" unique_id=1752403988]
 layout_mode = 0
-offset_left = 65.0
-offset_top = 158.0
-offset_right = 117.0
-offset_bottom = 210.0
+offset_left = 77.0
+offset_top = 169.0
+offset_right = 129.0
+offset_bottom = 221.0
+scale = Vector2(0.78, 0.78)
 texture = ExtResource("6_0sa54")
+
+[node name="Label" type="Label" parent="VBoxContainer/NormalButton" unique_id=477842670]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 80.0
+offset_right = 92.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 10
+text = "Sedang"
+
+[node name="Label2" type="Label" parent="VBoxContainer/NormalButton" unique_id=1780743668]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 72.0
+offset_right = 80.0
+offset_bottom = 77.0
+theme_override_colors/font_color = Color(0.41568628, 0.3764706, 0.29803923, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "PENGASINGAN"
+
+[node name="Label3" type="Label" parent="VBoxContainer/NormalButton" unique_id=1696108916]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 102.0
+offset_right = 68.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Nyawa awal"
+
+[node name="Label6" type="Label" parent="VBoxContainer/NormalButton" unique_id=1631046321]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 102.0
+offset_right = 132.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 7
+text = "100"
+
+[node name="Label4" type="Label" parent="VBoxContainer/NormalButton" unique_id=158084472]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 125.0
+offset_right = 68.0
+offset_bottom = 133.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Nemesis"
+
+[node name="Label5" type="Label" parent="VBoxContainer/NormalButton" unique_id=1248630334]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 151.0
+offset_right = 68.0
+offset_bottom = 159.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Musuh"
+
+[node name="IconEnemySwarm" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=407075830]
+texture_filter = 1
+position = Vector2(17, 152)
+texture = ExtResource("9_wmrvl")
+
+[node name="IconHp" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=1363822971]
+position = Vector2(17, 103)
+texture = ExtResource("10_tfb1b")
+
+[node name="IconNemesisHunting" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=1371588918]
+position = Vector2(17, 127)
+texture = ExtResource("9_cr2rk")
+
+[node name="PipOn" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=410695665]
+texture_filter = 1
+position = Vector2(92, 128)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=1136482880]
+texture_filter = 1
+position = Vector2(101, 128)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff2" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=1035787826]
+texture_filter = 1
+position = Vector2(110, 128)
+texture = ExtResource("11_vmyh3")
+
+[node name="PipOn2" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=727636499]
+texture_filter = 1
+position = Vector2(92, 153)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff3" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=59601217]
+texture_filter = 1
+position = Vector2(101, 153)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff4" type="Sprite2D" parent="VBoxContainer/NormalButton" unique_id=770768947]
+texture_filter = 1
+position = Vector2(110, 153)
+texture = ExtResource("11_vmyh3")
 
 [node name="HardButton" type="TextureButton" parent="VBoxContainer" unique_id=1595104445]
 texture_filter = 1
@@ -128,11 +354,121 @@ stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/HardButton" unique_id=901869058]
 layout_mode = 0
-offset_left = 65.0
-offset_top = 158.0
-offset_right = 117.0
-offset_bottom = 210.0
+offset_left = 77.0
+offset_top = 169.0
+offset_right = 129.0
+offset_bottom = 221.0
+scale = Vector2(0.78, 0.78)
 texture = ExtResource("7_p8g0y")
+
+[node name="Label" type="Label" parent="VBoxContainer/HardButton" unique_id=1989764007]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 80.0
+offset_right = 92.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 10
+text = "Berat"
+
+[node name="Label2" type="Label" parent="VBoxContainer/HardButton" unique_id=295797332]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 72.0
+offset_right = 80.0
+offset_bottom = 77.0
+theme_override_colors/font_color = Color(0.41568628, 0.3764706, 0.29803923, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "PENGASINGAN"
+
+[node name="Label3" type="Label" parent="VBoxContainer/HardButton" unique_id=513954643]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 102.0
+offset_right = 68.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Nyawa awal"
+
+[node name="Label6" type="Label" parent="VBoxContainer/HardButton" unique_id=2114309549]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 102.0
+offset_right = 132.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 7
+text = "100"
+
+[node name="Label4" type="Label" parent="VBoxContainer/HardButton" unique_id=2084706473]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 125.0
+offset_right = 68.0
+offset_bottom = 133.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Nemesis"
+
+[node name="Label5" type="Label" parent="VBoxContainer/HardButton" unique_id=147960327]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 151.0
+offset_right = 68.0
+offset_bottom = 159.0
+theme_override_colors/font_color = Color(0.16470589, 0.14117648, 0.1254902, 1)
+theme_override_fonts/font = ExtResource("5_ayibm")
+theme_override_font_sizes/font_size = 4
+text = "Musuh"
+
+[node name="IconEnemySwarm" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=2142983422]
+texture_filter = 1
+position = Vector2(17, 152)
+texture = ExtResource("9_wmrvl")
+
+[node name="IconHp" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=726673889]
+position = Vector2(17, 103)
+texture = ExtResource("10_tfb1b")
+
+[node name="IconNemesisHunting" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=1731246433]
+position = Vector2(17, 127)
+texture = ExtResource("9_cr2rk")
+
+[node name="PipOn" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=1409233239]
+texture_filter = 1
+position = Vector2(92, 128)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=1241128780]
+texture_filter = 1
+position = Vector2(101, 128)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff2" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=1754792358]
+texture_filter = 1
+position = Vector2(110, 128)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOn2" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=1129397301]
+texture_filter = 1
+position = Vector2(92, 153)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff3" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=686546230]
+texture_filter = 1
+position = Vector2(101, 153)
+texture = ExtResource("10_2x6hq")
+
+[node name="PipOff4" type="Sprite2D" parent="VBoxContainer/HardButton" unique_id=1856763056]
+texture_filter = 1
+position = Vector2(110, 153)
+texture = ExtResource("10_2x6hq")
 
 [node name="AcceptButton" type="Button" parent="." unique_id=1715891092]
 texture_filter = 1

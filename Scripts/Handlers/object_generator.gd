@@ -65,7 +65,6 @@ func _try_place_large_object(base_cell: Vector2i, coords: Vector2i, size: Vector
 			if not valid_ground.has(check_pos) or occupied_cells.has(check_pos):
 				return 
 
-	# If we reach here, the space is clear! Assemble the rock piece by piece.
 	for x in range(size.x):
 		for y in range(size.y):
 			var target_pos = base_cell + Vector2i(x, y)
@@ -83,12 +82,10 @@ func _generate_borders() -> void:
 	var min_y = bounds.position.y - 1
 	var max_y = bounds.end.y
 
-	# Draw top and bottom walls
 	for x in range(min_x, max_x + 1):
 		object_layer.set_cell(Vector2i(x, min_y), tile_source_id, border_tile_coords)
 		object_layer.set_cell(Vector2i(x, max_y), tile_source_id, border_tile_coords)
 		
-	# Draw left and right walls
 	for y in range(min_y + 1, max_y):
 		object_layer.set_cell(Vector2i(min_x, y), tile_source_id, border_tile_coords)
 		object_layer.set_cell(Vector2i(max_x, y), tile_source_id, border_tile_coords)

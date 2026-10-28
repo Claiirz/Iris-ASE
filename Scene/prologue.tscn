@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dv5pox2uru4l8" path="res://Scene/UI/chronofall_prolog_vonis/mockup/prolog_panel_04_1280x720.png" id="5_kexau"]
 [ext_resource type="Texture2D" uid="uid://blvb5e3xishq0" path="res://Scene/UI/chronofall_prolog_vonis/mockup/prolog_panel_05_1280x720.png" id="6_3w1fl"]
 [ext_resource type="PackedScene" uid="uid://dh4ghjocr41ih" path="res://Scene/difficulty_select.tscn" id="7_jocqh"]
+[ext_resource type="AudioStream" uid="uid://b1kpgh68lx2pa" path="res://Asset/sfx/ribhavagrawal-nightmare-alley-dark-ambience-230656.mp3" id="8_vu32g"]
 
 [node name="Prologue" type="Control" unique_id=613726649]
 layout_mode = 3
@@ -67,5 +68,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1777765329]
+stream = ExtResource("8_vu32g")
+autoplay = true
 
 [connection signal="pressed" from="SkipButton" to="." method="_on_skip_button_pressed"]

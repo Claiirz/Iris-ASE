@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bdqaswtl5odrv"]
 
 [ext_resource type="Script" uid="uid://cgkfogs6u0t4m" path="res://Scene/Enemies/enemy_1.gd" id="1_211yn"]
-[ext_resource type="Texture2D" uid="uid://dqwkapoa5yvb4" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/enemies/flying creature/fly_anim_spritesheet.png" id="1_vckqs"]
 [ext_resource type="Shader" uid="uid://bq20iutan84hp" path="res://Scene/Enemies/hitflash.gdshader" id="2_bf3ho"]
 [ext_resource type="PackedScene" uid="uid://dwqm2ddlhmvpa" path="res://Scene/Items/DroppedSword.tscn" id="2_ugfsa"]
 [ext_resource type="Resource" uid="uid://digyf7g45kv1s" path="res://Resources/Bat_stat.tres" id="2_waihr"]
@@ -21,6 +20,8 @@
 [ext_resource type="Script" uid="uid://duu51k5uio6r0" path="res://Scripts/fsmenemy/Bat/die_state.gd" id="11_cmy35"]
 [ext_resource type="Resource" uid="uid://c0ht380bsdwhn" path="res://Resources/Modular/anvil.tres" id="11_kleqx"]
 [ext_resource type="PackedScene" uid="uid://b2c1c464hqjqa" path="res://Scene/xp_orb.tscn" id="11_xmtim"]
+[ext_resource type="Texture2D" uid="uid://d180q3h6gennv" path="res://Asset/chronofall_items_enemies_pause/items_enemies/sprites/enemies/reptil_kecil_sheet.png" id="15_0ef5i"]
+[ext_resource type="Texture2D" uid="uid://d167bych8anwr" path="res://Asset/chronofall_items_enemies_pause/items_enemies/sprites/enemies/reptil_kecil_telegraph.png" id="16_0s1pb"]
 [ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="21_0ef5i"]
 [ext_resource type="AudioStream" uid="uid://cn0cdjirj0yft" path="res://Asset/sfx/enemysfx/slap.wav" id="21_uv7m1"]
 [ext_resource type="AudioStream" uid="uid://51a0wvnrw2bb" path="res://Asset/sfx/enemysfx/splat_quick.wav" id="22_pjusm"]
@@ -32,6 +33,10 @@ radius = 8.0
 resource_local_to_scene = true
 shader = ExtResource("2_bf3ho")
 shader_parameter/flash = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ef5i"]
+atlas = ExtResource("15_0ef5i")
+region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cmy35"]
 atlas = ExtResource("5_m52bk")
@@ -49,24 +54,32 @@ region = Rect2(32, 0, 16, 16)
 atlas = ExtResource("5_m52bk")
 region = Rect2(48, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_211yn"]
-atlas = ExtResource("1_vckqs")
-region = Rect2(0, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_0s1pb"]
+atlas = ExtResource("15_0ef5i")
+region = Rect2(0, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dqxu6"]
-atlas = ExtResource("1_vckqs")
-region = Rect2(16, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kleqx"]
+atlas = ExtResource("15_0ef5i")
+region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0vicv"]
-atlas = ExtResource("1_vckqs")
-region = Rect2(32, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_eko1s"]
+atlas = ExtResource("15_0ef5i")
+region = Rect2(48, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a0xd0"]
-atlas = ExtResource("1_vckqs")
-region = Rect2(48, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3qil"]
+atlas = ExtResource("16_0s1pb")
+region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_foiu6"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ef5i")
+}],
+"loop": 1,
+"name": &"dash",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cmy35")
@@ -86,20 +99,25 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_211yn")
+"texture": SubResource("AtlasTexture_0s1pb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dqxu6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0vicv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a0xd0")
+"texture": SubResource("AtlasTexture_kleqx")
 }],
 "loop": 1,
 "name": &"fly",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eko1s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3qil")
+}],
+"loop": 1,
+"name": &"tele",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e2o6t"]
@@ -135,8 +153,9 @@ debug_color = Color(0.9922742, 0, 0.26061273, 0.41960785)
 texture_filter = 1
 material = SubResource("ShaderMaterial_a8t2u")
 sprite_frames = SubResource("SpriteFrames_foiu6")
-animation = &"fly"
+animation = &"tele"
 autoplay = "fly"
+frame_progress = 0.64393073
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=224646178]
 collision_layer = 4

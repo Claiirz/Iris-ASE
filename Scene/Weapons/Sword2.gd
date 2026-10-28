@@ -39,9 +39,6 @@ func _ready() -> void:
 		if stats_comp.has_signal("stats_changed"):
 			stats_comp.stats_changed.connect(apply_player_attack_speed)		
 
-
-# --- COMBO ATTACK TRIGGER ---
-# --- COMBO ATTACK TRIGGER ---
 func trigger_attack() -> void:
 	if is_attacking:
 		return 

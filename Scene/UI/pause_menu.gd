@@ -3,7 +3,6 @@ extends CanvasLayer
 # Point to Main Menu since the Hub scene is unfinished
 @export var main_menu_scene_path: String = "res://Scene/main_menu.tscn"
 
-# Navigation References
 @onready var menu_root: Control = $DimOverlay
 @onready var nav_buttons: VBoxContainer = $MainContainer/NavPanel/NavButtons
 @onready var resume_button: Button = $MainContainer/NavPanel/NavButtons/ResumeButton
@@ -11,12 +10,10 @@ extends CanvasLayer
 @onready var abandon_button: Button = $MainContainer/NavPanel/NavButtons/AbandonButton
 @onready var selector_arrow: TextureRect = $MainContainer/NavPanel/SelectorArrow
 
-# Stats Label References (find_child avoids path errors if node hierarchy changes)
 @onready var vonis_value: Label = find_child("VonisValue", true, false) as Label
 @onready var era_value: Label = find_child("EraValue", true, false) as Label
 @onready var time_value: Label = find_child("TimeValue", true, false) as Label
 
-# Confirmation Modal References
 @onready var confirm_modal: Control = $ConfirmModal
 @onready var cancel_button: Button = find_child("CancelButton", true, false) as Button
 @onready var yes_button: Button = find_child("YesButton", true, false) as Button
@@ -102,8 +99,9 @@ func _update_run_stats_display() -> void:
 		if "difficulty_level" in GameManager and vonis_value:
 			vonis_value.text = str(GameManager.difficulty_level).to_upper()
 			
-		if "current_era" in GameManager and era_value:
-			era_value.text = str(GameManager.current_era)
+		# FIX: Look for current_floor instead of current_era
+		if "current_floor" in GameManager and era_value:
+			era_value.text = str(GameManager.current_floor)
 
 func _on_button_focused(btn: Button) -> void:
 	if selector_arrow and btn:

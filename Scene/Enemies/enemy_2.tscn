@@ -3,10 +3,8 @@
 [ext_resource type="Shader" uid="uid://bq20iutan84hp" path="res://Scene/Enemies/hitflash.gdshader" id="1_f7afj"]
 [ext_resource type="Script" uid="uid://bsfo1ft7u0rqo" path="res://Scene/Enemies/enemy_2.gd" id="1_nox1f"]
 [ext_resource type="Resource" uid="uid://cbip57tmen61q" path="res://Resources/Slime.tres" id="2_la3cr"]
-[ext_resource type="Texture2D" uid="uid://mn0wtn7b7kcy" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/enemies/slime/slime_run_spritesheeet.png" id="2_nox1f"]
 [ext_resource type="PackedScene" uid="uid://bx622sts03uip" path="res://Scene/Items/DroppedSword1.tscn" id="3_80xxg"]
 [ext_resource type="Texture2D" uid="uid://cwqvdslxcfbq0" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/effects (new)/enemy_afterdead_explosion_anim_spritesheet.png" id="3_la3cr"]
-[ext_resource type="Texture2D" uid="uid://dpg2q5lwgyyk0" path="res://Asset/PlaceHolders/v1.1 dungeon crawler 16X16 pixel pack/enemies/slime/slime_idle_spritesheet.png" id="4_2037s"]
 [ext_resource type="PackedScene" uid="uid://b62var7ngf40y" path="res://Scene/Items/item_pickup.tscn" id="4_cjkdp"]
 [ext_resource type="Script" uid="uid://6tqbywrdd4g6" path="res://Scripts/Items/upgrade_data.gd" id="5_7knv5"]
 [ext_resource type="Script" uid="uid://bj2nvgl6gkbyw" path="res://Scripts/fsmenemy/Bat/enemy1fsm.gd" id="5_80xxg"]
@@ -22,6 +20,7 @@
 [ext_resource type="Script" uid="uid://02j3210st2e3" path="res://Scripts/Handlers/mutation_component.gd" id="10_ruj5p"]
 [ext_resource type="Resource" uid="uid://cj8v4l7x2r5a" path="res://Resources/Modular/crowbar.tres" id="11_ek7iu"]
 [ext_resource type="PackedScene" uid="uid://b2c1c464hqjqa" path="res://Scene/xp_orb.tscn" id="12_61n4t"]
+[ext_resource type="Texture2D" uid="uid://cpqbb58xaylg7" path="res://Asset/chronofall_items_enemies_pause/items_enemies/sprites/enemies/serangga_purba_sheet.png" id="14_61n4t"]
 [ext_resource type="AudioStream" uid="uid://d3t1e2bf6ucbe" path="res://Asset/sfx/enemysfx/slimeshoot.mp3" id="17_0rsd3"]
 [ext_resource type="AudioStream" uid="uid://cn0cdjirj0yft" path="res://Asset/sfx/enemysfx/slap.wav" id="18_7b4q2"]
 [ext_resource type="AudioStream" uid="uid://b3scix6m3qig" path="res://Asset/sfx/enemysfx/slimedead.mp3" id="19_ruj5p"]
@@ -35,29 +34,13 @@ resource_local_to_scene = true
 shader = ExtResource("1_f7afj")
 shader_parameter/flash = false
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b24iy"]
-atlas = ExtResource("2_nox1f")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ek7iu"]
+atlas = ExtResource("14_61n4t")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xuq75"]
-atlas = ExtResource("2_nox1f")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2jvfk"]
-atlas = ExtResource("2_nox1f")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_61n4t"]
-atlas = ExtResource("2_nox1f")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ek7iu"]
-atlas = ExtResource("2_nox1f")
-region = Rect2(64, 0, 16, 16)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ydfvn"]
-atlas = ExtResource("2_nox1f")
-region = Rect2(80, 0, 16, 16)
+atlas = ExtResource("14_61n4t")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cmy35"]
 atlas = ExtResource("3_la3cr")
@@ -76,44 +59,16 @@ atlas = ExtResource("3_la3cr")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_seu6e"]
-atlas = ExtResource("4_2037s")
+atlas = ExtResource("14_61n4t")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5pybl"]
-atlas = ExtResource("4_2037s")
+atlas = ExtResource("14_61n4t")
 region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1f2lp"]
-atlas = ExtResource("4_2037s")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ymwiq"]
-atlas = ExtResource("4_2037s")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0adqi"]
-atlas = ExtResource("4_2037s")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8vid1"]
-atlas = ExtResource("4_2037s")
-region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jq34m"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b24iy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xuq75")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2jvfk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_61n4t")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ek7iu")
 }, {
@@ -147,18 +102,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5pybl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1f2lp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ymwiq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0adqi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8vid1")
 }],
 "loop": 1,
 "name": &"shoot",
@@ -193,7 +136,7 @@ debug_color = Color(0.9922742, 0, 0.26061273, 0.41960785)
 texture_filter = 1
 material = SubResource("ShaderMaterial_m4sbg")
 sprite_frames = SubResource("SpriteFrames_jq34m")
-animation = &"die"
+animation = &"chase"
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=624047615]
 collision_layer = 4

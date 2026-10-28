@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b1vcqaas0pucy"]
 
 [ext_resource type="Script" uid="uid://bb77n5okxghv" path="res://death_screen.gd" id="1_elwbp"]
+[ext_resource type="FontFile" uid="uid://cdroywfgveh44" path="res://Asset/sfx/PressStart2P.ttf" id="2_ru38t"]
 
 [node name="DeathScreen" type="CanvasLayer" unique_id=553491154]
 process_mode = 3
@@ -31,22 +32,29 @@ grow_vertical = 2
 
 [node name="you died" type="Label" parent="VBoxContainer" unique_id=1179758287]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ru38t")
 text = "you died"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="FloorLabel" type="Label" parent="VBoxContainer" unique_id=1781329567]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ru38t")
 
 [node name="TimeLabel" type="Label" parent="VBoxContainer" unique_id=316987971]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ru38t")
 
 [node name="RestartButton" type="Button" parent="VBoxContainer" unique_id=348707204]
 process_mode = 3
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ru38t")
 text = "restart"
 
 [node name="MainMenuButton" type="Button" parent="VBoxContainer" unique_id=600823914]
 process_mode = 3
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ru38t")
 text = "return to main menu"
 
 [connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
